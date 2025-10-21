@@ -1,9 +1,9 @@
-# OS
+# OS Basics
 
 A system is a combination of components each having specific function
 
 Assembly is HW dependent
-C is IO dependent
+C is IO and OS dependent
 
 Microprocessor: CPU and several supporting chips
 Microcontroller: CPU on a single chip
@@ -55,12 +55,11 @@ OS is loaded in RAM, but not always running
 --- CPU ---
 
 - Decode Circuit
-- MMU
+- MMU (Memory Management Unit); doesn't let the developer utilize the physical addresses, we instead use virtual/logical. Only MMU and OS know the real addresses.
 - Registers; program counter (el3aleh eldoor), CIR (current instruction register), ACC (accumulator), MAR (memory address register), MDR (memory data register)
 - ALU
 
 Fetch -> Decode -> Execute -> Store
-MMU doesn't let the developer utilize the physical addresses, we instead use virtual/logical. Only MMU and OS know the real addresses.
 Rust is the fastest language
 node js, bun js
 least interrupt is more important than biggest task
@@ -69,6 +68,7 @@ least interrupt is more important than biggest task
 
 Kernel - the one program running at all times
 As long as the kernel is in the RAM, the OS Is running
+To have any app running it must be both in RAM and CPU
 
 User -> Person/App/Machine/Developer/End User
 
@@ -104,6 +104,8 @@ REST API is an intermediary
 - Developer     -> CLI + App + OS
 - Application   -> API + App + OS (System Call)
 
+![connection types on OS](OSConnectionTypes.png)
+
 API + Internet = web service
 All web service is API, not all API is web service
 System call is an API that OS created for an app to access the HW
@@ -122,6 +124,10 @@ System call is an API that OS created for an app to access the HW
 
 bi-directional communication between client and server... it is a layer added to an API
 
+software added on API
+Developer writes and handles the websocket
+Heavy and always opened
+
 #### PubSub
 
 Mqtt
@@ -133,6 +139,10 @@ Mqtt
 - Broker        -> The "server" that connects the received data to the subscribed client on a topic
 
 frequently asks if user is connected or not. Whenever reconnected data gets sent
+
+![pub-sub](pubsub.png)
+
+Webhook is a concept used for notifications
 
 ---
 
