@@ -1,4 +1,4 @@
-# OS Basics
+# OS Day 1 - OS Basics
 
 A system is a combination of components each having specific function
 

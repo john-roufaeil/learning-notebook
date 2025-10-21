@@ -1,4 +1,4 @@
-# How OS Works
+# OS Day 2 - How OS Works
 
 1. Power On
 2. BIOS: check HW, change boot config
