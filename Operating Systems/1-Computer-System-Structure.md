@@ -20,3 +20,22 @@ But shared computers must keep all users happy
 
 **The kernel is the one program running at all times on the computer**
 
+
+
+## I/O
+
+![data transfer technique vs communication method](methods.png)
+
+### Memory-Mapped I/O
+
+![memory mapped io](MemoryMappedIO.png)
+
+### Isolated I/O
+
+Devices aren't mapped into memory at all, instead they are connected through a bus complettely separate from the memory bus
++ Memory and IO devices cannot interfere with each other -> makes system more parallel-friendly
+- CPU now needs special instructions like in and out to talk to devices over this bus -> larger, more expensive chips, less power efficient
+
+![isolated io](isolatedIO.png)
+
+

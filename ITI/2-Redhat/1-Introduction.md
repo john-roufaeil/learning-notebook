@@ -44,3 +44,5 @@ Linux doesn't need extensions
 /proc/  -> process related files
 
 If an option takes an argument we cannot combine this option with other options
+
+![Linux Directories](LinuxDirectories.png)
