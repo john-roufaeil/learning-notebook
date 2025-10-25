@@ -2,7 +2,7 @@
 
 ## Scheduling Aglorithms
 
-- priority
+- priority: smaller number bigger priority -> could lead to starvation... solutin = aging
 - first come first serve: best if smallest processes came first
 - shortest job first (SJF): optimal but impossible to apply... in preemptive: Shortest Remaining Time First (SRTF)
 - round robin
@@ -34,3 +34,20 @@ Dispatch latency: time taken by dispatcher to stop one process and start another
 
 ^ CPU Utilization, Throughput
 v Turnaround, Waiting Time, Response Time, Biggest Response  Time 
+
+## Deadlock
+
+arises if 4 conditions hold simultaneously
+
+1. Mutual exclusion: only one process at a time can use a resource.
+
+2. Hold and wait: a process holding at least one resource is waiting to acquire additional resources held by other processes
+
+3. No preemption: a resource can be released only voluntarily by the process holding it, after the process has completed its task.
+
+4. Circular wait
+
+### Solution of deadlocks
+
+- Kill all processes having deadlock
+- Kill process by process till solved
