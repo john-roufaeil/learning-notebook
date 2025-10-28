@@ -347,3 +347,9 @@ sort -k4 -t: -n /etc/passwd
 
 grep bash$ /etc/passwd | cut -d: -f1
 ```
+
+---
+
+**Real User ID**: Represents the user who launched the process.
+**Effective User ID**: Determines what the process is allowed to do.
+
