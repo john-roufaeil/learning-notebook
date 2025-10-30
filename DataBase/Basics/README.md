@@ -203,3 +203,97 @@ Each relationship needs:
     - Total (Must Participate): shown with double lines.
     - Partial (May Participate): shown with single lines.
 
+## Mapping to Tables
+
+> After designing an ERD, the next step is to **convert (map)** it into a **relational schema**, a set of database tables with relationships represented using keys.
+
+![tables](tables_example.png)
+
+### **1. Strong Entity → Table**
+- Each **strong entity** becomes a **table**.  
+- **Attributes** become table columns.  
+- The **primary key** of the entity becomes the **primary key** of the table.  
+
+**Example:**  
+Entity: `Student (StudentID, Name, Email)`  
+→  
+Table:  `STUDENT(StudentID [PK], Name, Email)`
+
+### **2. Weak Entity → Table**
+- Each **weak entity** also becomes a table.  
+- Include a **foreign key** from its **owner entity** (the strong one).  
+- The **primary key** is the combination of the **partial key + owner’s primary key**.  
+
+**Example:**  
+Weak Entity: `Dependent (DepName)` depends on `Employee (EmpID)`  
+→  
+Table:  `DEPENDENT(EmpID [FK], DepName, PRIMARY KEY (EmpID, DepName))`
+
+### **3. Attributes → Columns**
+- **Simple attributes:** become individual columns.  
+- **Composite attributes:** split into separate columns.  
+  - e.g., `Name → FirstName, LastName`  
+- **Multivalued attributes:** require a **separate table** with a foreign key reference.  
+  - e.g., `Student_Phone(StudentID [FK], PhoneNumber)`  
+- **Derived attributes:** usually **not stored**, since they can be computed.
+
+### **4. Relationships → Foreign Keys or New Tables**
+
+#### **a. One-to-One (1:1)**  
+- Add the **primary key of one entity** as a **foreign key** in the other.  
+- Choose the side that makes logical sense or has total participation.  
+
+#### **b. One-to-Many (1:N)**  
+- Add the **primary key** of the “one” side as a **foreign key** in the “many” side.  
+
+**Example:**  
+`Department (DeptID)` —< `Employee (EmpID, DeptID [FK])`  
+
+#### **c. Many-to-Many (M:N)**  
+- Create a **new table (intersection/junction table)**.  
+- Include **foreign keys** from both entities, and optionally other relationship attributes.  
+
+**Example:**  
+`Student` —< `Enrollment` >— `Course`  
+ENROLLMENT(StudentID [FK], CourseID [FK], Grade)
+PRIMARY KEY (StudentID, CourseID)
+
+**d. Ternary Relationships**  
+- Create a **new table** with foreign keys from all three entities.  
+
+**Example:**  
+ASSIGNMENT(EmployeeID [FK], ProjectID [FK], SkillID [FK])
+
+
+### **5. Specialization / Generalization (Optional)**
+For **inheritance hierarchies**, common mapping approaches include:
+
+1. **Single Table:** One table for all entities (add a type attribute).  
+2. **Class Table:** One table per subclass with a foreign key to the superclass.  
+3. **Separate Tables:** Each subclass has its own table with duplicated shared fields.
+
+### **Summary**
+
+| ERD Element | Mapping in Tables |
+|--------------|-------------------|
+| Strong Entity | Table with attributes and PK |
+| Weak Entity | Table + FK to owner + composite PK |
+| Simple Attribute | Column |
+| Composite Attribute | Split into multiple columns |
+| Multivalued Attribute | Separate table |
+| Derived Attribute | Not stored |
+| 1:1 Relationship | FK in one table |
+| 1:N Relationship | FK in “many” side |
+| M:N Relationship | New intersection table |
+| Ternary Relationship | New table with 3 FKs |
+
+![mapping to tables instructions](mapping_instructions.png)
+
+#### **How ERD, SQL, and Tables Match the Three-Schema Architecture**
+
+| Concept / Artifact | Schema Level | Data Model Type | Description |
+|--------------------|---------------|------------------|--------------|
+| **ERD (Entity Relationship Diagram)** | **Conceptual Schema** | **Logical / Conceptual Model** | Represents *what data exists* and *how entities relate*. No details on how it’s stored. |
+| **SQL DDL (CREATE TABLE, ALTER TABLE, etc.)** | **Physical Schema** | **Physical Model** | Defines *how data is implemented* in the database — table structures, data types, indexes, and constraints. |
+| **Database Tables (actual stored data)** | **Physical Schema** | **Physical Model** | The *real physical storage* of data in files or pages on disk, managed by the DBMS. |
+| **Views (SQL VIEW)** | **External Schema** | — | Defines *what part of the data a user or application sees* and *how it is presented*. |
