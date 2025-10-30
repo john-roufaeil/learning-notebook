@@ -459,7 +459,9 @@ Analyze performance using:
 |-|-|
 |![Dependency Types](dependency_types.png)|![First normal form](1st_normal_form.png)|
 |![Second normal form](2nd_normal_form.png)|![Third normal form](3rd_normal_form.png)|
-|![Normal forms comparison](normal_forms_comparison.png)| |
+|![Normal forms comparison](normal_forms_comparison.png)|![example first step](example.png)|
+|![example 0nf](example_0nf.png)|![example 1nf](example_1nf.png)|
+|![example 2nf](example_2nf.png)|![example 3nf](example_3nf.png)|
 
 
 
