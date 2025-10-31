@@ -1,4 +1,4 @@
-# Operating Systems
+# Introduction to Operating Systems
 > A program (SW) **managing the HW**
 
 > Acts as an intermediary between the user apps and the HW
@@ -6,6 +6,7 @@
 > A resource manager managing cpu time, memory, storage, I/O devices, processes (programs)
 
 ## Table of Contents
+- [Computer System Structure](#computer-system-structure)
 - [Need for OS](#need-for-os)
     - [Notes](#notes)
 - [Computing Systems](#computing-systems)
@@ -13,6 +14,7 @@
 - [Hardware](#hardware)
     - [Memory](#memory)
     - [CPU](#cpu)
+- [OS System Components](#os-system-components)
 - [Kernel](#kernel)
 - [System Types](#system-types)
     - [Multiprocessor Systems (Tightly Coupled)](#1-multiprocessor-systems-tighlty-coupled)
@@ -21,6 +23,19 @@
     - [System Types Summary](#system-types-summary)
 - [Network](#network)
     - [Bi-Directional Communication](#bi-directional-communication)
+
+## Computer System Structure
+
+Any computer system can be divided into 4 main components:
+1. Hardware - provides basic computing resources
+    > CPU, RAM, IO
+2. Operating System - controls use of hardware among apps and users
+3. Apps - define the ways that the users will use the system resources
+    > Word, compilers, browser, db, games
+4. Users
+    > People, other computers, machines
+
+![computer system structure](computer-system-structure.png)
 
 
 ## Need for OS
@@ -120,6 +135,40 @@ SOC = System on Chip
 
 > least interrupt is more important than biggest task
 
+## OS System components
+
+* Kernel
+    - The core of the OS
+    - Directly controls the HW (CPU, memory, disks, etc.)
+    - Stays in RAM all the time
+    - Runs in kernel mode, i.e., has full access to the system HW
+    - Decides which program runs next (Process mgmt)
+    - Allocates and frees RAM (memory mgmt)
+    - Talks to I/O devices (device mgmt)
+    - Reading/Writing to disk (file mgmt)
+    - System calls handling
+
+* Shell
+    - The interface between the user and the kernel
+    - Takes commands from user, sends to kernel, and shows results
+    - Can be command line shell like bash or graphical shell like gnome or windows explorer
+
+* System Calls
+
+    - A system call is the way a program requests a service from the Operating System kernel.
+    - Functions that let programs talk to the kernel
+    - It's like a door between user space and kernel space
+
+### User Mode vs Kernel Mode
+
+|Mode|Who runs here|Privilege level|Can access HW directly?|
+|---|---|---|---|
+|User Mode|Normal apps (like browsers, editors)| Low|No|
+|Kernel Mode|OS kernel and device drivers| High|Yes|
+
+- When a user program needs to access HW, it must ask the kernel through a system call.
+- This separation prevents user programs from crashing or damaging the whole system.
+
 ## Kernel
 
 > The one program running at all times
@@ -149,14 +198,16 @@ An app leaves CPU if:
 ### 1. Multiprocessor Systems (Tighlty Coupled)
 
 **Tightly coupled system**: processors share memory and a clock; communication  happens through shared memory
+- Systems with more than one CPU in close communication  
 - Advantages:
     - Increased throughput (more work done in parallel)
     - Economical (more cores cheaper than whole machines)
     - Increased reliability (if one processor fails, others can continue)
 
 ### 2. Loosely Coupled/Distributed Systems
-**Loosely Coupled System**: each processor has its own memory; processors communicate together through communication busses
+**Loosely Coupled System**: each processor has its own memory; processors communicate together through communication busses in LAN or WAN
 - **Distributed System**: system connected in a network
+- Loosely coupled system, each processor has its own local memory  
 - Advantages:
     - Resources sharing across multiple systems
     - Communication speed up (load sharing)... distributes work among nodes
