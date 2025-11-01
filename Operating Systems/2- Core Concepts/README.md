@@ -177,9 +177,8 @@ Registers are small, fast storage inside the CPU used for temporary data, addres
 - **Accumulator (ACC):** Stores ALU results.
 - **Memory Address Register (MAR):** Holds memory address for access.
 - **Memory Buffer/Data Register (MBR/MDR):** Temporarily holds data transferred to/from memory.
-- **Stack Pointer (SP):** Points to top of stack.
-- **Base/Frame Pointer (BP/FP):** Used for stack frame access.
 - **Status/Flags Register:** Holds condition flags (zero, sign, carry).
+
 Registers are the CPU’s fastest storage — all data must pass through them before reaching RAM.
 
 ### Control Unit (CU)
@@ -207,14 +206,17 @@ RAM stores active programs and data. Divided into:
 - **Heap:** Dynamic allocations.
 - **Data Segment:** Global/static data.
 - **Code Segment:** Program instructions.
+
 RAM is volatile and cleared when power is off.
+
+![RAM Components](RAMComposition.png)
 
 ### Memory Management Unit (MMU)
 The MMU translates **virtual addresses** to **physical addresses** using **page tables** managed by the OS.
 Functions:
 - Provides **virtual memory** (using disk for overflow).
 - Enforces **memory protection** and isolation.
-- Uses a **Translation Lookaside Buffer (TLB)** to speed up translations.
+
 If a page is missing from RAM, MMU triggers a **page fault**, and the OS loads it from disk.
 
 ### Direct Memory Access (DMA)
@@ -223,6 +225,7 @@ Steps:
 1. CPU programs DMA with source, destination, and size.
 2. DMA transfers data directly.
 3. DMA signals CPU via interrupt when complete.
+
 This increases throughput and reduces CPU load.
 
 ### I/O System and Device Controllers
