@@ -9,12 +9,12 @@
 - [Processes & Signals](#processes-priorities-and-signals-concepts)
 - [Redirection, Pipelining, String Processing](#redirection-pipeline-string-processing)
 
-
 ## Terminologies
 
 |Terminology|Description|
 |---|---|
 |**FOSS**|Free Open Source Software - can view code, make and distribute modifications|
+
 
 
 ## Linux Components
@@ -28,16 +28,17 @@
     - Bash is the most commonly used shell on Linux
     - Shells parse commands entered by user and translate the mto logical segments to be executed by the kernel or other utilities
 
-Hardware communicates with Kernel
-Kernel communicates with Shell
-Shell communicates with User
-
 Each version could have more than one release
+
+- Hardware communicates with Kernel
+- Kernel communicates with Shell
+- Shell communicates with User
+
 
 ## Linux Directories Tree
 
-Linux interprets everything as files 
-Linux doesn't need extensions
+- Linux interprets everything as files
+- Linux doesn't need extensions
 
 |Directory|Description|
 |---|---|
@@ -353,3 +354,46 @@ grep bash$ /etc/passwd | cut -d: -f1
 **Real User ID**: Represents the user who launched the process.
 **Effective User ID**: Determines what the process is allowed to do.
 
+## Compress & Archive
+
+zip compatible with windows and linux
+compress, uncompress, zcat -> .Z
+
+- gzip        -> .gz
+- bzip2       -> .bz
+- compress    -> .Z
+- zip         -> keeps old
+
+tar cvf (create virtual file) ~/Desktop/PlaceToSaveTheTar.tar /folder /orFilesToSave
+tar xvf (extract virtual file) ~/Desktop/PlaceOfTar.tar
+tar tvf (display)
+tar cjvf (or czvf)
+-z uses gzip
+-c create archvie
+-j use bzip2
+-
+
+## Inode
+
+Data structure containing metadata of a file
+
+- owner
+- size
+- permission
+- number of links
+- last edited
+
+ln -s /src /newSoft
+ln /src /newHard
+
+all soft links are created with 777 by default
+
+soft bysm3 fl etnen
+
+move doesnt create new inode
+
+```sudo ln -s /usr/bin/python3 /usr/bin/bigboss```
+
+---
+
+rpm doesnt solve dependency issues unlike yum
