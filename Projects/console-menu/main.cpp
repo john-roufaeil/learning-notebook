@@ -1,36 +1,48 @@
 #include "library.h"
-#include <cstdio>
+#include <iostream>
+
+void newScreen() {
+    clearScreen();
+    textColor("cyan");
+    gotoxy(4, 2);
+    std::cout << "=== NEW ===";
+    gotoxy(4, 4);
+    textColor("reset");
+    std::cout << "New page.";
+    displayInstructions("Press backspace to return to homepage.", 4, 2);
+    while (true) {
+        Key key = getKeyPress();
+        if (key == Key::BACKSPACE) {
+            break;
+    }
+}
+}
+
+void displayScreen() {
+    clearScreen();
+    textColor("cyan");
+    gotoxy(4, 2);
+    std::cout << "=== DISPLAY ===";
+    gotoxy(4, 4);
+    textColor("reset");
+    std::cout << "Display page.";
+    displayInstructions("Press backspace to return to homepage.", 4, 2);
+    while (true) {
+        Key key = getKeyPress();
+        if (key == Key::BACKSPACE) {
+            break;
+    }
+}
+}
 
 int main() {
-    clearScreen();
-
-    gotoxy(5, 5);
-    textColor("red");
-    printf("Hello in RED at (5, 5)");
-
-    gotoxy(10, 7);
-    textColor("green");
-    printf("Hello in GREEN at (10, 7)");
-
-    gotoxy(5, 9);
-    textColor("blue");
-    printf("Hello in BLUE at (5, 9)");
-
-    gotoxy(10, 11);
-    textColor("yellow");
-    printf("Hello in YELLOW at (10, 11)");
-
-    gotoxy(5, 13);
-    textColor("magenta");
-    printf("Hello in MAGENTA at (5, 13)");
-
-    gotoxy(10, 15);
-    textColor("cyan");
-    printf("Hello in CYAN at (10, 15)");
-
-    gotoxy(0, 20);
-    textColor("reset");
-    printf("Done!\n");
-
+    Menu mainMenu("Main Menu", 4, 2);
+    mainMenu.addItem("New", newScreen);
+    mainMenu.addItem("Display", displayScreen);
+    mainMenu.addItem("Exit", []() {
+        clearScreen();
+        exit(0);
+    });
+    mainMenu.run();
     return 0;
 }

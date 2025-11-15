@@ -1,5 +1,30 @@
 # Introduction
 
+## Data Types
+
+Basic Data Types:
+- int
+- float
+- double
+- char
+- bool
+- void
+
+Pointers
+- int * ptr = new int;
+- int * ptr = new int[10];
+- int * ptr = &x;
+- int x = *ptr;
+
+Other topics
+- If Conditions
+- For and While Loop
+- Arrays
+    - int arr1 [10];
+    - int * arr2 = new int[N];
+- Structs
+- Classes
+
 ### Size modifiers
 
 Size modifiers are not types, just keywords to modify the size of types
@@ -53,3 +78,52 @@ for (i=8; i>=0; i--) {
 }
 ```
 
+## Passing Variables to Functions
+
+### Passing by Value
+
+Not recommended for large structures
+
+```cpp
+int func(int x) {
+    x++;
+    return x;
+}
+
+int x = 5;
+cout << func(x); // printed 6, x is 5
+```
+
+### Passing by Reference
+
+```cpp
+int func(int & x) {
+    x++;
+    return x;
+}
+int x = 5;
+cout << func(x); // printed 6, x is 6
+```
+
+### Passing by Pointer
+
+```cpp
+int func(int * ptr) {
+    (*ptr)++;
+    return *ptr;
+}
+
+int x = 5;
+cout << func(&x); // printed 6, x is 6
+```
+
+### Passing by constant reference
+
+```cpp
+int func(const int & x) {
+    return x+1;
+}
+
+int x = 5;
+cout << func(x); // printed 6, x is 5
+```
