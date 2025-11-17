@@ -1,6 +1,29 @@
 #include "library.h"
 #include <iostream>
 
+void buildMagicSquareBoxes(int n, int x, int y) {
+    // Draw horizontal lines and top border
+    for (int i = 0; i <= n; i++) {
+        for (int j = 0; j < n; j++) {
+            gotoxy(x + j * 4, y + i * 2);
+            std::cout << "+---";
+        }
+        gotoxy(x + n * 4, y + i * 2);
+        std::cout << "+";
+    }
+    
+    // Draw vertical lines
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j <= n; j++) {
+            gotoxy(x + j * 4, y + i * 2 + 1);
+            std::cout << "|";
+            if (j < n) {
+                std::cout << "   ";
+            }
+        }
+    }
+}
+
 void magicScreen() {
     clearScreen();
     textColor("cyan");
@@ -36,6 +59,8 @@ void magicScreen() {
     gotoxy(4, 8);
     delay(1000);
     std::cout << "______________________________________" << std::endl;
+
+    buildMagicSquareBoxes(n, 4, 10);
 
     while (true) {
         Key key = getKeyPress();
