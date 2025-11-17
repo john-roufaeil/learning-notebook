@@ -27,7 +27,6 @@ enum class Key {
 };
 Key getKeyPress();
 
-// Menu system
 struct MenuItem {
     std::string text;
     std::function<void()> action;
@@ -37,7 +36,7 @@ class Menu {
 private:
     std::vector<MenuItem> items;
     int selectedIndex;
-    int x, y; // Menu position
+    int x, y;
     std::string title;
 
 public:

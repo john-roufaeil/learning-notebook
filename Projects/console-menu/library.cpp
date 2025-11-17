@@ -178,7 +178,7 @@ void Menu::display() {
         }
     }
 
-    displayInstructions("Use Arrow Keys to navigate | Home navigates to first item | End navigates to last item", x, y +1);
+    displayInstructions("Use Arrows to navigate | Home goes to top | End goes to bottom", x, y +1);
     displayInstructions("Enter to select | Backspace to go back | ESC to exit", x, y);
 }
 

@@ -14,8 +14,11 @@ void newScreen() {
         Key key = getKeyPress();
         if (key == Key::BACKSPACE) {
             break;
+        } else if (key == Key::ESCAPE) {
+            clearScreen();
+            exit(0);
+        }
     }
-}
 }
 
 void displayScreen() {
@@ -31,8 +34,11 @@ void displayScreen() {
         Key key = getKeyPress();
         if (key == Key::BACKSPACE) {
             break;
+        } else if (key == Key::ESCAPE) {
+            clearScreen();
+            exit(0);
+        }
     }
-}
 }
 
 int main() {
