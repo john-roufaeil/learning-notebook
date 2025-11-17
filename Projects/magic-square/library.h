@@ -11,6 +11,7 @@ void gotoxy(int x, int y);
 void clearScreen();
 void getTerminalSize(int& width, int& height);
 void displayInstructions(const std::string instructionsMessage, int x, int y);
+void delay(int milliseconds);
 
 // Keyboard input functions
 enum class Key {

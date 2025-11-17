@@ -2,6 +2,8 @@
 #include <iostream>
 #include <map>
 #include <cstdio>
+#include <chrono>
+#include <thread>
 
 #ifdef _WIN32
     #include <windows.h>
@@ -12,6 +14,10 @@
     #include <sys/select.h>
     #include <sys/ioctl.h>
 #endif
+
+void delay(int milliseconds) {
+    std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds));
+}
 
 void gotoxy(int x, int y) {
 #ifdef _WIN32
@@ -178,7 +184,7 @@ void Menu::display() {
         }
     }
 
-    displayInstructions("Use Arrow Keys to navigate | Home navigates to first item | End navigates to last item", x, y +1);
+    displayInstructions("Use Arrow Keys to navigate | Home goes to top | End goes to end", x, y +1);
     displayInstructions("Enter to select | Backspace to go back | ESC to exit", x, y);
 }
 
