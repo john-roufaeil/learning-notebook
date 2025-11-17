@@ -22,6 +22,34 @@ void buildMagicSquareBoxes(int n, int x, int y) {
             }
         }
     }
+    gotoxy(x, y);
+}
+
+void populateMagicSquare(int n, int x, int y) {
+    // Start at the middle of the first row
+    int row = 0;
+    int col = n / 2;
+    
+    for (int i = 1; i <= n * n; i++) {
+        delay(500);
+        
+        // Display the number in the box
+        if (i >= 100)         
+            gotoxy(x + col * 4 + 1, y + row * 2 + 1);
+        else
+            gotoxy(x + col * 4 + 2, y + row * 2 + 1);
+        std::cout << i;
+        std::flush(std::cout);  // Ensure immediate display
+        
+        if (i % n == 0) {
+            // If i is divisible by n, go down
+            row = (row + 1) % n;
+        } else {
+            // If i is not divisible by n, go up and left
+            row = (row - 1 + n) % n;
+            col = (col - 1 + n) % n;
+        }
+    }
 }
 
 void magicScreen() {
@@ -31,6 +59,7 @@ void magicScreen() {
     std::cout << "=== MAGIC SQUARE ===";
     textColor("reset");
     displayInstructions("Builds a magic square based on odd user input.", 4, 2);
+    displayInstructions("Use backspace to go to main menu", 4, 3);
 
     int n=0;
     gotoxy(4, 4);
@@ -61,6 +90,12 @@ void magicScreen() {
     std::cout << "______________________________________" << std::endl;
 
     buildMagicSquareBoxes(n, 4, 10);
+    populateMagicSquare(n, 4, 10);
+    gotoxy(4, 10 + n * 2 + 2);
+    textColor("green");
+    std::cout << "Magic Square of size " << n << " completed!" << std::endl;
+    gotoxy(4, 10 + n * 2 + 3);
+    textColor("reset");
 
     while (true) {
         Key key = getKeyPress();
