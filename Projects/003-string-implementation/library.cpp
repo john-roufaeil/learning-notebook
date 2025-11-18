@@ -43,24 +43,68 @@ int str_cmp(char str1[], char str2[]) {
     return 0;
 }
 
+int is_alpha(char c) {
+    if ((c >= 65 && c <= 90) || (c >= 97 && c <= 122)) return 1;
+    return 0;
+}
+
+int is_lower(char c) {
+    if (c >= 97 && c <= 122) return 1;
+    return 0;
+}
+
 void to_lowercase(char str[]) {
+    int len = str_len(str);
+    char c = '\0';
+    for (int i = 0; i < len; i++)
+    {
+        c = *(str + i);
+        if (is_alpha(c) && !is_lower(c))
+            *(str+i) = *(str+i) + 32;
+    }
 }
 
 void to_uppercase(char str[]) {
+    int len = str_len(str);
+    char c = '\0';
+    for (int i = 0; i < len; i++)
+    {
+        c = *(str + i);
+        if (is_alpha(c) && is_lower(c))
+            *(str+i) = *(str+i) - 32;
+    }
 }
 
-void str_concat(char str1[], char str2[], int str1Len) {
+int str_concat(char str1[], char str2[], int str1Len) {
+    int str1_len = str_len(str1);
+    int str2_len = str_len(str2);
+    
+    if (str1_len + str2_len < str1Len) return -1;
+    
+    for (int i = 0; i < str2_len; i++) {
+    	*(str1+i+str1_len) = *(str2+i);
+    }
+    return 0;
 }
 
-void str_copy(char str1[], char str2[]) {
+
+int str_copy(char str1[], char str2[]) {
+    int str2_len = str_len(str2);
+    if (str2_len > str_len(str1)) return -1;
+    
+    for (int i = 0; i < str2_len; i++) {
+    	*(str1+i) = *(str2+i);
+    }
+    *(str1+str2_len) = '\0';
+    return 0;
 }
 
-int str_find_char(char str[], char ch) {    
+// int str_find_char(char str[], char ch) {    
 
-    return -1;
-}
-int str_find_substr(char str[], char substr[]) {
-    return -1;
-}
-void str_reverse(char str[]) {
-}
+//     return -1;
+// }
+// int str_find_substr(char str[], char substr[]) {
+//     return -1;
+// }
+// void str_reverse(char str[]) {
+// }
