@@ -32,7 +32,8 @@ void populateMagicSquare(int n, int x, int y) {
     
     for (int i = 1; i <= n * n; i++) {
         delay(500);
-        
+        textColor("random");
+
         // Display the number in the box
         if (i >= 100)         
             gotoxy(x + col * 4 + 1, y + row * 2 + 1);

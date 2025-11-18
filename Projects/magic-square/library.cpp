@@ -39,7 +39,14 @@ void textColor(const std::string& color) {
         {"red", 4}, {"magenta", 5}, {"yellow", 6}, {"white", 7},
         {"reset", 7}
     };
-    auto it = colors.find(color);
+    std::string selectedColor = color;
+    
+    if (color == "random") {
+        std::string randomColors[] = {"red", "green", "yellow", "blue", "magenta", "cyan"};
+        selectedColor = randomColors[std::rand() % 6]; 
+    }
+
+    auto it = colors.find(selectedColor);
     if (it != colors.end()) {
         SetConsoleTextAttribute(hConsole, it->second);
     }
@@ -49,7 +56,14 @@ void textColor(const std::string& color) {
         {"yellow", "\033[33m"}, {"blue", "\033[34m"}, {"magenta", "\033[35m"},
         {"cyan", "\033[36m"}, {"white", "\033[37m"}, {"reset", "\033[0m"}
     };
-    auto it = colors.find(color);
+    std::string selectedColor = color;
+    
+    // Handle "random" case
+    if (color == "random") {
+        std::string randomColors[] = {"red", "green", "yellow", "blue", "magenta", "cyan"};
+        selectedColor = randomColors[std::rand() % 6];
+    }
+    auto it = colors.find(selectedColor);
     if (it != colors.end()) {
         printf("%s", it->second.c_str());
         fflush(stdout);
