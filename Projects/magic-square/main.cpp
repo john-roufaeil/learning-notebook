@@ -6,19 +6,19 @@ void buildMagicSquareBoxes(int n, int x, int y) {
     for (int i = 0; i <= n; i++) {
         for (int j = 0; j < n; j++) {
             gotoxy(x + j * 4, y + i * 2);
-            std::cout << "+---";
+            typeText("+---", 10);
         }
         gotoxy(x + n * 4, y + i * 2);
-        std::cout << "+";
+        typeText("+", 10);
     }
     
     // Draw vertical lines
     for (int i = 0; i < n; i++) {
         for (int j = 0; j <= n; j++) {
             gotoxy(x + j * 4, y + i * 2 + 1);
-            std::cout << "|";
+            typeText("|", 10);
             if (j < n) {
-                std::cout << "   ";
+                typeText("   ", 10);
             }
         }
     }
@@ -31,22 +31,15 @@ void populateMagicSquare(int n, int x, int y) {
     int col = n / 2;
     
     for (int i = 1; i <= n * n; i++) {
-        delay(500);
+        delay(250);
         textColor("random");
 
-        // Display the number in the box
-        if (i >= 100)         
-            gotoxy(x + col * 4 + 1, y + row * 2 + 1);
-        else
-            gotoxy(x + col * 4 + 2, y + row * 2 + 1);
-        std::cout << i;
-        std::flush(std::cout);  // Ensure immediate display
+        gotoxy(x + col * 4 + (i >= 100 ? 1 : 2), y + row * 2 + 1);
+        typeText(std::to_string(i));
         
         if (i % n == 0) {
-            // If i is divisible by n, go down
             row = (row + 1) % n;
         } else {
-            // If i is not divisible by n, go up and left
             row = (row - 1 + n) % n;
             col = (col - 1 + n) % n;
         }
@@ -60,17 +53,17 @@ void magicScreen() {
     std::cout << "=== MAGIC SQUARE ===";
     textColor("reset");
     displayInstructions("Builds a magic square based on odd user input.", 4, 2);
-    displayInstructions("Use backspace to go to main menu", 4, 3);
+    displayInstructions("Use backspace to go to main menu.", 4, 3);
 
     int n=0;
     gotoxy(4, 4);
-    std::cout << "Enter an odd number for the size of the magic square: ";
+    typeText("Enter an odd number for the size of the magic square: ");
     std::cin >> n;
     
-    while (n % 2 == 0 || n < 1 || n > 99) {
+    while (n % 2 == 0 || n < 1 || n > 31) {
         gotoxy(4, 5);
         textColor("red");
-        std::cout << "Invalid input. Please enter a positive odd number between 1 and 99: ";
+        typeText("Invalid input. Please enter a positive odd number between 1 and 31.");
         textColor("reset");
         gotoxy(4, 4);
         std::cout << "Enter an odd number for the size of the magic square:               ";
@@ -81,20 +74,20 @@ void magicScreen() {
     }
 
     gotoxy(4, 6);
-    delay(1000);
-    std::cout << "Generating Magic Square for input " << n << std::endl;
+    delay(500);
+    typeText("Generating Magic Square for input " + std::to_string(n));
     gotoxy(4, 7);
-    delay(1000);
-    std::cout << "Rows and columns will sum up to " << n * (n * n + 1) / 2 << std::endl;
+    delay(500);
+    typeText("Rows and columns will sum up to " + std::to_string(n * (n * n + 1) / 2));
     gotoxy(4, 8);
-    delay(1000);
+    delay(500);
     std::cout << "______________________________________" << std::endl;
 
     buildMagicSquareBoxes(n, 4, 10);
     populateMagicSquare(n, 4, 10);
     gotoxy(4, 10 + n * 2 + 2);
     textColor("green");
-    std::cout << "Magic Square of size " << n << " completed!" << std::endl;
+    typeText("Magic Square of size " + std::to_string(n) + " completed!");
     gotoxy(4, 10 + n * 2 + 3);
     textColor("reset");
 

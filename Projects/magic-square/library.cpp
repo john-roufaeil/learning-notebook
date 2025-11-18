@@ -15,6 +15,14 @@
     #include <sys/ioctl.h>
 #endif
 
+void typeText(std::string message, int delayTime = 50) {
+    for (char c : message) {
+        std::cout << c;
+        std::flush(std::cout);
+        delay(delayTime);
+    }
+}
+
 void delay(int milliseconds) {
     std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds));
 }

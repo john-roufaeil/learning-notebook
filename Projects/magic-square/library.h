@@ -12,6 +12,7 @@ void clearScreen();
 void getTerminalSize(int& width, int& height);
 void displayInstructions(const std::string instructionsMessage, int x, int y);
 void delay(int milliseconds);
+void typeText(std::string message, int delayTime = 50);
 
 // Keyboard input functions
 enum class Key {
