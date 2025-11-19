@@ -1,53 +1,72 @@
 #include "library.h"
-#include <iostream>
-#include <map>
-#include <cstdio>
-
-#ifdef _WIN32
-    #include <windows.h>
-    #include <conio.h>
-#else
-    #include <termios.h>
-    #include <unistd.h>
-    #include <sys/select.h>
-    #include <sys/ioctl.h>
-#endif
 
 void gotoxy(int x, int y) {
 #ifdef _WIN32
-    COORD coord;
-    coord.X = x;
-    coord.Y = y;
-    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
+    HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
+    COORD position;
+    position.X = x;
+    position.Y = y;
+    SetConsoleCursorPosition(consoleHandle, position);
 #else
-    printf("\033[%d;%dH", y + 1, x + 1);
-    fflush(stdout);
+    std::cout << "\033[" << y+1 << ";" << x+1 << "H";
+    std::cout.flush();
 #endif
 }
 
-void textColor(const std::string& color) {
+int getColorCode(std::string color, int isWindows) {
+    if (isWindows == 1) {
+        if (color == "black") return 0;
+        if (color == "blue") return 1;
+        if (color == "green") return 2;
+        if (color == "cyan") return 3;
+        if (color == "red") return 4;
+        if (color == "magenta")return 5;
+        if (color == "brown") return 6;
+        if (color == "lightgray") return 7;
+        if (color == "darkgray") return 8;
+        if (color == "lightblue") return 9;
+        if (color == "lightgreen") return 10;
+        if (color == "lightcyan") return 11;
+        if (color == "lightred") return 12;
+        if (color == "lightmagenta") return 13;
+        if (color == "yellow") return 14;
+        return 15;
+    }
+    if (color == "black") return 30;
+    if (color == "red") return 31;
+    if (color == "green") return 32;
+    if (color == "yellow") return 33;
+    if (color == "blue") return 34;
+    if (color == "magenta") return 35;
+    if (color == "cyan") return 36;
+    if (color == "lightgray") return 37;
+    if (color == "darkgray") return 90;
+    if (color == "lightred") return 91;
+    if (color == "lightgreen") return 92;
+    if (color == "lightyellow") return 93;
+    if (color == "lightblue") return 94;
+    if (color == "lightmagenta") return 95;
+    if (color == "lightcyan") return 96;
+    return 97;
+}
+
+void changeColor(std::string textColor) {
 #ifdef _WIN32
-    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-    static std::map<std::string, int> colors = {
-        {"black", 0}, {"blue", 1}, {"green", 2}, {"cyan", 3},
-        {"red", 4}, {"magenta", 5}, {"yellow", 6}, {"white", 7},
-        {"reset", 7}
-    };
-    auto it = colors.find(color);
-    if (it != colors.end()) {
-        SetConsoleTextAttribute(hConsole, it->second);
-    }
+    HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
+    int textColorCode = getColorCode(textColor, 1);
+    SetConsoleTextAttribute(consoleHandle, textColorCode);
 #else
-    static std::map<std::string, std::string> colors = {
-        {"black", "\033[30m"}, {"red", "\033[31m"}, {"green", "\033[32m"},
-        {"yellow", "\033[33m"}, {"blue", "\033[34m"}, {"magenta", "\033[35m"},
-        {"cyan", "\033[36m"}, {"white", "\033[37m"}, {"reset", "\033[0m"}
-    };
-    auto it = colors.find(color);
-    if (it != colors.end()) {
-        printf("%s", it->second.c_str());
-        fflush(stdout);
-    }
+    int textColorCode = getColorCode(textColor, 0);
+    std::cout << "\033[" << textColorCode << "m";
+#endif
+}
+
+void resetColor() {
+#ifdef _WIN32
+    HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(consoleHandle, 7);
+#else
+    std::cout << "\033[0m";
 #endif
 }
 
@@ -59,179 +78,58 @@ void clearScreen() {
 #endif
 }
 
-void getTerminalSize(int& width, int& height) {
-#ifdef _WIN32
-    CONSOLE_SCREEN_BUFFER_INFO csbi;
-    GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
-    width = csbi.srWindow.Right - csbi.srWindow.Left + 1;
-    height = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
-#else
-    struct winsize w;
-    ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
-    width = w.ws_col;
-    height = w.ws_row;
-#endif
-}
-
-// Keyboard input implementation
 Key getKeyPress() {
 #ifdef _WIN32
     int ch = _getch();
-
-    if (ch == 0 || ch == 224) { // Special key prefix
-        ch = _getch();
-        switch (ch) {
-            case 72: return Key::UP;
-            case 80: return Key::DOWN;
-            case 75: return Key::LEFT;
-            case 77: return Key::RIGHT;
-            case 71: return Key::HOME;
-            case 79: return Key::END;
+    if (ch == 0x0 || ch == 0xE0) {
+        int ch2 = _getch();
+        switch(ch2) {
+            case 72: return UP;
+            case 80: return DOWN;
+            case 75: return LEFT;
+            case 77: return RIGHT;
+            case 71: return HOME;
+            case 79: return END;
         }
     }
-
     switch (ch) {
-        case 13: return Key::ENTER;
-        case 27: return Key::ESCAPE;
-        case 8: return Key::BACKSPACE;
-        default: return Key::UNKNOWN;
+        case 13: return ENTER;
+        case 27: return ESCAPE;
+        case 8: return BACKSPACE;
+        default: return UNKNOWN;
     }
 #else
-    struct termios oldt, newt;
-    tcgetattr(STDIN_FILENO, &oldt);
-    newt = oldt;
-    newt.c_lflag &= ~(ICANON | ECHO);
-    tcsetattr(STDIN_FILENO, TCSANOW, &newt);
-
+    termios originalTerminal, newTerminal;
+    tcgetattr(STDIN_FILENO, &originalTerminal);
+    newTerminal = originalTerminal;
+    newTerminal.c_lflag &= ~(ICANON | ECHO);
+    tcsetattr(STDIN_FILENO, TCSANOW, &newTerminal);
     int ch = getchar();
-
-    if (ch == 27) { // ESC or arrow key
-        ch = getchar();
-        if (ch == '[') {
-            ch = getchar();
-            tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
-            switch (ch) {
-                case 'A': return Key::UP;
-                case 'B': return Key::DOWN;
-                case 'C': return Key::RIGHT;
-                case 'D': return Key::LEFT;
-                case 'H': return Key::HOME;
-                case 'F': return Key::END;
-                case '1': // Some terminals use different sequences
-                case '7':
-                    getchar(); // Consume the '~'
-                    return Key::HOME;
-                case '4':
-                case '8':
-                    getchar(); // Consume the '~'
-                    return Key::END;
+    if (ch == 27) {
+        int next1 = getchar();
+        if (next1 == '[') {
+            int next2 = getchar();
+            if (next2 >= '0' && next2 <= '9') {
+                tcsetattr(STDIN_FILENO, TCSANOW, &originalTerminal);
+                if (next2 == '1' || next2 == '7') return HOME;
+                if (next2 == '4' || next2 == '8') return END;
+                return UNKNOWN;
             }
+
+            tcsetattr(STDIN_FILENO, TCSANOW, &originalTerminal);
+            if (next2 == 'A') return UP;
+            if (next2 == 'B') return DOWN;
+            if (next2 == 'C') return RIGHT;
+            if (next2 == 'D') return LEFT;
+            if (next2 == 'H') return HOME;
+            if (next2 == 'F') return END;
         }
-        tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
-        return Key::ESCAPE;
+        tcsetattr(STDIN_FILENO, TCSANOW, &originalTerminal);
+        return ESCAPE;
     }
-
-    tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
-
-    switch (ch) {
-        case 10: return Key::ENTER;
-        case 127: return Key::BACKSPACE;
-        default: return Key::UNKNOWN;
-    }
+    tcsetattr(STDIN_FILENO, TCSANOW, &originalTerminal);
+    if (ch == 10) return ENTER;
+    if (ch == 127) return BACKSPACE;
+    return UNKNOWN;
 #endif
-}
-
-void displayInstructions(const std::string instructionsMessage, int x, int y) {
-    int width, height;
-    getTerminalSize(width, height);
-    gotoxy(x, height - y);
-    textColor("yellow");
-    std::cout << instructionsMessage;
-    textColor("reset");
-}
-
-// Menu implementation
-Menu::Menu(const std::string& menuTitle, int posX, int posY)
-    : title(menuTitle), x(posX), y(posY), selectedIndex(0) {}
-
-void Menu::addItem(const std::string& text, std::function<void()> action) {
-    items.push_back({text, action});
-}
-
-void Menu::display() {
-    // Display title
-    gotoxy(x, y);
-    textColor("cyan");
-    std::cout << "=== " << title << " ===" << std::endl;
-    textColor("reset");
-
-    // Display menu items
-    for (size_t i = 0; i < items.size(); ++i) {
-        gotoxy(x, y + i + 2);
-
-        if (i == selectedIndex) {
-            textColor("green");
-            std::cout << "> " << items[i].text;
-            textColor("reset");
-        } else {
-            std::cout << "  " << items[i].text;
-        }
-    }
-
-    displayInstructions("Use Arrows to navigate | Home goes to top | End goes to bottom", x, y +1);
-    displayInstructions("Enter to select | Backspace to go back | ESC to exit", x, y);
-}
-
-void Menu::run() {
-    clearScreen();
-
-    while (true) {
-        display();
-        Key key = getKeyPress();
-
-        switch (key) {
-            case Key::HOME:
-                selectedIndex = 0;
-                break;
-
-            case Key::END:
-                selectedIndex = items.size() - 1;
-                break;
-
-            case Key::UP:
-                if (selectedIndex > 0) {
-                    selectedIndex--;
-                } else if (selectedIndex == 0) {
-                    selectedIndex = items.size() - 1;
-                }
-                break;
-
-            case Key::DOWN:
-                if (selectedIndex < static_cast<int>(items.size()) - 1) {
-                    selectedIndex++;
-                } else if (selectedIndex = items.size() - 1) {
-                    selectedIndex = 0;
-                }
-                break;
-
-            case Key::ENTER:
-                clearScreen();
-                if (items[selectedIndex].action) {
-                    items[selectedIndex].action();
-                }
-                clearScreen();
-                break;
-
-            case Key::ESCAPE:
-                clearScreen();
-                exit(0);
-                break;
-
-            case Key::BACKSPACE:
-                return;
-
-            default:
-                break;
-        }
-    }
 }
