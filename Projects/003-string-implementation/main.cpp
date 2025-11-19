@@ -14,8 +14,8 @@ int main() {
     char testStr4[] = "Hello, World";
     char testStr5[] = "ANOTHER $TR!NG";
     char testStr6[] = "This is a Sample String";
-    char testStr7[] = {'H', 'e', 'l', 'l', 'o', '\0'};
-    char testStr8[] = "World";
+    char testStr7[20] = {'H', 'e', 'l', 'l', 'o', '\0'};
+    char testStr8[6] = "World";
     char testStr9[] = "Sample";
     char testStr10[] = "Text";
 
@@ -45,7 +45,7 @@ int main() {
     cout << "After Concatenation: ";
     str_concat(testStr7, testStr8, sizeof(testStr7)/sizeof(testStr7[0]));
     cout << testStr7 << endl;
-    
+
     cout << "Implemented Copying of '" << testStr10 << "' into '" << testStr9 << "' results in: ";
     str_copy(testStr9, testStr10);
     cout << testStr9 << endl;

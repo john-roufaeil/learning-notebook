@@ -26,20 +26,20 @@ int str_cmp(char str1[], char str2[]) {
     int str2_len = str_len(str2);
     int str1_sum = 0;
     int str2_sum = 0;
-    
+
     for (int i = 0; i < str1_len; i++) {
     	str1_sum += str1[i];
     }
-    
+
     for (int i = 0; i < str2_len; i++) {
     	str2_sum += *(str2+i);
     }
-    
+
     if (str1_len > str2_len) return  1;
     if (str2_len > str1_len) return -1;
     if (str1_sum > str2_sum) return  1;
     if (str2_sum > str1_sum) return -1;
-    
+
     return 0;
 }
 
@@ -78,12 +78,13 @@ void to_uppercase(char str[]) {
 int str_concat(char str1[], char str2[], int str1Len) {
     int str1_len = str_len(str1);
     int str2_len = str_len(str2);
-    
-    if (str1_len + str2_len < str1Len) return -1;
-    
+
+    if (str1_len + str2_len + 1 > str1Len) return -1;
+
     for (int i = 0; i < str2_len; i++) {
     	*(str1+i+str1_len) = *(str2+i);
     }
+    str1[str1_len + str2_len] = '\0';
     return 0;
 }
 
@@ -91,7 +92,7 @@ int str_concat(char str1[], char str2[], int str1Len) {
 int str_copy(char str1[], char str2[]) {
     int str2_len = str_len(str2);
     if (str2_len > str_len(str1)) return -1;
-    
+
     for (int i = 0; i < str2_len; i++) {
     	*(str1+i) = *(str2+i);
     }
@@ -99,7 +100,7 @@ int str_copy(char str1[], char str2[]) {
     return 0;
 }
 
-// int str_find_char(char str[], char ch) {    
+// int str_find_char(char str[], char ch) {
 
 //     return -1;
 // }

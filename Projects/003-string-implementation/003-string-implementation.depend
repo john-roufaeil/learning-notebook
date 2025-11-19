@@ -1,0 +1,16 @@
+# depslib dependency file v1.0
+1763561851 source:d:\iti\learning-notebook\projects\003-string-implementation\library.cpp
+	"library.h"
+	<iostream>
+	<map>
+	<cstdio>
+	<chrono>
+	<thread>
+
+1763561248 d:\iti\learning-notebook\projects\003-string-implementation\library.h
+
+1763561672 source:d:\iti\learning-notebook\projects\003-string-implementation\main.cpp
+	<iostream>
+	<string.h>
+	"library.h"
+
