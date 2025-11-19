@@ -15,7 +15,7 @@
     #include <sys/ioctl.h>
 #endif
 
-void typeText(std::string message, int delayTime = 50) {
+void typeText(std::string message, int delayTime) {
     for (char c : message) {
         std::cout << c;
         std::flush(std::cout);
@@ -48,10 +48,10 @@ void textColor(const std::string& color) {
         {"reset", 7}
     };
     std::string selectedColor = color;
-    
+
     if (color == "random") {
         std::string randomColors[] = {"red", "green", "yellow", "blue", "magenta", "cyan"};
-        selectedColor = randomColors[std::rand() % 6]; 
+        selectedColor = randomColors[std::rand() % 6];
     }
 
     auto it = colors.find(selectedColor);
@@ -65,7 +65,7 @@ void textColor(const std::string& color) {
         {"cyan", "\033[36m"}, {"white", "\033[37m"}, {"reset", "\033[0m"}
     };
     std::string selectedColor = color;
-    
+
     // Handle "random" case
     if (color == "random") {
         std::string randomColors[] = {"red", "green", "yellow", "blue", "magenta", "cyan"};
