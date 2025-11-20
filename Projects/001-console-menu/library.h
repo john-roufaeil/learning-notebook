@@ -26,6 +26,7 @@ enum Key {
 };
 
 void gotoxy(int x, int y);
+int getColorCode(std::string color, int isWindows);
 void changeColor(std::string textColor);
 void resetColor();
 void clearScreen();
