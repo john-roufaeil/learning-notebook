@@ -2,11 +2,21 @@
 #define TERMINAL_H
 
 #include <string>
+#include <iostream>
+
+#ifdef _WIN32
+    #include <windows.h>
+    #include <conio.h>
+#else
+    #include <unistd.h> 
+    #include <termios.h>
+    #include <sys/ioctl.h>
+#endif
 
 enum InputMode
 {
-    CMD,    // Keys are interpreted but not displayed (used for commands)
-    ECHO    // Keys are displayed on terminal
+    CMDMODE,    // Keys are interpreted but not displayed (used for commands)
+    ECHOMODE    // Keys are displayed on terminal
 };
 
 enum SpecialKey
@@ -42,15 +52,13 @@ struct TerminalSize
 };
 
 void gotoxy(short x, short y);
-void setColor(std::string textColor, std::string bgColor = "transparent");
+int getColorCode(const std::string &color);
+void setColor(const std::string &textColor, const std::string &bgColor = "none");
 void resetColor();
 void clearScreen();
 void hideCursor(bool hide);
-void setCursorBlinking(bool blinking);
 void setInputMode(InputMode mode); // Allow or disallow user input text to be shown on terminal
 Key getKeyPress();
 TerminalSize getTerminalSize();
-// handle window resize
-// handle scroll
 
 #endif
