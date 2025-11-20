@@ -34,6 +34,6 @@ void resetColor();
 void clearScreen();
 Key getKeyPress();;
 void delay(int milliseconds);
-void typeText(std::string message, int delayTime = 50);
+void typeText(std::string message, int delayTime);
 
 #endif

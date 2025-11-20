@@ -1,5 +1,4 @@
 #include "library.h"
-#include <iostream>
 
 void buildMagicSquareBoxes(int n, int x, int y) {
     for (int i = 0; i <= n; i++) {
@@ -26,7 +25,7 @@ void populateMagicSquare(int n, int x, int y) {
         delay(250);
 
         gotoxy(x + col * 4 + (i >= 100 ? 1 : 2), y + row * 2 + 1);
-        typeText(std::to_string(i));
+        typeText(std::to_string(i), 50);
         
         if (i % n == 0) {
             row = (row + 1) % n;
@@ -46,13 +45,13 @@ void magicScreen() {
 
     int n=0;
     gotoxy(4, 4);
-    typeText("Enter an odd number for the size of the magic square: ");
+    typeText("Enter an odd number for the size of the magic square: ", 50);
     std::cin >> n;
     
     while (n % 2 == 0 || n < 1 || n > 31) {
         gotoxy(4, 5);
         changeColor("red");
-        typeText("Invalid input. Please enter a positive odd number between 1 and 31.");
+        typeText("Invalid input. Please enter a positive odd number between 1 and 31.", 50);
         changeColor("reset");
         gotoxy(4, 4);
         std::cout << "Enter an odd number for the size of the magic square:               ";
@@ -64,10 +63,10 @@ void magicScreen() {
 
     gotoxy(4, 6);
     delay(250);
-    typeText("Generating Magic Square for input " + std::to_string(n));
+    typeText("Generating Magic Square for input " + std::to_string(n), 50);
     gotoxy(4, 7);
     delay(250);
-    typeText("Rows and columns will sum up to " + std::to_string(n * (n * n + 1) / 2));
+    typeText("Rows and columns will sum up to " + std::to_string(n * (n * n + 1) / 2), 50);
     gotoxy(4, 8);
     delay(250);
     std::cout << "______________________________________" << std::endl;
@@ -76,7 +75,7 @@ void magicScreen() {
     populateMagicSquare(n, 4, 10);
     gotoxy(4, 10 + n * 2 + 2);
     changeColor("green");
-    typeText("Magic Square of size " + std::to_string(n) + " completed!");
+    typeText("Magic Square of size " + std::to_string(n) + " completed!", 50);
     gotoxy(4, 10 + n * 2 + 3);
     changeColor("reset");
 
