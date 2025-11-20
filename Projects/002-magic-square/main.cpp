@@ -82,7 +82,7 @@ void magicScreen() {
 
     while (true) {
         Key key = getKeyPress();
-        if (key == Key::BACKSPACE) {
+        if (key == BACKSPACE) {
             break;
         }
     }

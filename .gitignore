@@ -6,6 +6,7 @@
 **/.fuse*
 **/*.depend
 **/*.layout
+**/*.vscode*/**
 
 # User-specific files
 *.rsuser
