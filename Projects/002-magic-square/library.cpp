@@ -5,7 +5,7 @@ void typeText(std::string message, int delayTime) {
     {
         char c = message[i];
         std::cout << c;
-        std::flush(std::cout);
+        std::cout.flush();
         delay(delayTime);
     }
 }

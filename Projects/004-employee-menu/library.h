@@ -19,10 +19,10 @@ struct DOB {
 };
 
 struct Employee {
-    std::string firstName;
-    std::string lastName;
     int age;
     int salary;
+    std::string firstName;
+    std::string lastName;
     DOB dob;
 };
 

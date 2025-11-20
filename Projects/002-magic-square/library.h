@@ -1,8 +1,6 @@
 #ifndef LIBRARY_H
 #define LIBRARY_H
 
-// #include <vector>
-// #include <functional>
 #include <string>
 #include <iostream>
 
