@@ -37,13 +37,16 @@ bool isInputInteger(const std::string &input) {
 
 int strToInt(const std ::string &input) {
     int num = 0;
-    for (int i = 0; i < input.size(); i++) {
+    bool isNegative = 0;
+    for (int i = 0; i < input.size(); i++)
+    {
+        if (input[0] == '-') {
+            isNegative = 1;
+            continue;       
+        }
         num = (input[i] - '0') + num * 10;
     }
-    if (input[0] == '-') {
-        num *= -1;
-    }
-    return num;
+    return isNegative ? -num : num;
 }
 
 std::string getValidFilename() {
