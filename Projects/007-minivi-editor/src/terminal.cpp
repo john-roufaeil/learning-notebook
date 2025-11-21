@@ -14,7 +14,7 @@ void gotoxy(short x, short y) {
 }
 
 int getColorCode(const std::string &color) {
-    std::string colors[] = {"black", "blue", "green", "cyan", "red", "magenta", "brown", 
+    std::string colors[] = {"black", "blue", "green", "cyan", "red", "magenta", "brown",
         "lightgray", "darkgray", "lightblue", "lightgreen", "lightcyan", "lightred", "lightmagenta", "yellow", "white"};
     int LinuxClrMap[] = {30, 34, 32, 36, 31, 35, 33, 37, 90, 94, 92, 96, 91, 95, 93, 97};
     const int numOfColors = sizeof(colors) / sizeof(colors[0]);

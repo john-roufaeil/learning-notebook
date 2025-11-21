@@ -20,7 +20,7 @@ void newScreen() {
     gotoxy(START_X, START_Y);
     std::cout << "=== Create a New File ===";
     resetColor();
-    
+
     std::string fileName = getValidFilename();
     int count = getValidFileSize();
 
@@ -30,7 +30,7 @@ void newScreen() {
 
     // placeholder highlight for input area
     gotoxy(START_X, START_Y + 6);
-    setColor("white", "lightblue"); 
+    setColor("white", "lightblue");
     for (int i = 0; i < count; i++) {
         gotoxy(START_X + (i % rowWidth), START_Y + 6 + (i / rowWidth));
         std::cout << " ";
@@ -76,7 +76,7 @@ void mainMenu() {
             }
         }
         resetColor();
-    
+
         // instructions
         gotoxy(START_X, getTerminalSize().rows - START_Y);
         setColor("yellow");
