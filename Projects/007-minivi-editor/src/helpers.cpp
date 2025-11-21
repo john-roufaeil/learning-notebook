@@ -163,11 +163,9 @@ void takeFileInput(int count, char *fileContent, char *fileName) {
                 }
 
                 else if (key.sk == BACKSPACE) {
-                    char emptyChar = ' ';
                     i--;
                     gotoxy(START_X + (i % rowWidth), START_Y + 6 + (i / rowWidth));
                     std::cout << " ";
-                    // fileContent[i] = emptyChar;
                     gotoxy(START_X + (i % rowWidth), START_Y + 6 + (i / rowWidth));
                 }
 
@@ -204,11 +202,9 @@ void takeFileInput(int count, char *fileContent, char *fileName) {
             }
 
             if (key.sk == BACKSPACE && i > 0) {
-                char emptyChar = ' ';
                 i--;
                 gotoxy(START_X + (i % rowWidth), START_Y + 6 + (i / rowWidth));
                 std::cout << " ";
-                // fileContent[i] = ' ';
                 gotoxy(START_X + (i % rowWidth), START_Y + 6 + (i / rowWidth));
             }
 
@@ -284,5 +280,104 @@ void saveFile(char *fileContent, char *fileName) {
     if (file) {
         fputs(fileContent, file);
         fclose(file);
+    }
+}
+
+void displayExistingFiles() {
+    std::string files[100];
+    std::string path = "./Files";
+    std::filesystem::directory_iterator it = std::filesystem::directory_iterator(path);
+    std::filesystem::directory_iterator end = std::filesystem::directory_iterator();
+    
+    int fileCount = 0;
+    for (; it != end; it++) {
+        std::filesystem::directory_entry entry = *it;
+        if (std::filesystem::is_regular_file(entry.path())) {
+            files[fileCount] = entry.path().filename().string();
+            fileCount++;
+        }
+    }
+    int selectedIndex = 0;
+
+    while(true) {
+        clearScreen();
+        setColor("cyan");
+        gotoxy(START_X, START_Y);
+        std::cout << "=== DISPLAY ===";
+        resetColor();
+    
+        gotoxy(START_X, getTerminalSize().rows - START_Y);
+        setColor("yellow");
+        std::cout << "Arrows > Navigate | Enter > Select | Backspace > Back | Esc > Exit";
+        resetColor();
+        for (int i = 0; i < fileCount; i++)
+        {
+            gotoxy(START_X, START_Y + 2 + i);
+            if (i == selectedIndex) {
+                setColor("lightcyan");
+                std::cout << "> " << files[i];
+                resetColor();
+            } else {
+                std::cout << "  " << files[i];
+            }
+        }
+
+        Key key = getKeyPress();
+        if (key.isSpecial) {
+            if (key.sk == UP) {
+                selectedIndex--;
+                if (selectedIndex < 0)
+                    selectedIndex = fileCount - 1;
+            } else if (key.sk == DOWN) {
+                selectedIndex++;
+                if (selectedIndex == fileCount)
+                    selectedIndex = 0;
+            } else if (key.sk == ENTER) {
+                viewFileContent(files[selectedIndex]);
+            } else if (key.sk == BACKSPACE) {
+                return;
+            } else if (key.sk == ESC) {
+                clearScreen();
+                exit(0);
+            }
+        }
+    }
+}
+
+void viewFileContent(const std::string &filename) {
+    clearScreen();
+    gotoxy(START_X, START_Y);
+    setColor("cyan");
+    std::cout << "=== " << filename << " ===";
+    gotoxy(START_X, getTerminalSize().rows - START_Y);
+    setColor("yellow");
+    std::cout << "Backspace > Back | Esc > Exit";
+    resetColor();
+    gotoxy(START_X, START_Y + 1);
+    std::cout << std::string(getTerminalSize().cols - 2 * START_X, '-');
+    resetColor();
+
+    // read file
+    std::string path = "./Files/" + filename;
+    std::ifstream file(path);
+
+    gotoxy(START_X, START_Y + 3);
+
+    if (!file.is_open()) {
+        std::cout << "Cannot open file.";
+    } else {
+        std::string line;
+        std::getline(file, line);
+        std::cout << line;
+    }
+
+    while (true) {
+        Key key = getKeyPress();
+        if (key.isSpecial && key.sk == BACKSPACE)
+            return;
+        if (key.isSpecial && key.sk == ESC) {
+            clearScreen();
+            exit(0);
+        }
     }
 }

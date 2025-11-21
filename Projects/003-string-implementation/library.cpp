@@ -1,9 +1,6 @@
-#include "library.h"
 #include <iostream>
-#include <map>
-#include <cstdio>
-#include <chrono>
-#include <thread>
+#include <string.h>
+#include "library.h"
 
 #ifdef _WIN32
 #else

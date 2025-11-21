@@ -47,14 +47,12 @@ void newScreen() {
 }
 
 void displayScreen() {
-    clearScreen();
-    setColor("cyan");
-    gotoxy(START_X, START_Y);
-    std::cout << "=== DISPLAY ===";
-    resetColor();
+
     gotoxy(START_X, START_Y + 2);
-    std::cout << "Display page.";
-    waitForBackOrExit();
+
+    displayExistingFiles();
+
+    // waitForBackOrExit();
 }
 
 void mainMenu() {
