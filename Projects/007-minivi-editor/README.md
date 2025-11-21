@@ -12,3 +12,4 @@ https://www.geeksforgeeks.org/cpp/how-to-change-console-color-in-cpp/
 - https://stackoverflow.com/questions/9292231/unechoed-string-input-in-c
 - (Linux arrow codes)[https://stackoverflow.com/questions/10463201/getch-and-arrow-codes]
 - (Terminal Size)[https://stackoverflow.com/questions/23369503/get-size-of-terminal-window-rows-columns]
+- (filesystem)[https://en.cppreference.com/w/cpp/filesystem/directory_entry/path.html]
