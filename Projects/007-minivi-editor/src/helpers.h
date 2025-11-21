@@ -12,5 +12,7 @@ bool isInputInteger(const std::string &input);
 int strToInt(const std ::string &input);
 std::string getValidFilename();
 int getValidFileSize();
+void takeFileInput(int count);
+void endFileInput(int count);
 
 #endif
