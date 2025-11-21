@@ -60,5 +60,7 @@ void hideCursor(bool hide);
 void setInputMode(InputMode mode); // Allow or disallow user input text to be shown on terminal
 Key getKeyPress();
 TerminalSize getTerminalSize();
+void delay(int milliseconds);
+void typeText(const std::string &message, int delayTime = 10);
 
 #endif

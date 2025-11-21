@@ -9,12 +9,11 @@ void gotoxy(int x, int y) {
     SetConsoleCursorPosition(consoleHandle, position);
 #else
     std::cout << "\033[" << y+1 << ";" << x+1 << "H";
-    std::cout.flush();
 #endif
 }
 
-int getColorCode(std::string color, int isWindows) {
-    if (isWindows == 1) {
+int getColorCode(std::string color) {
+    #ifdef _WIN32
         if (color == "black") return 0;
         if (color == "blue") return 1;
         if (color == "green") return 2;
@@ -31,32 +30,32 @@ int getColorCode(std::string color, int isWindows) {
         if (color == "lightmagenta") return 13;
         if (color == "yellow") return 14;
         return 15;
-    }
-    if (color == "black") return 30;
-    if (color == "red") return 31;
-    if (color == "green") return 32;
-    if (color == "yellow") return 33;
-    if (color == "blue") return 34;
-    if (color == "magenta") return 35;
-    if (color == "cyan") return 36;
-    if (color == "lightgray") return 37;
-    if (color == "darkgray") return 90;
-    if (color == "lightred") return 91;
-    if (color == "lightgreen") return 92;
-    if (color == "lightyellow") return 93;
-    if (color == "lightblue") return 94;
-    if (color == "lightmagenta") return 95;
-    if (color == "lightcyan") return 96;
-    return 97;
+    #else
+        if (color == "black") return 30;
+        if (color == "red") return 31;
+        if (color == "green") return 32;
+        if (color == "yellow") return 33;
+        if (color == "blue") return 34;
+        if (color == "magenta") return 35;
+        if (color == "cyan") return 36;
+        if (color == "lightgray") return 37;
+        if (color == "darkgray") return 90;
+        if (color == "lightred") return 91;
+        if (color == "lightgreen") return 92;
+        if (color == "lightyellow") return 93;
+        if (color == "lightblue") return 94;
+        if (color == "lightmagenta") return 95;
+        if (color == "lightcyan") return 96;
+        return 97;
+    #endif
 }
 
 void changeColor(std::string textColor) {
+    int textColorCode = getColorCode(textColor);
 #ifdef _WIN32
     HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
-    int textColorCode = getColorCode(textColor, 1);
     SetConsoleTextAttribute(consoleHandle, textColorCode);
 #else
-    int textColorCode = getColorCode(textColor, 0);
     std::cout << "\033[" << textColorCode << "m";
 #endif
 }
@@ -81,7 +80,7 @@ void clearScreen() {
 Key getKeyPress() {
 #ifdef _WIN32
     int ch = _getch();
-    if (ch == 0x0 || ch == 0xE0) {
+    if (ch == 0x0 || ch == 224) {
         int ch2 = _getch();
         switch(ch2) {
             case 72: return UP;

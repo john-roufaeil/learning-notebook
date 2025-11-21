@@ -179,3 +179,19 @@ TerminalSize getTerminalSize() {
     return TerminalSize{w.ws_col, w.ws_row};
 #endif
 }
+
+void typeText(const std::string &message, int delayTime) {
+    for (int i = 0; i < static_cast<float> (message.length()); i++) {
+        std::cout << message[i];
+        std::cout.flush();
+        delay(delayTime);
+    }
+}
+
+void delay(int milliseconds) {
+#ifdef _WIN32
+    Sleep(milliseconds);
+#else
+    usleep(milliseconds * 1000);
+#endif
+}
