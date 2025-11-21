@@ -27,29 +27,28 @@ void gotoxy(int x, int y) {
     SetConsoleCursorPosition(consoleHandle, position);
 #else
     std::cout << "\033[" << y+1 << ";" << x+1 << "H";
-    std::cout.flush();
 #endif
 }
 
-int getColorCode(std::string color, int isWindows) {
-    if (isWindows == 1) {
-        if (color == "black") return 0;
-        if (color == "blue") return 1;
-        if (color == "green") return 2;
-        if (color == "cyan") return 3;
-        if (color == "red") return 4;
-        if (color == "magenta")return 5;
-        if (color == "brown") return 6;
-        if (color == "lightgray") return 7;
-        if (color == "darkgray") return 8;
-        if (color == "lightblue") return 9;
-        if (color == "lightgreen") return 10;
-        if (color == "lightcyan") return 11;
-        if (color == "lightred") return 12;
-        if (color == "lightmagenta") return 13;
-        if (color == "yellow") return 14;
-        return 15;
-    }
+int getColorCode(std::string color) {
+#ifdef _WIN32
+    if (color == "black") return 0;
+    if (color == "blue") return 1;
+    if (color == "green") return 2;
+    if (color == "cyan") return 3;
+    if (color == "red") return 4;
+    if (color == "magenta")return 5;
+    if (color == "brown") return 6;
+    if (color == "lightgray") return 7;
+    if (color == "darkgray") return 8;
+    if (color == "lightblue") return 9;
+    if (color == "lightgreen") return 10;
+    if (color == "lightcyan") return 11;
+    if (color == "lightred") return 12;
+    if (color == "lightmagenta") return 13;
+    if (color == "yellow") return 14;
+    return 15;
+#else
     if (color == "black") return 30;
     if (color == "red") return 31;
     if (color == "green") return 32;
@@ -66,15 +65,15 @@ int getColorCode(std::string color, int isWindows) {
     if (color == "lightmagenta") return 95;
     if (color == "lightcyan") return 96;
     return 97;
+#endif
 }
 
 void changeColor(std::string textColor) {
+    int textColorCode = getColorCode(textColor);
 #ifdef _WIN32
     HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
-    int textColorCode = getColorCode(textColor, 1);
     SetConsoleTextAttribute(consoleHandle, textColorCode);
 #else
-    int textColorCode = getColorCode(textColor, 0);
     std::cout << "\033[" << textColorCode << "m";
 #endif
 }
