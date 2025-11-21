@@ -1,5 +1,6 @@
 #include "terminal.h"
 #include "helpers.h"
+#include "files.h"
 
 void waitForBackOrExit() {
     while (true) {
@@ -47,12 +48,7 @@ void newScreen() {
 }
 
 void displayScreen() {
-
-    gotoxy(START_X, START_Y + 2);
-
     displayExistingFiles();
-
-    // waitForBackOrExit();
 }
 
 void mainMenu() {
