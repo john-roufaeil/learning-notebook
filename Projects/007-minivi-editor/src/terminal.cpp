@@ -1,4 +1,5 @@
 #include "terminal.h"
+#include "helpers.h"
 
 void gotoxy(short x, short y) {
 #ifdef _WIN32
@@ -87,14 +88,26 @@ void setInputMode(InputMode mode) {
     HANDLE inputHandle = GetStdHandle(STD_INPUT_HANDLE);
     DWORD dwMode;
     GetConsoleMode(inputHandle, &dwMode);
-    if (mode == CMDMODE) dwMode &= ~ENABLE_ECHO_INPUT;
-    else dwMode |= ENABLE_ECHO_INPUT;
+    if (mode == CMDMODE)  {
+        dwMode &= ~ENABLE_ECHO_INPUT;
+        hideCursor(true);
+    }
+    else {
+        dwMode |= ENABLE_ECHO_INPUT;
+        hideCursor(false);
+    }
     SetConsoleMode(inputHandle, dwMode);
 #else
     termios terminal;
     tcgetattr(STDIN_FILENO, &terminal);
-    if (mode == CMDMODE) terminal.c_lflag &= ~(ECHO | ICANON);
-    else terminal.c_lflag |= (ECHO | ICANON);
+    if (mode == CMDMODE) {
+        terminal.c_lflag &= ~(ECHO | ICANON);
+        hideCursor(true);
+    }
+    else {
+        terminal.c_lflag |= (ECHO | ICANON);
+        hideCursor(false);
+    }
     tcsetattr(STDIN_FILENO, TCSANOW, &terminal);
 #endif
 }
@@ -180,13 +193,13 @@ TerminalSize getTerminalSize() {
 #endif
 }
 
-void typeText(const std::string &message, int delayTime) {
-    for (int i = 0; i < static_cast<float> (message.length()); i++) {
-        std::cout << message[i];
-        std::cout.flush();
-        delay(delayTime);
-    }
-}
+// void typeText(const std::string &message, int delayTime) {
+//     for (int i = 0; i < static_cast<float> (message.length()); i++) {
+//         std::cout << message[i];
+//         std::cout.flush();
+//         delay(delayTime);
+//     }
+// }
 
 void delay(int milliseconds) {
 #ifdef _WIN32
@@ -195,7 +208,6 @@ void delay(int milliseconds) {
     usleep(milliseconds * 1000);
 #endif
 }
-
 
 const char *getCurrentUsername() {
 #ifdef _WIN32

@@ -1,7 +1,5 @@
 #include "terminal.h"
-
-#define START_X 4
-#define START_Y 2
+#include "helpers.h"
 
 void waitForBackOrExit() {
     while (true) {
@@ -16,72 +14,156 @@ void waitForBackOrExit() {
 
 void newScreen() {
     clearScreen();
-    setColor("cyan");
+    setColor("lightmagenta");
     gotoxy(START_X, START_Y);
-    std::cout << "=== NEW ===";
+    std::cout << "=== Create a New File ===";
     resetColor();
-    gotoxy(START_X, START_Y + 2);
+    
+    std::string fileName = getValidFilename();
+    int count = getValidFileSize();
 
+    gotoxy(START_X, START_Y + 4);
+    setColor("lightblue");
+    std::cout << std::string(getTerminalSize().cols - START_X * 2, '-');
 
-    setInputMode(CMDMODE);
-    typeText("Enter file name: ", 50);
-    hideCursor(false);
-    setInputMode(ECHOMODE);
-    std::string fileNameInput;
+    gotoxy(START_X, getTerminalSize().rows - START_Y);
+    setColor("yellow");
+    std::cout << "Esc > Stop Input";
 
-    while(true) {
-        std::getline(std::cin, fileNameInput);
-        if (!fileNameInput.empty()) {
-            break;
+    gotoxy(START_X, START_Y + 6);
+    setColor("white", "lightblue"); 
+
+    // placeholder highlight for input area
+    for (int i = 0; i < count; i++) {
+        if (i % (getTerminalSize().cols - 8) == 0) {
+            gotoxy(START_X, START_Y + 6 + i / (getTerminalSize().cols - 8));
         }
-        gotoxy(START_X, START_Y + 3);
-        setColor("white", "red");
-        typeText("File name cannot be empty. Please enter a valid file name.", 50);
-        resetColor();
-        gotoxy(START_X + 17, START_Y + 2);
-        std::cout << "                            ";
-        gotoxy(START_X + 17, START_Y + 2);
+        std::cout << " " ;
     }
 
+    // take input
+    setInputMode(CMDMODE);
+    hideCursor(false);
+    gotoxy(START_X, START_Y + 6);
+    int rowWidth = getTerminalSize().cols - 2 * START_X;
+    
+    for (int i = 0; i < count + 1;) {
+        Key key = getKeyPress();
 
+        // if reached end of input area
+        if (i == count && i > 0) {
+            if (key.isSpecial) {
+                if (key.sk == LEFT) {
+                    i--;
+                    gotoxy(START_X + (i % rowWidth), START_Y + 6 + (i / rowWidth));
+                }
+
+                if (key.sk == UP) {
+                    i = std::max(0,i - rowWidth);
+                    gotoxy(START_X + (i % rowWidth), START_Y + 6 + (i / rowWidth));
+                }
+
+                else if (key.sk == BACKSPACE) {
+                    i--;
+                    gotoxy(START_X + (i % rowWidth), START_Y + 6 + (i / rowWidth));
+                    std::cout << " ";
+                    gotoxy(START_X + (i % rowWidth), START_Y + 6 + (i / rowWidth));
+                }
+
+                else if (key.sk == ESC) break;
+            }
+
+            continue; 
+        }
+
+        if (key.isSpecial) {
+            if (key.sk == LEFT && i > 0) {
+                i--;
+                gotoxy(START_X + (i % rowWidth), START_Y + 6 + (i / rowWidth));
+                continue;
+            }
+
+            if (key.sk == RIGHT && (i < count - 1)) {
+                i++;
+                gotoxy(START_X + (i % rowWidth), START_Y + 6 + (i / rowWidth));
+                continue;
+            }
+
+            if (key.sk == UP && i > 0) {
+                i -= rowWidth;
+                if (i < 0) { i = 0;
+                }
+                gotoxy(START_X + (i % rowWidth), START_Y + 6 + (i / rowWidth));
+                continue;
+            }
+
+            if (key.sk == DOWN && i < count) {
+                i += rowWidth;
+                if (i > count - 1) {
+                    i = count - 1;
+                }
+                gotoxy(START_X + (i % rowWidth), START_Y + 6 + (i / rowWidth));
+                continue;
+            }
+
+            if (key.sk == BACKSPACE && i > 0) {
+                i--;
+                gotoxy(START_X + (i % rowWidth), START_Y + 6 + (i / rowWidth));
+                std::cout << " ";
+                gotoxy(START_X + (i % rowWidth), START_Y + 6 + (i / rowWidth));
+                continue;
+            }
+
+            if (key.sk == ESC) break;
+
+            continue;
+        }
+        
+        gotoxy(START_X + (i % rowWidth), START_Y + 6 + (i / rowWidth));
+        std::cout << key.c;
+        i++; // cursor moves when printing
+    }
 
     setInputMode(CMDMODE);
-    typeText("Enter how many characters you will enter: ", 50);
-    hideCursor(false);
-    setInputMode(ECHOMODE);
-    
-    int count;
-    std::string input;
-
+    resetColor();
+    gotoxy(START_X, getTerminalSize().rows - START_Y);
+    setColor("yellow");
+    std::cout << "Enter > Select | Arrows > Navigate | Esc > Exit";
+    resetColor();
+    gotoxy(START_X, getTerminalSize().rows - START_Y - 1);
+    std::string savePrompt = "Would you like to save the file?";
+    std::cout << savePrompt;
+    std::string options[2] = {" Yes ", " Cancel "};
+    int selectedIndex = 0;
     while (true) {
-        bool valid = true;
-        std::getline(std::cin, input);
-        if (!input.empty()) {
-            for (int i = 0; i < input.size(); i++) {
-                if (!isdigit(input[i])) {
-                    valid = false;
-                    break;
-                }
+        gotoxy(START_X * 2 + savePrompt.length(), getTerminalSize().rows - START_Y - 1);
+        if (selectedIndex == 0) {
+            setColor("white", "green");
+            std::cout << options[0];
+            resetColor();
+            std::cout << "    " << options[1];
+        } else {
+            std::cout << options[0] << "    ";
+            setColor("white", "red");
+            std::cout << options[1];
+            resetColor();
+        }
+
+        Key key = getKeyPress();
+        if (key.isSpecial) {
+            if (key.sk == LEFT && selectedIndex > 0) {
+                selectedIndex--;
+            } else if (key.sk == RIGHT && selectedIndex < 1) {
+                selectedIndex++;
+            } else if (key.sk == ENTER) {
+                break;
+            } else if (key.sk == ESC) {
+                clearScreen();
+                exit(0);
             }
         }
-        if (valid) {
-            count = static_cast<int>(std::stoi(input));
-            gotoxy(START_X, START_Y + 3);
-            std::cout << "                                                                                             ";
-            gotoxy(START_X, START_Y + 3);
-            setColor("white", "green"); 
-            typeText("You are allowed to input up to " + std::to_string(count) + " characters.", 50);
-            resetColor();
-            break;
-        }
-        gotoxy(START_X, START_Y + 3);
-        setColor("white", "red");
-        typeText("Invalid input, please enter a positive integer.", 50);
-        resetColor();
-        gotoxy(START_X + 42, START_Y + 2);
-        std::cout << "                            ";
-        gotoxy(START_X + 42, START_Y + 2);
     }
+    resetColor();
 
     waitForBackOrExit();
 }
@@ -97,24 +179,29 @@ void displayScreen() {
     waitForBackOrExit();
 }
 
-int main() {
-    std::string menuItems[] = { "New", "Display", "Exit" };
+void mainMenu() {
+    setInputMode(CMDMODE);
+    std::string menuItems[] = { "New File", "Display Files", "Exit" };
     int menuSize = sizeof(menuItems) / sizeof(menuItems[0]);
     int selectedIndex = 0;
-    setInputMode(CMDMODE);
-    hideCursor(true);
-    clearScreen();
-    setColor("lightmagenta");
-    gotoxy(START_X, START_Y);
-    std::cout << "Hi, " << getCurrentUsername() << "! Welcome to MiniVi Editor" << std::endl;
-    resetColor();
+    while (true) {
+        clearScreen();
+        // header
+        setColor("lightmagenta");
+        gotoxy(START_X, START_Y);
+        std::cout << "Hi, " << getCurrentUsername() << "! Welcome to MiniVi Editor" << std::endl;
+    
+        // instructions
+        gotoxy(START_X, getTerminalSize().rows - START_Y);
+        setColor("yellow");
+        std::cout << "Arrow Keys, Home, End > Navigate | Enter > Select | Esc > Exit";
+        resetColor();
 
-    while (true)
-    {
+        // menu
         for (short i = 0; i < menuSize; i++) {
             gotoxy(START_X, START_Y + 2 + i);
             if (i == selectedIndex) {
-                setColor("lightmagenta");
+                setColor("lightcyan");
                 std::cout << "> " << menuItems[i];
                 resetColor();
             } else {
@@ -143,11 +230,11 @@ int main() {
                     selectedIndex = menuSize - 1;
                     break;
                 case ENTER:
-                    if (menuItems[selectedIndex] == "New") {
+                    if (selectedIndex == 0) {
                         newScreen();
-                    } else if (menuItems[selectedIndex] == "Display") {
+                    } else if (selectedIndex == 1) {
                         displayScreen();
-                    } else if (menuItems[selectedIndex] == "Exit") {
+                    } else if (selectedIndex ==  2) {
                         clearScreen();
                         exit(0);
                     }
@@ -159,6 +246,10 @@ int main() {
                     break;
             }
     }
+}
+
+int main() {
+    mainMenu();
 
     return 0;
 }
