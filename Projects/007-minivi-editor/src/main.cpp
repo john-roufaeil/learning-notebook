@@ -21,7 +21,68 @@ void newScreen() {
     std::cout << "=== NEW ===";
     resetColor();
     gotoxy(START_X, START_Y + 2);
-    std::cout << "New page.";
+
+
+    setInputMode(CMDMODE);
+    typeText("Enter file name: ", 50);
+    hideCursor(false);
+    setInputMode(ECHOMODE);
+    std::string fileNameInput;
+
+    while(true) {
+        std::getline(std::cin, fileNameInput);
+        if (!fileNameInput.empty()) {
+            break;
+        }
+        gotoxy(START_X, START_Y + 3);
+        setColor("white", "red");
+        typeText("File name cannot be empty. Please enter a valid file name.", 50);
+        resetColor();
+        gotoxy(START_X + 17, START_Y + 2);
+        std::cout << "                            ";
+        gotoxy(START_X + 17, START_Y + 2);
+    }
+
+
+
+    setInputMode(CMDMODE);
+    typeText("Enter how many characters you will enter: ", 50);
+    hideCursor(false);
+    setInputMode(ECHOMODE);
+    
+    int count;
+    std::string input;
+
+    while (true) {
+        bool valid = true;
+        std::getline(std::cin, input);
+        if (!input.empty()) {
+            for (int i = 0; i < input.size(); i++) {
+                if (!isdigit(input[i])) {
+                    valid = false;
+                    break;
+                }
+            }
+        }
+        if (valid) {
+            count = static_cast<int>(std::stoi(input));
+            gotoxy(START_X, START_Y + 3);
+            std::cout << "                                                                                             ";
+            gotoxy(START_X, START_Y + 3);
+            setColor("white", "green"); 
+            typeText("You are allowed to input up to " + std::to_string(count) + " characters.", 50);
+            resetColor();
+            break;
+        }
+        gotoxy(START_X, START_Y + 3);
+        setColor("white", "red");
+        typeText("Invalid input, please enter a positive integer.", 50);
+        resetColor();
+        gotoxy(START_X + 42, START_Y + 2);
+        std::cout << "                            ";
+        gotoxy(START_X + 42, START_Y + 2);
+    }
+
     waitForBackOrExit();
 }
 
@@ -40,15 +101,16 @@ int main() {
     std::string menuItems[] = { "New", "Display", "Exit" };
     int menuSize = sizeof(menuItems) / sizeof(menuItems[0]);
     int selectedIndex = 0;
+    setInputMode(CMDMODE);
+    hideCursor(true);
+    clearScreen();
+    setColor("lightmagenta");
+    gotoxy(START_X, START_Y);
+    std::cout << "Hi, " << getCurrentUsername() << "! Welcome to MiniVi Editor" << std::endl;
+    resetColor();
 
-    while (true) {
-        hideCursor(true);
-        clearScreen();
-        setColor("cyan");
-        gotoxy(START_X, START_Y);
-        std::cout << "=== MAIN MENU ===";
-        resetColor();
-
+    while (true)
+    {
         for (short i = 0; i < menuSize; i++) {
             gotoxy(START_X, START_Y + 2 + i);
             if (i == selectedIndex) {

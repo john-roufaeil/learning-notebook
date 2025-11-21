@@ -128,20 +128,20 @@ Key getKeyPress() {
         return Key{false, false, false, static_cast<char>(ch)};
     return Key{true, false, false, UNKNOWN};
 #else
-    setInputMode(CMDMODE);
+    // setInputMode(CMDMODE);
     int ch = getchar();
     if (ch == 27) {
         int next1 = getchar();
         if (next1 == '[') {
             int next2 = getchar();
             if (next2 >= '0' && next2 <= '9') {
-                setInputMode(ECHOMODE);
+                // setInputMode(ECHOMODE);
                 if (next2 == '1' || next2 == '7') return Key{true, false, false, HOME};
                 if (next2 == '4' || next2 == '8') return Key{true, false, false, END};
                 return Key{true, false, false, UNKNOWN};
             }
 
-            setInputMode(ECHOMODE);
+            // setInputMode(ECHOMODE);
             if (next2 == 'A') return Key{true, false, false, UP};
             if (next2 == 'B') return Key{true, false, false, DOWN};
             if (next2 == 'C') return Key{true, false, false, RIGHT};
@@ -149,10 +149,10 @@ Key getKeyPress() {
             if (next2 == 'H') return Key{true, false, false, HOME};
             if (next2 == 'F') return Key{true, false, false, END};
         }
-        setInputMode(ECHOMODE);
+        // setInputMode(ECHOMODE);
         return Key{true, false, false, ESC};
     }
-    setInputMode(ECHOMODE);
+    // setInputMode(ECHOMODE);
     if (ch == 10) return Key{true, false, false, ENTER};
     if (ch == 127) return Key{true, false, false, BACKSPACE};
     if (ch >= 1 && ch <= 26) // Ctrl+A - Ctrl+Z
@@ -193,5 +193,19 @@ void delay(int milliseconds) {
     Sleep(milliseconds);
 #else
     usleep(milliseconds * 1000);
+#endif
+}
+
+
+const char *getCurrentUsername() {
+#ifdef _WIN32
+    static char username[UNLEN + 1]; // UNLEN is a macro defined in <windows.h> for max username length
+    DWORD size = UNLEN + 1;
+    if (GetUserNameA(username, &size))
+        return username;
+    return "user";
+#else
+    char* name = getpwuid(getuid())->pw_name;
+    return name ? name : "user";
 #endif
 }

@@ -11,6 +11,7 @@
     #include <unistd.h> 
     #include <termios.h>
     #include <sys/ioctl.h>
+    #include <pwd.h>
 #endif
 
 enum InputMode
@@ -62,5 +63,6 @@ Key getKeyPress();
 TerminalSize getTerminalSize();
 void delay(int milliseconds);
 void typeText(const std::string &message, int delayTime = 10);
+const char *getCurrentUsername();
 
 #endif
