@@ -129,7 +129,7 @@ int getValidFileSize() {
     }
 }
 
-void takeFileInput(int count) {
+void takeFileInput(int count, char *fileContent, char *fileName) {
     int rowWidth = getTerminalSize().cols - 2 * START_X;
     resetColor();
     gotoxy(START_X, getTerminalSize().rows - START_Y - 1);
@@ -163,9 +163,11 @@ void takeFileInput(int count) {
                 }
 
                 else if (key.sk == BACKSPACE) {
+                    char emptyChar = ' ';
                     i--;
                     gotoxy(START_X + (i % rowWidth), START_Y + 6 + (i / rowWidth));
                     std::cout << " ";
+                    // fileContent[i] = emptyChar;
                     gotoxy(START_X + (i % rowWidth), START_Y + 6 + (i / rowWidth));
                 }
 
@@ -202,9 +204,11 @@ void takeFileInput(int count) {
             }
 
             if (key.sk == BACKSPACE && i > 0) {
+                char emptyChar = ' ';
                 i--;
                 gotoxy(START_X + (i % rowWidth), START_Y + 6 + (i / rowWidth));
                 std::cout << " ";
+                // fileContent[i] = ' ';
                 gotoxy(START_X + (i % rowWidth), START_Y + 6 + (i / rowWidth));
             }
 
@@ -215,13 +219,15 @@ void takeFileInput(int count) {
         
         gotoxy(START_X + (i % rowWidth), START_Y + 6 + (i / rowWidth));
         std::cout << key.c;
+        fileContent[i] = key.c;
         i++; // cursor moves when printing
     }
-    endFileInput(count);
+    fileContent[count] = '\0';
+    
+    endFileInput(count, fileContent, fileName);
 }
 
-
-void endFileInput(int count) {
+void endFileInput(int count, char *fileContent, char *fileName ) {
     setInputMode(CMDMODE);
     resetColor();
     gotoxy(START_X, getTerminalSize().rows - START_Y);
@@ -255,12 +261,24 @@ void endFileInput(int count) {
                 selectedIndex++;
             } else if (key.sk == ENTER) {
                 if (selectedIndex == 1) {
-                    takeFileInput(count);
+                    takeFileInput(count, fileContent, fileName);
+                } else {
+                    saveFile(fileContent, fileName);
                 }
             } else if (key.sk == ESC) {
                 clearScreen();
                 exit(0);
             }
         }
+    }
+    resetColor();
+}
+
+void saveFile(char *fileContent, char *fileName) {
+    std::string path = "./Files/" + std::string(fileName);
+    FILE *file = fopen(path.c_str(), "w");
+    if (file) {
+        fputs(fileContent, file);
+        fclose(file);
     }
 }

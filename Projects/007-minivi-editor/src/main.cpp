@@ -35,12 +35,14 @@ void newScreen() {
         std::cout << " ";
     }
 
-    takeFileInput(count);
-
-    // end input and confirm save
-    // endFileInput(count);
-    resetColor();
-
+    char *fileContent = (char *)malloc(sizeof(char) * (count + 1));
+    if (fileContent) {
+        for (int i = 0; i < count; i++) {
+            fileContent[i] = ' ';
+        }
+    }
+    takeFileInput(count, fileContent, const_cast<char*>(fileName.c_str()));
+    free(fileContent);
     waitForBackOrExit();
 }
 
@@ -66,11 +68,6 @@ void mainMenu() {
         setColor("lightmagenta");
         gotoxy(START_X, START_Y);
         std::cout << "Hi, " << getCurrentUsername() << "! Welcome to MiniVi Editor" << std::endl;
-    
-        // instructions
-        gotoxy(START_X, getTerminalSize().rows - START_Y);
-        setColor("yellow");
-        std::cout << "Arrow Keys, Home, End > Navigate | Enter > Select | Esc > Exit";
         resetColor();
 
         // menu
@@ -84,6 +81,13 @@ void mainMenu() {
                 std::cout << "  " << menuItems[i];
             }
         }
+        resetColor();
+    
+        // instructions
+        gotoxy(START_X, getTerminalSize().rows - START_Y);
+        setColor("yellow");
+        std::cout << "Arrow Keys, Home, End > Navigate | Enter > Select | Esc > Exit";
+        resetColor();
 
         Key key = getKeyPress();
         if (key.isSpecial)
@@ -126,6 +130,5 @@ void mainMenu() {
 
 int main() {
     mainMenu();
-
     return 0;
 }
