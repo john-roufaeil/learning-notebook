@@ -223,7 +223,7 @@ void takeFileInput(int count, char *fileContent, char *fileName) {
         i++; // cursor moves when printing
     }
     fileContent[count] = '\0';
-    
+
     endFileInput(count, fileContent, fileName);
 }
 
@@ -262,8 +262,12 @@ void endFileInput(int count, char *fileContent, char *fileName ) {
             } else if (key.sk == ENTER) {
                 if (selectedIndex == 1) {
                     takeFileInput(count, fileContent, fileName);
-                } else {
+                    return;
+                }
+                else
+                {
                     saveFile(fileContent, fileName);
+                    return;
                 }
             } else if (key.sk == ESC) {
                 clearScreen();

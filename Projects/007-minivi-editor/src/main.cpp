@@ -43,7 +43,7 @@ void newScreen() {
     }
     takeFileInput(count, fileContent, const_cast<char*>(fileName.c_str()));
     free(fileContent);
-    waitForBackOrExit();
+    // waitForBackOrExit();
 }
 
 void displayScreen() {
