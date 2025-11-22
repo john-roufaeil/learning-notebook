@@ -109,7 +109,6 @@ void newScreen(Employee employees[], int &employeeCount) {
     while (true) {
         std::string dobInput;
         std::getline(std::cin, dobInput);
-        int day, month, year;
 
         if (isValidDOB(dobInput)) {
             DOB dob = extractDOB(dobInput);

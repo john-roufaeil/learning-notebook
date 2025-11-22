@@ -17,17 +17,16 @@ bool isValidDOB(std::string input) {
 
 DOB extractDOB(std::string input) {
     DOB dob{0,0,0};
-    int day = 0, month = 0, year = 0;
+    input += " ";
     int currNum = 0;
     int part = 1; 
-    for (int i = 0; i <= input.length(); i++) {
+    for (int i = 0; i < input.length(); i++) {
         if  (input[i] != ' ' && i < input.length()) {
             currNum = currNum * 10 + (input[i] - '0');
-        } else if (currNum > 0 || (i > 0 && input[i] != ' ')) {
+        } else {
             if (part == 1) dob.day = currNum;
             else if (part == 2) dob.month = currNum;
             else if (part == 3) dob.year = currNum;
-
             currNum = 0;
             part++;
         }
