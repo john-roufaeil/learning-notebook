@@ -1,8 +1,18 @@
+#include <iostream>
+#include <cstdlib>
 #include "library.h"
 
-void typeText(std::string message, int delayTime) {
-    for (int i = 0; i < message.length(); i++)
-    {
+#ifdef _WIN32
+    #include <windows.h>
+    #include <conio.h>
+#else
+    #include <unistd.h>
+    #include <termios.h>
+#endif
+
+
+void typeText(const std::string &message, int delayTime) {
+    for (int i = 0; i < message.length(); i++) {
         char c = message[i];
         std::cout << c;
         std::cout.flush();
@@ -30,7 +40,7 @@ void gotoxy(int x, int y) {
 #endif
 }
 
-int getColorCode(std::string color) {
+int getColorCode(const std::string &color) {
 #ifdef _WIN32
     if (color == "black") return 0;
     if (color == "blue") return 1;
@@ -68,7 +78,7 @@ int getColorCode(std::string color) {
 #endif
 }
 
-void changeColor(std::string textColor) {
+void changeColor(const std::string &textColor) {
     int textColorCode = getColorCode(textColor);
 #ifdef _WIN32
     HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);

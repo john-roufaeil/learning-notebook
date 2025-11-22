@@ -2,6 +2,7 @@
 #define LIBRARY_H
 
 #include <string>
+
 enum Key {
     UP,
     DOWN,

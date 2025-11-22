@@ -2,16 +2,6 @@
 #define LIBRARY_H
 
 #include <string>
-#include <iostream>
-#include <cstdlib>
-
-#ifdef _WIN32
-    #include <windows.h>
-    #include <conio.h>
-#else
-    #include <unistd.h>
-    #include <termios.h>
-#endif
 
 enum Key {
     UP,
@@ -27,12 +17,12 @@ enum Key {
 };
 
 void gotoxy(int x, int y);
-int getColorCode(std::string color);
-void changeColor(std::string textColor);
+int getColorCode(const std::string &color);
+void changeColor(const std::string &textColor);
 void resetColor();
 void clearScreen();
 Key getKeyPress();;
 void delay(int milliseconds);
-void typeText(std::string message, int delayTime);
+void typeText(const std::string &message, int delayTime);
 
 #endif
