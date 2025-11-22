@@ -178,7 +178,7 @@ TerminalSize getTerminalSize() {
     return TerminalSize{columns, rows};
 #else
     struct winsize w;
-    ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
+    ioctl(STDOUT_FILENO, TIOCGWINSZ, &w); // terminal i/o control get window size
 
     return TerminalSize{w.ws_col, w.ws_row};
 #endif
