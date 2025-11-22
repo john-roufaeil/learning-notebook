@@ -44,6 +44,7 @@ enum Key {
 bool isInt(std::string input);
 bool isAlpha(std::string input);
 bool isValidDOB(std::string input);
+DOB extractDOB(std::string input);
 void gotoxy(int x, int y);
 int getColorCode(std::string color);
 void changeColor(std::string textColor);

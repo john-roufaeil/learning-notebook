@@ -8,7 +8,32 @@ bool isInt(std::string input) {
 bool isAlpha(std::string input) {
     std::regex alphaRegex("^[A-Za-z]+$");
     return std::regex_match(input, alphaRegex);
-} 
+}   
+
+bool isValidDOB(std::string input) {
+    std::regex dobRegex("^(0[1-9]|[12][0-9]|3[01]) (0[1-9]|1[0-2]) (19\\d\\d|20[01]\\d|202[0-5])$");
+    return std::regex_match(input, dobRegex);
+}
+
+DOB extractDOB(std::string input) {
+    DOB dob{0,0,0};
+    int day = 0, month = 0, year = 0;
+    int currNum = 0;
+    int part = 1; 
+    for (int i = 0; i <= input.length(); i++) {
+        if  (input[i] != ' ' && i < input.length()) {
+            currNum = currNum * 10 + (input[i] - '0');
+        } else if (currNum > 0 || (i > 0 && input[i] != ' ')) {
+            if (part == 1) dob.day = currNum;
+            else if (part == 2) dob.month = currNum;
+            else if (part == 3) dob.year = currNum;
+
+            currNum = 0;
+            part++;
+        }
+    }
+    return dob;
+}
 
 void gotoxy(int x, int y) {
 #ifdef _WIN32

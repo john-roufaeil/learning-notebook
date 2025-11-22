@@ -27,9 +27,13 @@ void newScreen(Employee employees[], int &employeeCount) {
         std::cout << "           ";
         gotoxy(4,5);
         changeColor("red");
-        if (e.firstName.empty())
+        if (e.firstName.empty()) {
+            std::cout << "                                                                             ";
+            gotoxy(4,5);
             std::cout << "First name cannot be empty.";
-        else if (!isAlpha(e.firstName)) {
+        } else if (!isAlpha(e.firstName)) {
+            std::cout << "                                                                             ";
+            gotoxy(4,5);
             std:: cout<< "First name must contain only alphabetic characters.";
         }
         resetColor();
@@ -53,9 +57,13 @@ void newScreen(Employee employees[], int &employeeCount) {
         std::cout << "           ";
         gotoxy(4, 7);
         changeColor("red");
-        if (e.lastName.empty())
+        if (e.lastName.empty()) {
+            std::cout << "                                                                             ";
+            gotoxy(4,7);
             std::cout << "Last name cannot be empty.";
-        else if (!isAlpha(e.lastName)) {
+        } else if (!isAlpha(e.lastName)) {
+            std::cout << "                                                                             ";
+            gotoxy(4,7);
             std:: cout<< "Last name must contain only alphabetic characters.";
         }
         resetColor();
@@ -72,7 +80,7 @@ void newScreen(Employee employees[], int &employeeCount) {
 
         if (isInt(salaryInput) && std::stoi(salaryInput) >= 1000 && std::stoi(salaryInput) <= 1000000) {
             gotoxy(4, 9);
-            std::cout << "                                                      ";
+            std::cout << "                                                                             ";
             e.salary = std::stoi(salaryInput);
             break;
         }
@@ -82,11 +90,11 @@ void newScreen(Employee employees[], int &employeeCount) {
         gotoxy(4, 9);
         changeColor("red");
         if (!isInt(salaryInput)) {
-            std::cout << "                                                      ";
+            std::cout << "                                                                             ";
             gotoxy(4, 9);
             std::cout << "Salary must be a valid integer.";
         } else if (e.salary < 1000 || e.salary > 1000000) {
-            std::cout << "                                                      ";
+            std::cout << "                                                                             ";
             gotoxy(4, 9);
             std:: cout<< "Salary must be between 1,000 and 1,000,000.";
         }
@@ -101,18 +109,13 @@ void newScreen(Employee employees[], int &employeeCount) {
     while (true) {
         std::string dobInput;
         std::getline(std::cin, dobInput);
-        std::istringstream dobStream(dobInput);
         int day, month, year;
 
-        bool ok = (dobStream >> day >> month >> year) &&
-              !(day < 1 || day > 31 || month < 1 || month > 12 || year < 1925 || year > 2025);
-
-        if (ok) {
-            e.dob.day = day;
-            e.dob.month = month;
-            e.dob.year = year;
+        if (isValidDOB(dobInput)) {
+            DOB dob = extractDOB(dobInput);
+            e.dob = dob;
             gotoxy(4, 11);
-            std::cout << "                                                      ";
+            std::cout << "                                                                             ";
             break;
         }
 
@@ -120,18 +123,10 @@ void newScreen(Employee employees[], int &employeeCount) {
         std::cout << "                     ";
         gotoxy(4, 11);
         changeColor("red");
+        std::cout << "                                                      ";
+        gotoxy(4, 11);
+        std::cout << "Enter numbers only (DD MM YYYY) between 01/01/1925 and 01/01/2025";
 
-        dobStream.clear();
-        dobStream.str(dobInput);
-        if (!(dobStream >> day >> month >> year)) {
-            std::cout << "                                                      ";
-            gotoxy(4, 11);
-            std::cout << "Enter numbers only (DD MM YYYY).";
-        } else if(day < 1 || day > 31 || month < 1 || month > 12 || year < 1925 || year > 2025) {
-            std::cout << "                                                      ";
-            gotoxy(4, 11);
-            std::cout << "Date must be between 01/01/1925 and 01/01/2025.";
-        }
         resetColor();
         gotoxy(4 + dobPrompt.length(), 10);
     }
