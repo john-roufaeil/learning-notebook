@@ -21,7 +21,6 @@ struct DOB {
 };
 
 struct Employee {
-    int age;
     int salary;
     std::string firstName;
     std::string lastName;
@@ -43,7 +42,8 @@ enum Key {
 };
 
 bool isInt(std::string input);
-bool isAlpha(const std::string input);
+bool isAlpha(std::string input);
+bool isValidDOB(std::string input);
 void gotoxy(int x, int y);
 int getColorCode(std::string color);
 void changeColor(std::string textColor);

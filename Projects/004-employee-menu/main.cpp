@@ -8,8 +8,9 @@ void newScreen(Employee employees[], int& employeeCount) {
     std::cout << "=== Register a New Employee ===";
     resetColor();
 
-    Employee e{0,0,"", "", {0,0,0}};
+    Employee e{0,"", "", {0,0,0}};
 
+    // firstname validation
     gotoxy(4, 4);
     std::string firstNamePrompt = "First Name: ";
     std::cout << firstNamePrompt;
@@ -35,6 +36,7 @@ void newScreen(Employee employees[], int& employeeCount) {
     gotoxy(4, 5);
     std::cout << "                                                   ";
 
+    // lastname validation
     gotoxy(4, 6);
     std::string lastNamePrompt = "Last Name: ";
     std::cout << lastNamePrompt;
@@ -59,26 +61,89 @@ void newScreen(Employee employees[], int& employeeCount) {
     gotoxy(4, 7);
     std::cout << "                                                   ";
 
-
+    // salary validation
     gotoxy(4, 8);
-    std::cout << "Age: ";
-    std::cin >> e.age;
+    std::string salaryPrompt = "Salary: ";
+    std::cout << salaryPrompt;
+    while (true) {
+        std::string salaryInput;
+        std::cin >> salaryInput;
 
+        if (!isInt(salaryInput)) {
+            gotoxy(4 + salaryPrompt.length(), 8);
+            std::cout << "             ";
+            gotoxy(4, 9);
+            changeColor("red");
+            std::cout << "Salary must be a valid integer.";
+            resetColor();
+            gotoxy(4 + salaryPrompt.length(), 8);
+            continue;
+        }
+
+        e.salary = std::stoi(salaryInput);
+
+        if (e.salary < 1000 || e.salary > 1000000) {
+            gotoxy(4 + salaryPrompt.length(), 8);
+            std::cout << "             ";
+            gotoxy(4, 9);
+            changeColor("red");
+            std::cout << "Salary must be between 1,000 and 1,000,000.";
+            resetColor();
+            gotoxy(4 + salaryPrompt.length(), 8);
+        } else {
+            break;
+        }
+    }
+    gotoxy(4, 9);
+    std::cout << "                                                      "; 
+
+    // DOB validation
     gotoxy(4, 10);
-    std::cout << "Salary: ";
-    std::cin >> e.salary;
+    std::string dobPrompt = "Date of Birth (DD MM YYYY): ";
+    std::cout << dobPrompt;
+    while (true) {
+        int day, month, year;
+        std::cin >> day >> month >> year;
 
-    gotoxy(4, 12);
-    std::cout << "Date of Birth (DD MM YYYY): ";
-    std::cin >> e.dob.day >> e.dob.month >> e.dob.year;
+        if (std::cin.fail()) {
+            std::cin.clear();
+            std::cin.ignore(1000, '\n');
+            gotoxy(4 + dobPrompt.length(), 10);
+            std::cout << "                     ";
+            gotoxy(4, 11);
+            changeColor("red");
+            std::cout << "Enter numbers only (DD MM YYYY).";
+            resetColor();
+            gotoxy(4 + dobPrompt.length(), 10);
+            continue;
+        }
+
+        if (day < 1 || day > 31 || month < 1 || month > 12 || year < 1925 || year > 2025) {
+            gotoxy(4 + dobPrompt.length(), 10);
+            std::cout << "                     ";
+            gotoxy(4, 11);
+            changeColor("red");
+            std::cout << "Date must be between 01/01/1925 and 01/01/2025.";
+            resetColor();
+            gotoxy(4 + dobPrompt.length(), 10);
+            continue;
+        }
+
+        e.dob.day = day;
+        e.dob.month = month;
+        e.dob.year = year;
+        break;
+    }
+    gotoxy(4, 11);
+    std::cout << "                                                      "; 
 
     employees[employeeCount++] = e;
 
-    gotoxy(4, 10);
+    gotoxy(4, 12);
     changeColor("lightgreen");
     std::cout << "Employee registered successfully!";
 
-    gotoxy(4, 11);
+    gotoxy(4, 13);
     changeColor("yellow");
     std::cout << "Press TAB to add another employee or BACKSPACE to return to the main menu.";
     resetColor();
@@ -103,7 +168,7 @@ void displayScreen(Employee employees[], int employeeCount) {
     for (int i = 0; i < employeeCount; i++) {
         gotoxy(4, 4 + i);
         std::cout << i + 1 << ". " << employees[i].firstName << " " << employees[i].lastName << " " << 
-        employees[i].age << " " << employees[i].salary << " " << employees[i].dob.day << "/" <<
+        employees[i].salary << " " << employees[i].dob.day << "/" <<
         employees[i].dob.month << "/" << employees[i].dob.year;
     }
     while (true)
