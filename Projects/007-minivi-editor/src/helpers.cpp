@@ -59,7 +59,7 @@ std::string getValidFilename() {
     std::cout<<fileNamePrompt;
     while(true) {
         setInputMode(ECHOMODE);
-        std::getline(std::cin, fileNameInput);
+        std::cin >> fileNameInput;
         setInputMode(CMDMODE);
         isEmpty = fileNameInput.empty();
         fileExists = isFileExist(&fileNameInput);

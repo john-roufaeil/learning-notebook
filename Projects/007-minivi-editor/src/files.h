@@ -1,6 +1,8 @@
 #ifndef FILES_H
 #define FILES_H
 
+#define MAX_NUMBER_OF_FILES 100
+
 #include <string>
 #include <fstream>
 

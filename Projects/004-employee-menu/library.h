@@ -14,6 +14,8 @@
     #include <termios.h>
 #endif
 
+#define MAX_EMPLOYEES 100;
+
 struct DOB {
     int day;
     int month;

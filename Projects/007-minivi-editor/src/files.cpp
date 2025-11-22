@@ -157,7 +157,7 @@ void saveFile(char *fileContent, char *fileName) {
 }
 
 void displayExistingFiles() {
-    std::string files[100];
+    std::string files[MAX_NUMBER_OF_FILES];
     std::string path = "./Files";
     std::filesystem::directory_iterator it = std::filesystem::directory_iterator(path);
     std::filesystem::directory_iterator end = std::filesystem::directory_iterator();

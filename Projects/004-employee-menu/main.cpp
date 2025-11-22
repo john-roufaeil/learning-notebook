@@ -1,5 +1,4 @@
 #include "library.h"
-#include <iostream>
 
 void newScreen(Employee employees[], int &employeeCount) {
     clearScreen();
@@ -178,7 +177,7 @@ void displayScreen(Employee employees[], int employeeCount) {
 }
 
 int main() {
-    Employee employees[100];
+    Employee employees[MAX_EMPLOYEES];
     int employeeCount = 0;
 
     std::string menuItems[] = { "New", "Display", "Exit" };
