@@ -8,12 +8,7 @@ bool isInt(std::string input) {
 bool isAlpha(std::string input) {
     std::regex alphaRegex("^[A-Za-z]+$");
     return std::regex_match(input, alphaRegex);
-}   
-
-bool isValidDOB(std::string input) {
-    std::regex dobRegex("^(0[1-9]|[12][0-9]|3[01]) (0[1-9]|1[0-2]) (19|20)\\d\\d$");
-    return std::regex_match(input, dobRegex);
-}
+} 
 
 void gotoxy(int x, int y) {
 #ifdef _WIN32

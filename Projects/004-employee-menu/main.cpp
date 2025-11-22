@@ -1,22 +1,25 @@
 #include "library.h"
 #include <iostream>
 
-void newScreen(Employee employees[], int& employeeCount) {
+void newScreen(Employee employees[], int &employeeCount) {
     clearScreen();
     changeColor("cyan");
     gotoxy(4, 2);
     std::cout << "=== Register a New Employee ===";
     resetColor();
 
-    Employee e{0,"", "", {0,0,0}};
+    Employee e;
 
     // firstname validation
     gotoxy(4, 4);
     std::string firstNamePrompt = "First Name: ";
     std::cout << firstNamePrompt;
-    std::getline(std::cin, e.firstName);
     while (true) {
+        std::getline(std::cin, e.firstName);
+        
         if (!e.firstName.empty() && isAlpha(e.firstName)) {
+            gotoxy(4, 5);
+            std::cout << "                                                   ";
             break;
         }
         
@@ -31,20 +34,21 @@ void newScreen(Employee employees[], int& employeeCount) {
         }
         resetColor();
         gotoxy(4 + firstNamePrompt.length(), 4);
-        std::getline(std::cin, e.firstName);
     }
-    gotoxy(4, 5);
-    std::cout << "                                                   ";
 
     // lastname validation
     gotoxy(4, 6);
     std::string lastNamePrompt = "Last Name: ";
     std::cout << lastNamePrompt;
-    std::getline(std::cin, e.lastName);
     while (true) {
+        std::getline(std::cin, e.lastName);
+
         if (!e.lastName.empty() && isAlpha(e.lastName)) {
+            gotoxy(4, 7);
+            std::cout << "                                                   ";
             break;
         }
+        
         gotoxy(4 + lastNamePrompt.length(), 6);
         std::cout << "           ";
         gotoxy(4, 7);
@@ -56,10 +60,7 @@ void newScreen(Employee employees[], int& employeeCount) {
         }
         resetColor();
         gotoxy(4 + lastNamePrompt.length(), 6);
-        std::getline(std::cin, e.lastName);
     }
-    gotoxy(4, 7);
-    std::cout << "                                                   ";
 
     // salary validation
     gotoxy(4, 8);
@@ -67,75 +68,73 @@ void newScreen(Employee employees[], int& employeeCount) {
     std::cout << salaryPrompt;
     while (true) {
         std::string salaryInput;
-        std::cin >> salaryInput;
+        std::getline(std::cin, salaryInput);
 
-        if (!isInt(salaryInput)) {
-            gotoxy(4 + salaryPrompt.length(), 8);
-            std::cout << "             ";
+        if (isInt(salaryInput) && std::stoi(salaryInput) >= 1000 && std::stoi(salaryInput) <= 1000000) {
             gotoxy(4, 9);
-            changeColor("red");
-            std::cout << "Salary must be a valid integer.";
-            resetColor();
-            gotoxy(4 + salaryPrompt.length(), 8);
-            continue;
-        }
-
-        e.salary = std::stoi(salaryInput);
-
-        if (e.salary < 1000 || e.salary > 1000000) {
-            gotoxy(4 + salaryPrompt.length(), 8);
-            std::cout << "             ";
-            gotoxy(4, 9);
-            changeColor("red");
-            std::cout << "Salary must be between 1,000 and 1,000,000.";
-            resetColor();
-            gotoxy(4 + salaryPrompt.length(), 8);
-        } else {
+            std::cout << "                                                      ";
+            e.salary = std::stoi(salaryInput);
             break;
         }
+
+        gotoxy(4 + salaryPrompt.length(), 8);
+        std::cout << "           ";
+        gotoxy(4, 9);
+        changeColor("red");
+        if (!isInt(salaryInput)) {
+            std::cout << "                                                      ";
+            gotoxy(4, 9);
+            std::cout << "Salary must be a valid integer.";
+        } else if (e.salary < 1000 || e.salary > 1000000) {
+            std::cout << "                                                      ";
+            gotoxy(4, 9);
+            std:: cout<< "Salary must be between 1,000 and 1,000,000.";
+        }
+        resetColor();
+        gotoxy(4 + salaryPrompt.length(), 8);
     }
-    gotoxy(4, 9);
-    std::cout << "                                                      "; 
 
     // DOB validation
     gotoxy(4, 10);
     std::string dobPrompt = "Date of Birth (DD MM YYYY): ";
     std::cout << dobPrompt;
     while (true) {
+        std::string dobInput;
+        std::getline(std::cin, dobInput);
+        std::istringstream dobStream(dobInput);
         int day, month, year;
-        std::cin >> day >> month >> year;
 
-        if (std::cin.fail()) {
-            std::cin.clear();
-            std::cin.ignore(1000, '\n');
-            gotoxy(4 + dobPrompt.length(), 10);
-            std::cout << "                     ";
+        bool ok = (dobStream >> day >> month >> year) &&
+              !(day < 1 || day > 31 || month < 1 || month > 12 || year < 1925 || year > 2025);
+
+        if (ok) {
+            e.dob.day = day;
+            e.dob.month = month;
+            e.dob.year = year;
             gotoxy(4, 11);
-            changeColor("red");
+            std::cout << "                                                      ";
+            break;
+        }
+
+        gotoxy(4 + dobPrompt.length(), 10);
+        std::cout << "                     ";
+        gotoxy(4, 11);
+        changeColor("red");
+
+        dobStream.clear();
+        dobStream.str(dobInput);
+        if (!(dobStream >> day >> month >> year)) {
+            std::cout << "                                                      ";
+            gotoxy(4, 11);
             std::cout << "Enter numbers only (DD MM YYYY).";
-            resetColor();
-            gotoxy(4 + dobPrompt.length(), 10);
-            continue;
-        }
-
-        if (day < 1 || day > 31 || month < 1 || month > 12 || year < 1925 || year > 2025) {
-            gotoxy(4 + dobPrompt.length(), 10);
-            std::cout << "                     ";
+        } else if(day < 1 || day > 31 || month < 1 || month > 12 || year < 1925 || year > 2025) {
+            std::cout << "                                                      ";
             gotoxy(4, 11);
-            changeColor("red");
             std::cout << "Date must be between 01/01/1925 and 01/01/2025.";
-            resetColor();
-            gotoxy(4 + dobPrompt.length(), 10);
-            continue;
         }
-
-        e.dob.day = day;
-        e.dob.month = month;
-        e.dob.year = year;
-        break;
+        resetColor();
+        gotoxy(4 + dobPrompt.length(), 10);
     }
-    gotoxy(4, 11);
-    std::cout << "                                                      "; 
 
     employees[employeeCount++] = e;
 
@@ -174,12 +173,10 @@ void displayScreen(Employee employees[], int employeeCount) {
     while (true)
     {
         Key key = getKeyPress();
-        if (key == BACKSPACE)
-        {
+        if (key == BACKSPACE) {
             break;
         }
-        else if (key == ESCAPE)
-        {
+        else if (key == ESCAPE) {
             clearScreen();
             exit(0);
         }
