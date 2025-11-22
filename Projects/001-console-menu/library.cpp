@@ -80,7 +80,7 @@ void clearScreen() {
 Key getKeyPress() {
 #ifdef _WIN32
     int ch = _getch();
-    if (ch == 0x0 || ch == 224) {
+    if (ch == 0 || ch == 224) {
         int ch2 = _getch();
         switch(ch2) {
             case 72: return UP;
@@ -109,13 +109,11 @@ Key getKeyPress() {
         if (next1 == '[') {
             int next2 = getchar();
             if (next2 >= '0' && next2 <= '9') {
-                tcsetattr(STDIN_FILENO, TCSANOW, &originalTerminal);
                 if (next2 == '1' || next2 == '7') return HOME;
                 if (next2 == '4' || next2 == '8') return END;
                 return UNKNOWN;
             }
 
-            tcsetattr(STDIN_FILENO, TCSANOW, &originalTerminal);
             if (next2 == 'A') return UP;
             if (next2 == 'B') return DOWN;
             if (next2 == 'C') return RIGHT;
@@ -123,10 +121,8 @@ Key getKeyPress() {
             if (next2 == 'H') return HOME;
             if (next2 == 'F') return END;
         }
-        tcsetattr(STDIN_FILENO, TCSANOW, &originalTerminal);
         return ESCAPE;
     }
-    tcsetattr(STDIN_FILENO, TCSANOW, &originalTerminal);
     if (ch == 10) return ENTER;
     if (ch == 127) return BACKSPACE;
     return UNKNOWN;

@@ -2,6 +2,7 @@
 #define LIBRARY_H
 
 #include <string>
+#include <cstdlib>
 #include <iostream>
 
 #ifdef _WIN32

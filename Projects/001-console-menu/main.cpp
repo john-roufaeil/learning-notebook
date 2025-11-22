@@ -1,5 +1,4 @@
 #include "library.h"
-#include <iostream>
 
 void newScreen() {
     clearScreen();
