@@ -89,11 +89,11 @@ void setInputMode(InputMode mode) {
     DWORD dwMode;
     GetConsoleMode(inputHandle, &dwMode);
     if (mode == CMDMODE)  {
-        dwMode &= ~ENABLE_ECHO_INPUT;
+        dwMode &= ~(ENABLE_ECHO_INPUT | ENABLE_LINE_INPUT);
         hideCursor(true);
     }
     else {
-        dwMode |= ENABLE_ECHO_INPUT;
+        dwMode |= (ENABLE_ECHO_INPUT | ENABLE_LINE_INPUT);
         hideCursor(false);
     }
     SetConsoleMode(inputHandle, dwMode);

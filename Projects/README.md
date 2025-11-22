@@ -1,6 +1,8 @@
 # Mini-VI Editor
 
 ## Resources
+- [Windows Handle](https://learn.microsoft.com/en-us/windows/win32/sysinfo/handles-and-objects)
+- [Linux Termios](https://pubs.opengroup.org/onlinepubs/7908799/xsh/termios.h.html)
 - [Linux terminal escape characters](https://stackoverflow.com/questions/38770996/linux-moving-the-console-cursor-visual)
 - [Linux terminal coloring](https://stackoverflow.com/questions/2616906/how-do-i-output-coloured-text-to-a-linux-terminal)
 https://www.geeksforgeeks.org/cpp/how-to-change-console-color-in-cpp/
