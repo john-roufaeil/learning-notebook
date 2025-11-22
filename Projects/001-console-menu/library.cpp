@@ -1,4 +1,15 @@
+#include <cstdlib>
+#include <iostream>
 #include "library.h"
+
+#ifdef _WIN32
+    #include <windows.h>
+    #include <conio.h>
+#else
+    #include <unistd.h>
+    #include <termios.h>
+#endif
+
 
 void gotoxy(int x, int y) {
 #ifdef _WIN32
@@ -12,7 +23,7 @@ void gotoxy(int x, int y) {
 #endif
 }
 
-int getColorCode(std::string color) {
+int getColorCode(const std::string &color) {
     #ifdef _WIN32
         if (color == "black") return 0;
         if (color == "blue") return 1;
@@ -50,7 +61,7 @@ int getColorCode(std::string color) {
     #endif
 }
 
-void changeColor(std::string textColor) {
+void changeColor(const std::string &textColor) {
     int textColorCode = getColorCode(textColor);
 #ifdef _WIN32
     HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);

@@ -1,3 +1,4 @@
+#include <iostream>
 #include "library.h"
 
 void newScreen() {
