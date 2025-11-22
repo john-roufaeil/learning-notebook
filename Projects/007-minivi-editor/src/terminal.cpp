@@ -141,20 +141,13 @@ Key getKeyPress() {
         return Key{false, false, false, static_cast<char>(ch)};
     return Key{true, false, false, UNKNOWN};
 #else
-    // setInputMode(CMDMODE);
     int ch = getchar();
     if (ch == 27) {
         int next1 = getchar();
         if (next1 == '[') {
             int next2 = getchar();
-            if (next2 >= '0' && next2 <= '9') {
-                // setInputMode(ECHOMODE);
-                if (next2 == '1' || next2 == '7') return Key{true, false, false, HOME};
-                if (next2 == '4' || next2 == '8') return Key{true, false, false, END};
-                return Key{true, false, false, UNKNOWN};
-            }
-
-            // setInputMode(ECHOMODE);
+            if (next2 == '1' || next2 == '7') return Key{true, false, false, HOME};
+            if (next2 == '4' || next2 == '8') return Key{true, false, false, END};
             if (next2 == 'A') return Key{true, false, false, UP};
             if (next2 == 'B') return Key{true, false, false, DOWN};
             if (next2 == 'C') return Key{true, false, false, RIGHT};
@@ -162,16 +155,14 @@ Key getKeyPress() {
             if (next2 == 'H') return Key{true, false, false, HOME};
             if (next2 == 'F') return Key{true, false, false, END};
         }
-        // setInputMode(ECHOMODE);
         return Key{true, false, false, ESC};
     }
-    // setInputMode(ECHOMODE);
     if (ch == 10) return Key{true, false, false, ENTER};
     if (ch == 127) return Key{true, false, false, BACKSPACE};
     if (ch >= 1 && ch <= 26) // Ctrl+A - Ctrl+Z
         return Key{false, false, true, static_cast<char>(ch + 'a' - 1)};
-    if (ch >= 65 && ch <= 90) // Shift+A - Shift+Z
-        return Key{false, true, false, static_cast<char>(ch + 32)};
+    // if (ch >= 65 && ch <= 90) // Shift+A - Shift+Z
+    //     return Key{false, true, false, static_cast<char>(ch + 32)};
     if (ch >= 32 && ch <= 126) // Lowercase char, numbers, symbols
         return Key{false, false, false, static_cast<char>(ch)};
     return Key{true, false, false, UNKNOWN};

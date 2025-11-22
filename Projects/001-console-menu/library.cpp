@@ -108,12 +108,8 @@ Key getKeyPress() {
         int next1 = getchar();
         if (next1 == '[') {
             int next2 = getchar();
-            if (next2 >= '0' && next2 <= '9') {
-                if (next2 == '1' || next2 == '7') return HOME;
-                if (next2 == '4' || next2 == '8') return END;
-                return UNKNOWN;
-            }
-
+            if (next2 == '1' || next2 == '7') return HOME;
+            if (next2 == '4' || next2 == '8') return END;
             if (next2 == 'A') return UP;
             if (next2 == 'B') return DOWN;
             if (next2 == 'C') return RIGHT;
