@@ -1,10 +1,5 @@
 #include <iostream>
-#include <string.h>
 #include "library.h"
-
-#ifdef _WIN32
-#else
-#endif
 
 void print_divider() {
     std::cout << "----------------------------------------" << std::endl;
@@ -96,13 +91,3 @@ int str_copy(char str1[], char str2[]) {
     *(str1+str2_len) = '\0';
     return 0;
 }
-
-// int str_find_char(char str[], char ch) {
-
-//     return -1;
-// }
-// int str_find_substr(char str[], char substr[]) {
-//     return -1;
-// }
-// void str_reverse(char str[]) {
-// }

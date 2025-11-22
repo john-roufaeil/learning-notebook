@@ -9,8 +9,5 @@ void to_lowercase(char str[]);
 void to_uppercase(char str[]);
 int str_concat(char str1[], char str2[], int str1Len);
 int str_copy(char str1[], char str2[]);
-// int str_find_char(char str[], char ch);
-// int str_find_substr(char str[], char substr[]);
-// void str_reverse(char str[]);
 
 #endif
