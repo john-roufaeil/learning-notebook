@@ -1,5 +1,6 @@
 #include "library.h"
 #include <iostream>
+
 void newScreen(Employee employees[], int& employeeCount) {
     clearScreen();
     changeColor("cyan");
@@ -7,25 +8,67 @@ void newScreen(Employee employees[], int& employeeCount) {
     std::cout << "=== Register a New Employee ===";
     resetColor();
 
-    Employee e;
+    Employee e{0,0,"", "", {0,0,0}};
 
     gotoxy(4, 4);
-    std::cout << "First Name: ";
-    std::cin >> e.firstName;
-
+    std::string firstNamePrompt = "First Name: ";
+    std::cout << firstNamePrompt;
+    std::getline(std::cin, e.firstName);
+    while (true) {
+        if (!e.firstName.empty() && isAlpha(e.firstName)) {
+            break;
+        }
+        
+        gotoxy(4 + firstNamePrompt.length(), 4);
+        std::cout << "           ";
+        gotoxy(4,5);
+        changeColor("red");
+        if (e.firstName.empty())
+            std::cout << "First name cannot be empty.";
+        else if (!isAlpha(e.firstName)) {
+            std:: cout<< "First name must contain only alphabetic characters.";
+        }
+        resetColor();
+        gotoxy(4 + firstNamePrompt.length(), 4);
+        std::getline(std::cin, e.firstName);
+    }
     gotoxy(4, 5);
-    std::cout << "Last Name: ";
-    std::cin >> e.lastName;
+    std::cout << "                                                   ";
 
     gotoxy(4, 6);
+    std::string lastNamePrompt = "Last Name: ";
+    std::cout << lastNamePrompt;
+    std::getline(std::cin, e.lastName);
+    while (true) {
+        if (!e.lastName.empty() && isAlpha(e.lastName)) {
+            break;
+        }
+        gotoxy(4 + lastNamePrompt.length(), 6);
+        std::cout << "           ";
+        gotoxy(4, 7);
+        changeColor("red");
+        if (e.lastName.empty())
+            std::cout << "Last name cannot be empty.";
+        else if (!isAlpha(e.lastName)) {
+            std:: cout<< "Last name must contain only alphabetic characters.";
+        }
+        resetColor();
+        gotoxy(4 + lastNamePrompt.length(), 6);
+        std::getline(std::cin, e.lastName);
+    }
+    gotoxy(4, 7);
+    std::cout << "                                                   ";
+
+
+    gotoxy(4, 8);
     std::cout << "Age: ";
     std::cin >> e.age;
 
-    gotoxy(4, 7);
+    gotoxy(4, 10);
     std::cout << "Salary: ";
     std::cin >> e.salary;
 
-    gotoxy(4, 8);
+    gotoxy(4, 12);
     std::cout << "Date of Birth (DD MM YYYY): ";
     std::cin >> e.dob.day >> e.dob.month >> e.dob.year;
 
@@ -49,7 +92,6 @@ void newScreen(Employee employees[], int& employeeCount) {
         }
     }
 }
-
 
 void displayScreen(Employee employees[], int employeeCount) {
     clearScreen();

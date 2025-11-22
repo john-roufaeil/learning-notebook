@@ -1,5 +1,15 @@
 #include "library.h"
 
+bool isInt(std::string input) {
+    std::regex intRegex("^-?[0-9]+$");
+    return std::regex_match(input, intRegex);
+}
+
+bool isAlpha(const std::string input) {
+    std::regex alphaRegex("^[A-Za-z]+$");
+    return std::regex_match(input, alphaRegex);
+}
+
 void gotoxy(int x, int y) {
 #ifdef _WIN32
     HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);

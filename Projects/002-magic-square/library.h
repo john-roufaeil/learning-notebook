@@ -3,6 +3,7 @@
 
 #include <string>
 #include <iostream>
+#include <cstdlib>
 
 #ifdef _WIN32
     #include <windows.h>

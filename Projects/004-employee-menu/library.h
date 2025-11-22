@@ -3,6 +3,8 @@
 
 #include <string>
 #include <iostream>
+#include <cstdlib>
+#include <regex>
 
 #ifdef _WIN32
     #include <windows.h>
@@ -40,6 +42,8 @@ enum Key {
     UNKNOWN
 };
 
+bool isInt(std::string input);
+bool isAlpha(const std::string input);
 void gotoxy(int x, int y);
 int getColorCode(std::string color);
 void changeColor(std::string textColor);
