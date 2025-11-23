@@ -188,7 +188,7 @@ void displayScreen(Employee employees[], int employeeCount) {
     }
 }
 
-void getMenuInput(const std::string menuItems[], int &selectedIndex, int menuSize, int employeeCount, Employee employees[]) {
+void getMenuInput(const std::string menuItems[], int &selectedIndex, int menuSize, int &employeeCount, Employee employees[]) {
     Key key = getKeyPress();
         switch (key) {
             case UP:
@@ -256,7 +256,7 @@ int main() {
     while (true) {
         drawMenu(menuItems, menuSize, selectedIndex);
         getMenuInput(menuItems, selectedIndex, menuSize, employeeCount, employees);
-    }
+     }
 
     return 0;
 }

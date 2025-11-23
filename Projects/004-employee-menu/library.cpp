@@ -11,17 +11,17 @@
     #include <termios.h>
 #endif
 
-bool isInt(std::string input) {
+bool isInt(const std::string &input) {
     std::regex intRegex("^-?[0-9]+$");
     return std::regex_match(input, intRegex);
 }
 
-bool isAlpha(std::string input) {
+bool isAlpha(const std::string &input) {
     std::regex alphaRegex("^[A-Za-z]+$");
     return std::regex_match(input, alphaRegex);
 }   
 
-bool isValidDOB(std::string input) {
+bool isValidDOB(const std::string &input) {
     std::regex dobRegex("^(0[1-9]|[12][0-9]|3[01]) (0[1-9]|1[0-2]) (19[2-9][0-9]|20[01]\\d|202[0-4])$");
     return std::regex_match(input, dobRegex);
 }
@@ -57,7 +57,7 @@ void gotoxy(int x, int y) {
 #endif
 }
 
-int getColorCode(std::string color) {
+int getColorCode(const std::string &color) {
 #ifdef _WIN32
     if (color == "black") return 0;
     if (color == "blue") return 1;
@@ -95,7 +95,7 @@ int getColorCode(std::string color) {
 #endif
 }
 
-void changeColor(std::string textColor) {
+void changeColor(const std::string &textColor) {
     int textColorCode = getColorCode(textColor);
 #ifdef _WIN32
     HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);

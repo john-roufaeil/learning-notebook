@@ -30,13 +30,13 @@ enum Key {
     UNKNOWN
 };
 
-bool isInt(std::string input);
-bool isAlpha(std::string input);
-bool isValidDOB(std::string input);
+bool isInt(const std::string &input);
+bool isAlpha(const std::string &input);
+bool isValidDOB(const std::string &input);
 DOB extractDOB(std::string input);
 void gotoxy(int x, int y);
-int getColorCode(std::string color);
-void changeColor(std::string textColor);
+int getColorCode(const std::string &color);
+void changeColor(const std::string &textColor);
 void resetColor();
 void clearScreen();
 Key getKeyPress();
