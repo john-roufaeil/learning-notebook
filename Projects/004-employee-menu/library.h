@@ -2,19 +2,6 @@
 #define LIBRARY_H
 
 #include <string>
-#include <iostream>
-#include <cstdlib>
-#include <regex>
-
-#ifdef _WIN32
-    #include <windows.h>
-    #include <conio.h>
-#else
-    #include <unistd.h>
-    #include <termios.h>
-#endif
-
-#define MAX_EMPLOYEES 100;
 
 struct DOB {
     int day;

@@ -1,4 +1,15 @@
+#include <iostream>
+#include <cstdlib>
+#include <regex>
 #include "library.h"
+
+#ifdef _WIN32
+    #include <windows.h>
+    #include <conio.h>
+#else
+    #include <unistd.h>
+    #include <termios.h>
+#endif
 
 bool isInt(std::string input) {
     std::regex intRegex("^-?[0-9]+$");
@@ -11,7 +22,7 @@ bool isAlpha(std::string input) {
 }   
 
 bool isValidDOB(std::string input) {
-    std::regex dobRegex("^(0[1-9]|[12][0-9]|3[01]) (0[1-9]|1[0-2]) (19\\d\\d|20[01]\\d|202[0-5])$");
+    std::regex dobRegex("^(0[1-9]|[12][0-9]|3[01]) (0[1-9]|1[0-2]) (19[2-9][0-9]|20[01]\\d|202[0-4])$");
     return std::regex_match(input, dobRegex);
 }
 

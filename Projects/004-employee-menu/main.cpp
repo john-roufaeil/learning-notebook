@@ -1,15 +1,9 @@
+#include <iostream>
 #include "library.h"
 
-void newScreen(Employee employees[], int &employeeCount) {
-    clearScreen();
-    changeColor("cyan");
-    gotoxy(4, 2);
-    std::cout << "=== Register a New Employee ===";
-    resetColor();
+#define MAX_EMPLOYEES 100
 
-    Employee e;
-
-    // firstname validation
+void getValidFirstName(Employee &e) {
     gotoxy(4, 4);
     std::string firstNamePrompt = "First Name: ";
     std::cout << firstNamePrompt;
@@ -38,8 +32,9 @@ void newScreen(Employee employees[], int &employeeCount) {
         resetColor();
         gotoxy(4 + firstNamePrompt.length(), 4);
     }
+}
 
-    // lastname validation
+void getValidLastName(Employee &e) {
     gotoxy(4, 6);
     std::string lastNamePrompt = "Last Name: ";
     std::cout << lastNamePrompt;
@@ -68,8 +63,9 @@ void newScreen(Employee employees[], int &employeeCount) {
         resetColor();
         gotoxy(4 + lastNamePrompt.length(), 6);
     }
+}
 
-    // salary validation
+void getValidSalary(Employee &e) {
     gotoxy(4, 8);
     std::string salaryPrompt = "Salary: ";
     std::cout << salaryPrompt;
@@ -100,8 +96,9 @@ void newScreen(Employee employees[], int &employeeCount) {
         resetColor();
         gotoxy(4 + salaryPrompt.length(), 8);
     }
+}
 
-    // DOB validation
+void getValidDOB(Employee &e) {
     gotoxy(4, 10);
     std::string dobPrompt = "Date of Birth (DD MM YYYY): ";
     std::cout << dobPrompt;
@@ -123,11 +120,26 @@ void newScreen(Employee employees[], int &employeeCount) {
         changeColor("red");
         std::cout << "                                                      ";
         gotoxy(4, 11);
-        std::cout << "Enter numbers only (DD MM YYYY) between 01/01/1925 and 01/01/2025";
+        std::cout << "Enter numbers only (DD MM YYYY) between 01/01/1920 and 31/12/2024";
 
         resetColor();
         gotoxy(4 + dobPrompt.length(), 10);
     }
+}
+
+void newScreen(Employee employees[], int &employeeCount) {
+    clearScreen();
+    changeColor("cyan");
+    gotoxy(4, 2);
+    std::cout << "=== Register a New Employee ===";
+    resetColor();
+
+    Employee e;
+
+    getValidFirstName(e);
+    getValidLastName(e);
+    getValidSalary(e);
+    getValidDOB(e);
 
     employees[employeeCount++] = e;
 
@@ -176,33 +188,8 @@ void displayScreen(Employee employees[], int employeeCount) {
     }
 }
 
-int main() {
-    Employee employees[MAX_EMPLOYEES];
-    int employeeCount = 0;
-
-    std::string menuItems[] = { "New", "Display", "Exit" };
-    int menuSize = sizeof(menuItems) / sizeof(menuItems[0]);
-    int selectedIndex = 0;
-
-    while (true) {
-        clearScreen();
-        changeColor("cyan");
-        gotoxy(4, 2);
-        std::cout << "=== MAIN MENU ===";
-        resetColor();
-
-        for (short i = 0; i < menuSize; i++) {
-            gotoxy(4, 4 + i);
-            if (i == selectedIndex) {
-                changeColor("lightmagenta");
-                std::cout << "> " << menuItems[i];
-                resetColor();
-            } else {
-                std::cout << "  " << menuItems[i];
-            }
-        }
-
-        Key key = getKeyPress();
+void getMenuInput(const std::string menuItems[], int &selectedIndex, int menuSize, int employeeCount, Employee employees[]) {
+    Key key = getKeyPress();
         switch (key) {
             case UP:
             case LEFT:
@@ -237,6 +224,38 @@ int main() {
             default:
                 break;
         }
+}
+
+void drawMenu(const std::string menuItems[], int menuSize, int selectedIndex) {
+    clearScreen();
+        changeColor("cyan");
+        gotoxy(4, 2);
+        std::cout << "=== MAIN MENU ===";
+        resetColor();
+
+        for (short i = 0; i < menuSize; i++) {
+            gotoxy(4, 4 + i);
+            if (i == selectedIndex) {
+                changeColor("lightmagenta");
+                std::cout << "> " << menuItems[i];
+                resetColor();
+            } else {
+                std::cout << "  " << menuItems[i];
+            }
+        }
+}
+
+int main() {
+    Employee employees[MAX_EMPLOYEES];
+    int employeeCount = 0;
+
+    std::string menuItems[] = { "New", "Display", "Exit" };
+    int menuSize = sizeof(menuItems) / sizeof(menuItems[0]);
+    int selectedIndex = 0;
+
+    while (true) {
+        drawMenu(menuItems, menuSize, selectedIndex);
+        getMenuInput(menuItems, selectedIndex, menuSize, employeeCount, employees);
     }
 
     return 0;
