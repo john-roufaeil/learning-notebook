@@ -14,7 +14,7 @@ int main() {
     char testStr4[] = "Hello, World";
     char testStr5[] = "ANOTHER $TR!NG";
     char testStr6[] = "This is a Sample String";
-    char testStr7[20] = {'H', 'e', 'l', 'l', 'o', '\0'};
+    char testStr7[20] = "Hello";
     char testStr8[6] = "World";
     char testStr9[] = "Sample";
     char testStr10[] = "Text";
