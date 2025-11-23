@@ -1,5 +1,9 @@
+#include <iostream>
 #include "helpers.h"
 #include "terminal.h"
+
+#define START_X 4
+#define START_Y 2
 
 bool isFileExist(const std::string* fileName) {
     std::string path = "./Files/" + *fileName;

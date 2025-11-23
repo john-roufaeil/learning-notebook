@@ -1,5 +1,18 @@
+#include <iostream>
+#include <filesystem>
 #include "terminal.h"
 #include "helpers.h"
+
+#ifdef _WIN32
+    #include <windows.h>
+    #include <conio.h>
+    #include <Lmcons.h>
+#else
+    #include <unistd.h>
+    #include <termios.h>
+    #include <sys/ioctl.h>
+    #include <pwd.h>
+#endif
 
 void gotoxy(short x, short y) {
 #ifdef _WIN32

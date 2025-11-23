@@ -2,19 +2,6 @@
 #define TERMINAL_H
 
 #include <string>
-#include <iostream>
-#include <filesystem>
-
-#ifdef _WIN32
-    #include <windows.h>
-    #include <conio.h>
-    #include <Lmcons.h>
-#else
-    #include <unistd.h>
-    #include <termios.h>
-    #include <sys/ioctl.h>
-    #include <pwd.h>
-#endif
 
 enum InputMode
 {

@@ -1,6 +1,10 @@
+#include <iostream>
 #include "terminal.h"
 #include "helpers.h"
 #include "files.h"
+
+#define START_X 4
+#define START_Y 2
 
 void waitForBackOrExit() {
     while (true) {

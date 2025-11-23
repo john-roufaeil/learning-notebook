@@ -1,6 +1,15 @@
+#include <string>
+#include <fstream>
+#include <filesystem>
+#include <iostream>
 #include "files.h"
 #include "terminal.h"
 #include "helpers.h"
+
+#define START_X 4
+#define START_Y 2
+#define MAX_NUMBER_OF_FILES 100
+
 
 void takeFileInput(int count, char *fileContent, char *fileName) {
     int rowWidth = getTerminalSize().cols - 2 * START_X;
