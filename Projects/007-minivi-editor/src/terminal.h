@@ -51,7 +51,6 @@ void setInputMode(InputMode mode); // Allow or disallow user input text to be sh
 Key getKeyPress();
 TerminalSize getTerminalSize();
 void delay(int milliseconds);
-// void typeText(const std::string &message, int delayTime = 10);
 const char *getCurrentUsername();
 
 #endif

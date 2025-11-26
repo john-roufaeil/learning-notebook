@@ -80,7 +80,6 @@ int str_concat(char str1[], char str2[], int str1Len) {
     return 0;
 }
 
-
 int str_copy(char str1[], char str2[]) {
     int str2_len = str_len(str2);
     if (str2_len > str_len(str1)) return -1;

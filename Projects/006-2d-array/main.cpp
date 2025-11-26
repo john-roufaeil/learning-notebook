@@ -19,9 +19,4 @@ int main(void) {
     display2DArray(tdArr, 3, 5);
 
     return 0;
-}
-
-//tdArr is ptr to tdArr[0]
-//tdArr + i is ptr to tdArr[i]
-//*(tdArr + i) is tdArr[i] which is ptr to tdArr[i][0]
-//*( *(tdArr + i) + j) is tdArr[i][j]
+}\
