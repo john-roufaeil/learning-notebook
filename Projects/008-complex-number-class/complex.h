@@ -6,12 +6,18 @@ class Complex {
         int real;
         int img;
     public:
-        void setReal(int real);
-        int getReal();
-        void setImg(int img);
-        int getImg();
-        void displayComplex();
         Complex(int real = 0, int img = 0);
+
+        void setReal(int real);
+        int getReal() const;
+        void setImg(int img);
+        int getImg() const;
+        void displayComplex();
+
+        Complex operator+(const Complex &other) const;
+        Complex operator-(const Complex &other) const;
+        Complex operator*(const Complex &other) const;
+        Complex operator/(const Complex &other) const;
 };
 
 #endif
