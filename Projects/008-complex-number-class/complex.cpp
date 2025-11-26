@@ -59,3 +59,35 @@ Complex Complex::operator/(const Complex &other) const {
     int resultDenominator = otherReal * otherReal + otherImg * otherImg;
     return Complex(resultRealNumerator / resultDenominator, resultImgNumerator / resultDenominator);
 }
+
+void Complex::operator=(const Complex &other) {
+    this->setReal(other.getReal());
+    this->setImg(other.getImg());
+}
+
+void Complex::operator+=(const Complex &other) {
+    this->setReal(other.getReal() + this->getReal());
+    this->setImg(other.getImg() + this->getImg());
+}
+
+void Complex::operator-=(const Complex &other) {
+    this->setReal(this->getReal() - other.getReal());
+    this->setImg(this->getImg() - other.getImg());
+}
+
+void Complex::operator*=(const Complex &other) {
+    this->setReal(this->getReal() * other.getReal() - this->getImg() * other.getImg());
+    this->setImg(this->getImg() * other.getReal() + this->getReal() * other.getImg());
+}
+
+void Complex::operator/=(const Complex &other) {
+    int thisReal = this->getReal();
+    int thisImg = this->getImg();
+    int otherReal = other.getReal();
+    int otherImg = other.getImg();
+    int resultRealNumerator = thisReal * otherReal + thisImg * otherImg;
+    int resultImgNumerator = thisImg * otherReal - thisReal * otherImg;
+    int resultDenominator = otherReal * otherReal + otherImg * otherImg;
+    this->setReal(resultRealNumerator / resultDenominator);
+    this->setImg(resultImgNumerator / resultDenominator);
+}

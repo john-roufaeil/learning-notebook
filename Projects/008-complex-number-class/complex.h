@@ -18,6 +18,11 @@ class Complex {
         Complex operator-(const Complex &other) const;
         Complex operator*(const Complex &other) const;
         Complex operator/(const Complex &other) const;
+        void operator=(const Complex &other);
+        void operator+=(const Complex &other);
+        void operator-=(const Complex &other);
+        void operator*=(const Complex &other);
+        void operator/=(const Complex &other);
 };
 
 #endif
