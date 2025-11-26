@@ -91,3 +91,11 @@ void Complex::operator/=(const Complex &other) {
     this->setReal(resultRealNumerator / resultDenominator);
     this->setImg(resultImgNumerator / resultDenominator);
 }
+
+bool Complex::operator==(const Complex &other) const {
+    return this->getReal() == other.getReal() && this->getImg() == other.getImg();
+}
+
+bool Complex::operator!=(const Complex &other) const {
+    return this->getReal() != other.getReal() || this->getImg() != other.getImg();
+}
