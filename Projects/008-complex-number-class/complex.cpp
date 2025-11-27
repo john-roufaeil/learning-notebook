@@ -23,8 +23,8 @@ double Complex::getImg() const {
 }
 
 Complex::Complex(double real, double img) {
-    setReal(real);
-    setImg(img);
+    this->real = real;
+    this->img = img;
 }
 
 Complex Complex::operator+(const Complex &other) const {
