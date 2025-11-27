@@ -22,15 +22,19 @@ class Complex {
         Complex operator-(double n) const;
         Complex operator*(double n) const;
         Complex operator/(double n) const;
+        Complex operator++(int); // Postfix
+        Complex operator--(int);
+        Complex& operator++(); // Prefix
+        Complex& operator--();
         Complex& operator=(const Complex &other);
-        void operator+=(const Complex &other);
-        void operator-=(const Complex &other);
-        void operator*=(const Complex &other);
-        void operator/=(const Complex &other);
-        void operator+=(double n);
-        void operator-=(double n);
-        void operator*=(double n);
-        void operator/=(double n);
+        Complex& operator+=(const Complex &other);
+        Complex& operator-=(const Complex &other);
+        Complex& operator*=(const Complex &other);
+        Complex& operator/=(const Complex &other);
+        Complex& operator+=(double n);
+        Complex& operator-=(double n);
+        Complex& operator*=(double n);
+        Complex& operator/=(double n);
         bool operator==(const Complex &other) const;
         bool operator!=(const Complex &other) const;
         double magnitude() const;

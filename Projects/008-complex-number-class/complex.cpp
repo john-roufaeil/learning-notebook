@@ -84,32 +84,57 @@ Complex Complex::operator/(double n) const {
     return Complex(this->getReal() / n, this->getImg() / n);
 }
 
+Complex Complex::operator++(int) {
+    Complex before = *this;
+    this->setReal(this->getReal() + 1);
+    return before;
+}
+
+Complex Complex::operator--(int) {
+    Complex before = *this;
+    this->setReal(this->getReal() - 1);
+    return before;
+}
+
+Complex& Complex::operator++() {
+    this->setReal(this->getReal() + 1);
+    return *this;
+}
+
+Complex& Complex::operator--() {
+    this->setReal(this->getReal() - 1);
+    return *this;
+}
+
 Complex& Complex::operator=(const Complex &other) {
     this->setReal(other.getReal());
     this->setImg(other.getImg());
     return *this;
 }
 
-void Complex::operator+=(const Complex &other) {
+Complex& Complex::operator+=(const Complex &other) {
     this->setReal(other.getReal() + this->getReal());
     this->setImg(other.getImg() + this->getImg());
+    return *this;
 }
 
-void Complex::operator-=(const Complex &other) {
+Complex& Complex::operator-=(const Complex &other) {
     this->setReal(this->getReal() - other.getReal());
     this->setImg(this->getImg() - other.getImg());
+    return *this;
 }
 
-void Complex::operator*=(const Complex &other) {
+Complex& Complex::operator*=(const Complex &other) {
     double thisReal = this->getReal();
     double thisImg = this->getImg();
     double otherReal = other.getReal();
     double otherImg = other.getImg();
     this->setReal(thisReal * otherReal - thisImg * otherImg);
     this->setImg(thisImg * otherReal + thisReal * otherImg);
+    return *this;
 }
 
-void Complex::operator/=(const Complex &other) {
+Complex& Complex::operator/=(const Complex &other) {
     double thisReal = this->getReal();
     double thisImg = this->getImg();
     double otherReal = other.getReal();
@@ -121,26 +146,31 @@ void Complex::operator/=(const Complex &other) {
         throw std::invalid_argument("Division by zero");
     this->setReal(resultRealNumerator / resultDenominator);
     this->setImg(resultImgNumerator / resultDenominator);
+    return *this;
 }
 
-void Complex::operator+=(double n) {
+Complex& Complex::operator+=(double n) {
     this->setReal(this->getReal() + n);
+    return *this;
 }
 
-void Complex::operator-=(double n) {
+Complex& Complex::operator-=(double n) {
     this->setReal(this->getReal() - n);
+    return *this;
 }
 
-void Complex::operator*=(double n) {
+Complex& Complex::operator*=(double n) {
     this->setReal(this->getReal() * n);
     this->setImg(this->getImg() * n);
+    return *this;
 }
 
-void Complex::operator/=(double n) {
+Complex& Complex::operator/=(double n) {
     if (abs(n) < EPSILON)
         throw std::invalid_argument("Division by zero");
     this->setReal(this->getReal() / n);
     this->setImg(this->getImg() / n);
+    return *this;
 }
 
 bool Complex::operator==(const Complex &other) const {
