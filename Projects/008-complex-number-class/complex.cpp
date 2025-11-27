@@ -22,18 +22,6 @@ double Complex::getImg() const {
     return this->img;
 }
 
-void Complex::display() {
-    // if (this->getImg() < EPSILON) 
-    //     return std::to_string(this->getReal()) + std::to_string(this->getImg()) + "i";
-    // return std::to_string(this->getReal()) + "+" + std::to_string(this->getImg()) + "i";
-    if (this->getImg() < 0) {
-        std::cout << this->getReal() << this->getImg() << "i";
-    } else {
-        std::cout << this->getReal() << "+" << this->getImg() << "i";
-    }
-    // std::cout << "==========" << std::endl;
-}
-
 Complex::Complex(double real, double img) {
     setReal(real);
     setImg(img);
@@ -212,4 +200,18 @@ Complex operator/(double n, const Complex& c) {
     if (abs(denominator) < EPSILON)
         throw std::invalid_argument("Division by zero");
     return Complex(n * c.getReal() / denominator, -n * c.getImg() / denominator);
+}
+
+std::ostream& operator<<(std::ostream& os, const Complex& c) {
+    if (c.getImg() < 0) 
+        return os << c.getReal() << c.getImg() << "i";
+    return os << c.getReal() << "+" << c.getImg() << "i";
+}
+
+std::istream& operator>>(std::istream& is, Complex& c) {
+    double real, img;
+    is >> real >> img ;
+    c.setReal(real);
+    c.setImg(img);
+    return is;
 }
