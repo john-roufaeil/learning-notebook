@@ -2,19 +2,19 @@
 #include "complex.h"
 #include <cmath>
 
-void Complex::setReal(int real)  {
+void Complex::setReal(double real)  {
     this->real = real;
 }
 
-int Complex::getReal() const {
+double Complex::getReal() const {
     return this->real;
 }
 
-void Complex::setImg(int img)  {
+void Complex::setImg(double img)  {
     this->img = img;
 }
 
-int Complex::getImg() const {
+double Complex::getImg() const {
     return this->img;
 }
 
@@ -27,53 +27,53 @@ void Complex::displayComplex() {
     std::cout << "==========" << std::endl;
 }
 
-Complex::Complex(int real, int img) {
+Complex::Complex(double real, double img) {
     setReal(real);
     setImg(img);
 }
 
 Complex Complex::operator+(const Complex &other) const {
-    int resultReal = this->getReal() + other.getReal();
-    int resultImg = this->getImg() + other.getImg();
+    double resultReal = this->getReal() + other.getReal();
+    double resultImg = this->getImg() + other.getImg();
     return Complex(resultReal, resultImg);
 }
 
 Complex Complex::operator-(const Complex &other) const {
-    int resultReal = this->getReal() - other.getReal();
-    int resultImg = this->getImg() - other.getImg();
+    double resultReal = this->getReal() - other.getReal();
+    double resultImg = this->getImg() - other.getImg();
     return Complex(resultReal, resultImg);
 }
 
 Complex Complex::operator*(const Complex &other) const {
-    int resultReal = this->getReal() * other.getReal() - this->getImg() * other.getImg();
-    int resultImg = this->getImg() * other.getReal() + this->getReal() * other.getImg();
+    double resultReal = this->getReal() * other.getReal() - this->getImg() * other.getImg();
+    double resultImg = this->getImg() * other.getReal() + this->getReal() * other.getImg();
     return Complex(resultReal, resultImg);
 }
 
 Complex Complex::operator/(const Complex &other) const {
-    int thisReal = this->getReal();
-    int thisImg = this->getImg();
-    int otherReal = other.getReal();
-    int otherImg = other.getImg();
-    int resultRealNumerator = thisReal * otherReal + thisImg * otherImg;
-    int resultImgNumerator = thisImg * otherReal - thisReal * otherImg;
-    int resultDenominator = otherReal * otherReal + otherImg * otherImg;
+    double thisReal = this->getReal();
+    double thisImg = this->getImg();
+    double otherReal = other.getReal();
+    double otherImg = other.getImg();
+    double resultRealNumerator = thisReal * otherReal + thisImg * otherImg;
+    double resultImgNumerator = thisImg * otherReal - thisReal * otherImg;
+    double resultDenominator = otherReal * otherReal + otherImg * otherImg;
     return Complex(resultRealNumerator / resultDenominator, resultImgNumerator / resultDenominator);
 }
 
-Complex Complex::operator+(int n) const {
+Complex Complex::operator+(double n) const {
     return Complex(this->getReal() + n, this->getImg());
 }
 
-Complex Complex::operator-(int n) const {
+Complex Complex::operator-(double n) const {
     return Complex(this->getReal() - n, this->getImg());
 }
 
-Complex Complex::operator*(int n) const {
+Complex Complex::operator*(double n) const {
     return Complex(this->getReal() * n, this->getImg());
 }
 
-Complex Complex::operator/(int n) const {
+Complex Complex::operator/(double n) const {
     return Complex(this->getReal() / n, this->getImg());
 }
 
@@ -93,35 +93,39 @@ void Complex::operator-=(const Complex &other) {
 }
 
 void Complex::operator*=(const Complex &other) {
-    this->setReal(this->getReal() * other.getReal() - this->getImg() * other.getImg());
-    this->setImg(this->getImg() * other.getReal() + this->getReal() * other.getImg());
+    double thisReal = this->getReal();
+    double thisImg = this->getImg();
+    double otherReal = other.getReal();
+    double otherImg = other.getImg();
+    this->setReal(thisReal * otherReal - thisImg * otherImg);
+    this->setImg(thisImg * otherReal + thisReal * otherImg);
 }
 
 void Complex::operator/=(const Complex &other) {
-    int thisReal = this->getReal();
-    int thisImg = this->getImg();
-    int otherReal = other.getReal();
-    int otherImg = other.getImg();
-    int resultRealNumerator = thisReal * otherReal + thisImg * otherImg;
-    int resultImgNumerator = thisImg * otherReal - thisReal * otherImg;
-    int resultDenominator = otherReal * otherReal + otherImg * otherImg;
+    double thisReal = this->getReal();
+    double thisImg = this->getImg();
+    double otherReal = other.getReal();
+    double otherImg = other.getImg();
+    double resultRealNumerator = thisReal * otherReal + thisImg * otherImg;
+    double resultImgNumerator = thisImg * otherReal - thisReal * otherImg;
+    double resultDenominator = otherReal * otherReal + otherImg * otherImg;
     this->setReal(resultRealNumerator / resultDenominator);
     this->setImg(resultImgNumerator / resultDenominator);
 }
 
-void Complex::operator+=(int n) {
+void Complex::operator+=(double n) {
     this->setReal(this->getReal() + n);
 }
 
-void Complex::operator-=(int n) {
+void Complex::operator-=(double n) {
     this->setReal(this->getReal() - n);
 }
 
-void Complex::operator*=(int n) {
+void Complex::operator*=(double n) {
     this->setReal(this->getReal() * n);
 }
 
-void Complex::operator/=(int n) {
+void Complex::operator/=(double n) {
     this->setReal(this->getReal() / n);
 }
 
@@ -133,8 +137,8 @@ bool Complex::operator!=(const Complex &other) const {
     return this->getReal() != other.getReal() || this->getImg() != other.getImg();
 }
 
-int Complex::magnitude() const {
-    int underRoot = this->getImg() * this->getImg() + this->getReal() * this->getReal();
+double Complex::magnitude() const {
+    double underRoot = this->getImg() * this->getImg() + this->getReal() * this->getReal();
     return sqrt(underRoot);
 }
 
