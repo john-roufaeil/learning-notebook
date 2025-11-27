@@ -22,7 +22,7 @@ class Complex {
         Complex operator-(double n) const;
         Complex operator*(double n) const;
         Complex operator/(double n) const;
-        void operator=(const Complex &other);
+        Complex& operator=(const Complex &other);
         void operator+=(const Complex &other);
         void operator-=(const Complex &other);
         void operator*=(const Complex &other);

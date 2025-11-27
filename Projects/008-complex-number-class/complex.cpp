@@ -1,6 +1,9 @@
 #include <iostream>
 #include "complex.h"
 #include <cmath>
+#include <stdexcept>
+
+#define EPSILON 1e-9
 
 void Complex::setReal(double real)  {
     this->real = real;
@@ -58,6 +61,8 @@ Complex Complex::operator/(const Complex &other) const {
     double resultRealNumerator = thisReal * otherReal + thisImg * otherImg;
     double resultImgNumerator = thisImg * otherReal - thisReal * otherImg;
     double resultDenominator = otherReal * otherReal + otherImg * otherImg;
+    if (resultDenominator < EPSILON)
+        throw std::invalid_argument("Division by zero");
     return Complex(resultRealNumerator / resultDenominator, resultImgNumerator / resultDenominator);
 }
 
@@ -70,16 +75,19 @@ Complex Complex::operator-(double n) const {
 }
 
 Complex Complex::operator*(double n) const {
-    return Complex(this->getReal() * n, this->getImg());
+    return Complex(this->getReal() * n, this->getImg() * n);
 }
 
-Complex Complex::operator/(double n) const {
-    return Complex(this->getReal() / n, this->getImg());
+Complex Complex::operator/(double n) const {   
+    if (abs(n) < EPSILON)
+        throw std::invalid_argument("Division by zero");
+    return Complex(this->getReal() / n, this->getImg() / n);
 }
 
-void Complex::operator=(const Complex &other) {
+Complex& Complex::operator=(const Complex &other) {
     this->setReal(other.getReal());
     this->setImg(other.getImg());
+    return *this;
 }
 
 void Complex::operator+=(const Complex &other) {
@@ -109,6 +117,8 @@ void Complex::operator/=(const Complex &other) {
     double resultRealNumerator = thisReal * otherReal + thisImg * otherImg;
     double resultImgNumerator = thisImg * otherReal - thisReal * otherImg;
     double resultDenominator = otherReal * otherReal + otherImg * otherImg;
+    if (resultDenominator < EPSILON)
+        throw std::invalid_argument("Division by zero");
     this->setReal(resultRealNumerator / resultDenominator);
     this->setImg(resultImgNumerator / resultDenominator);
 }
@@ -123,18 +133,22 @@ void Complex::operator-=(double n) {
 
 void Complex::operator*=(double n) {
     this->setReal(this->getReal() * n);
+    this->setImg(this->getImg() * n);
 }
 
 void Complex::operator/=(double n) {
+    if (abs(n) < EPSILON)
+        throw std::invalid_argument("Division by zero");
     this->setReal(this->getReal() / n);
+    this->setImg(this->getImg() / n);
 }
 
 bool Complex::operator==(const Complex &other) const {
-    return this->getReal() == other.getReal() && this->getImg() == other.getImg();
+    return abs(this->getReal() - other.getReal()) < EPSILON && abs(this->getImg() - other.getImg()) < EPSILON;
 }
 
 bool Complex::operator!=(const Complex &other) const {
-    return this->getReal() != other.getReal() || this->getImg() != other.getImg();
+    return abs(this->getReal() - other.getReal()) > EPSILON || abs(this->getImg() - other.getImg()) > EPSILON;
 }
 
 double Complex::magnitude() const {
