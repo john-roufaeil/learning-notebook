@@ -35,8 +35,11 @@ class Complex {
         bool operator!=(const Complex &other) const;
         double magnitude() const;
         Complex conjugate() const;
+    };
 
-        // reverse
-};
+Complex operator+(double n, const Complex& c);
+Complex operator-(double n, const Complex& c);
+Complex operator*(double n, const Complex& c);
+Complex operator/(double n, const Complex& c);
 
 #endif

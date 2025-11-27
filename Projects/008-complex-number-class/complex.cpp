@@ -159,3 +159,23 @@ double Complex::magnitude() const {
 Complex Complex::conjugate() const {
     return Complex(this->getReal(), -1 * this->getImg());
 }
+
+Complex operator+(double n, const Complex& c) {
+    return Complex(n + c.getReal(), c.getImg());
+}
+
+Complex operator-(double n, const Complex& c) {
+    return Complex(n - c.getReal(), -1 * c.getImg());
+}
+
+Complex operator*(double n, const Complex& c) {
+    return Complex(n * c.getReal(), n * c.getImg());
+}
+
+Complex operator/(double n, const Complex& c) {
+    // n / (a+bi) = n * (a-bi) / (a²+b²)
+    double denominator = c.getReal() * c.getReal() + c.getImg() * c.getImg();
+    if (abs(denominator) < EPSILON)
+        throw std::invalid_argument("Division by zero");
+    return Complex(n * c.getReal() / denominator, -n * c.getImg() / denominator);
+}
