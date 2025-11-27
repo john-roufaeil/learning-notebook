@@ -1,5 +1,6 @@
 #include <iostream>
 #include "complex.h"
+#include <cmath>
 
 void Complex::setReal(int real)  {
     this->real = real;
@@ -60,6 +61,22 @@ Complex Complex::operator/(const Complex &other) const {
     return Complex(resultRealNumerator / resultDenominator, resultImgNumerator / resultDenominator);
 }
 
+Complex Complex::operator+(int n) const {
+    return Complex(this->getReal() + n, this->getImg());
+}
+
+Complex Complex::operator-(int n) const {
+    return Complex(this->getReal() - n, this->getImg());
+}
+
+Complex Complex::operator*(int n) const {
+    return Complex(this->getReal() * n, this->getImg());
+}
+
+Complex Complex::operator/(int n) const {
+    return Complex(this->getReal() / n, this->getImg());
+}
+
 void Complex::operator=(const Complex &other) {
     this->setReal(other.getReal());
     this->setImg(other.getImg());
@@ -92,10 +109,35 @@ void Complex::operator/=(const Complex &other) {
     this->setImg(resultImgNumerator / resultDenominator);
 }
 
+void Complex::operator+=(int n) {
+    this->setReal(this->getReal() + n);
+}
+
+void Complex::operator-=(int n) {
+    this->setReal(this->getReal() - n);
+}
+
+void Complex::operator*=(int n) {
+    this->setReal(this->getReal() * n);
+}
+
+void Complex::operator/=(int n) {
+    this->setReal(this->getReal() / n);
+}
+
 bool Complex::operator==(const Complex &other) const {
     return this->getReal() == other.getReal() && this->getImg() == other.getImg();
 }
 
 bool Complex::operator!=(const Complex &other) const {
     return this->getReal() != other.getReal() || this->getImg() != other.getImg();
+}
+
+int Complex::magnitude() const {
+    int underRoot = this->getImg() * this->getImg() + this->getReal() * this->getReal();
+    return sqrt(underRoot);
+}
+
+Complex Complex::conjugate() const {
+    return Complex(this->getReal(), -1 * this->getImg());
 }
