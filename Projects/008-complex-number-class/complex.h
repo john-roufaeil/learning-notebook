@@ -12,7 +12,7 @@ class Complex {
         double getReal() const;
         void setImg(double img);
         double getImg() const;
-        void displayComplex();
+        void display();
 
         Complex operator+(const Complex &other) const;
         Complex operator-(const Complex &other) const;

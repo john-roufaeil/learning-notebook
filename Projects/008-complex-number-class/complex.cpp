@@ -2,6 +2,7 @@
 #include "complex.h"
 #include <cmath>
 #include <stdexcept>
+#include <string>
 
 #define EPSILON 1e-9
 
@@ -21,13 +22,16 @@ double Complex::getImg() const {
     return this->img;
 }
 
-void Complex::displayComplex() {
+void Complex::display() {
+    // if (this->getImg() < EPSILON) 
+    //     return std::to_string(this->getReal()) + std::to_string(this->getImg()) + "i";
+    // return std::to_string(this->getReal()) + "+" + std::to_string(this->getImg()) + "i";
     if (this->getImg() < 0) {
-        std::cout << this->getReal() << this->getImg() << "i" << std::endl;
+        std::cout << this->getReal() << this->getImg() << "i";
     } else {
-        std::cout << this->getReal() << "+" << this->getImg() << "i" << std::endl;
+        std::cout << this->getReal() << "+" << this->getImg() << "i";
     }
-    std::cout << "==========" << std::endl;
+    // std::cout << "==========" << std::endl;
 }
 
 Complex::Complex(double real, double img) {
