@@ -1,4 +1,5 @@
 #include <iostream>
+#include "helpers.h"
 #include "library.h"
 #include "employees.h"
 #define MAX_EMPLOYEES 100
@@ -11,19 +12,10 @@ void newScreen(Employee employees[], int &employeeCount) {
     resetColor();
 
     Employee e;
-
-    gotoxy(4, 4);
-    std::cout << "";
-
-    Key key = getKeyPress();
-    if (key == ESCAPE) {
-        return;
-    }
-
-    getValidFirstName(e);
-    getValidLastName(e);
-    getValidSalary(e);
-    getValidDOB(e);
+    if (getValidFirstName(e) == 1) return;
+    if (getValidLastName(e) == 1) return;
+    if (getValidSalary(e) == 1) return;
+    if (getValidDOB(e) == 1) return;
 
     employees[employeeCount] = e;
     employeeCount++;
@@ -56,16 +48,10 @@ void displayScreen(Employee employees[], int employeeCount) {
     gotoxy(4, 4);
     for (int i = 0; i < employeeCount; i++) {
         gotoxy(4, 4 + i);
-        std::cout << i + 1 << ". " << employees[i].firstName;
-        gotoxy(4 + 10, 4 + i);
-        std::cout << employees[i].lastName;
-        gotoxy(4 + 20, 4 + i);
-        std::cout << employees[i].salary;
-        gotoxy(4 + 28, 4 + i);
-        std::cout << employees[i].dob.day << "/" << employees[i].dob.month << "/" << employees[i].dob.year;
+        std::cout << i + 1 << ". " << employees[i].firstName << " " << employees[i].lastName << " " << 
+        employees[i].salary << " " << employees[i].dob.day << "/" << employees[i].dob.month << "/" << employees[i].dob.year;
     }
-    while (true)
-    {
+    while (true) {
         Key key = getKeyPress();
         if (key == BACKSPACE) {
             return;
@@ -114,8 +100,16 @@ void getMenuInput(int &selectedIndex, int menuSize, int &employeeCount, Employee
         }
 }
 
-void drawMenu(const std::string menuItems[], int menuSize, int selectedIndex) {
-    clearScreen();
+int main() {
+    Employee employees[MAX_EMPLOYEES];
+    int employeeCount = 0;
+
+    std::string menuItems[] = { "New Employee", "Display Employees", "Exit" };
+    int menuSize = sizeof(menuItems) / sizeof(menuItems[0]);
+    int selectedIndex = 0;
+
+    while (true) {
+        clearScreen();
         changeColor("cyan");
         gotoxy(4, 2);
         std::cout << "=== MAIN MENU ===";
@@ -131,18 +125,6 @@ void drawMenu(const std::string menuItems[], int menuSize, int selectedIndex) {
                 std::cout << "  " << menuItems[i];
             }
         }
-}
-
-int main() {
-    Employee employees[MAX_EMPLOYEES];
-    int employeeCount = 0;
-
-    std::string menuItems[] = { "New Employee", "Display Employees", "Exit" };
-    int menuSize = sizeof(menuItems) / sizeof(menuItems[0]);
-    int selectedIndex = 0;
-
-    while (true) {
-        drawMenu(menuItems, menuSize, selectedIndex);
         getMenuInput(selectedIndex, menuSize, employeeCount, employees);
      }
 

@@ -4,9 +4,9 @@
 #include <string>
 #include "library.h"
 
-void getValidFirstName(Employee &e);
-void getValidLastName(Employee &e);
-void getValidSalary(Employee &e);
-void getValidDOB(Employee &e);
+int getValidFirstName(Employee &e);
+int getValidLastName(Employee &e);
+int getValidSalary(Employee &e);
+int getValidDOB(Employee &e);
 
 #endif
