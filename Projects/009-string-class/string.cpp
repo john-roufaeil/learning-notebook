@@ -54,11 +54,11 @@ void String::setSize(int newSize) {
     this->size = newSize;
 }
 
-int String::getSize() {
+int String::getSize() const {
     return this->size;
 }
 
-void String::setStr(char* newStr) {
+void String::setStr(const char* newStr) {
     if (!newStr) return;
     int newLen = 0;
     while (newStr[newLen] != '\0') newLen++;
@@ -74,11 +74,11 @@ void String::setStr(char* newStr) {
     this->str[newLen] = '\0';
 }
 
-char* String::getStr() {
+char* String::getStr() const {
     return this->str;
 }
 
-void String::fullPrint() {
+void String::fullPrint() const {
     std::cout << "Size: " << this->getSize() << " chars, Data: " << this->getStr() << std::endl;
 }
 
@@ -109,7 +109,7 @@ const char& String::operator[](int idx) const {
     return this->str[idx];
 }
 
-std::ostream& operator<<(std::ostream& os, String& s) {
+std::ostream& operator<<(std::ostream& os, const String& s) {
     os << s.getStr();
     return os;
 }
