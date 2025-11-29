@@ -2,24 +2,26 @@
 #include "complex.h"
 
 int main() {
-    // Constructor std::cout << and   Complex c1(3, 4);
     Complex c1;
     std::cin >> c1;
     Complex c2(5, -2);
     Complex c3;
-    std::cout << "c1: ";  std::cout << c1; std::cout << std::endl;
-    std::cout << "c2(5, -2): "; std::cout << c2; std::cout << std::endl;
+    std::cout << "__________" << std::endl << std::endl;
+    std::cout << "c1: ";
+    std::cout << c1;
+    std::cout << std::endl;
+    std::cout << "c2: "; std::cout << c2; std::cout << std::endl;
     std::cout << "c3: "; std::cout << c3; std::cout << std::endl;
     std::cout << std::endl;
 
-    // Arithmetic (Complex op Complex)
+    // Complex op Complex
     Complex add = c1 + c2;
     Complex sub = c1 - c2;
     std::cout << c1; std::cout << " + "; std::cout << c2; std::cout << " : "; std::cout << add; std::cout << std::endl;
     std::cout << c1; std::cout << " - "; std::cout << c2; std::cout << " : "; std::cout << sub; std::cout << std::endl;
     std::cout << std::endl;
 
-    // Artihmetic (Complex op double)
+    // Complex op double
     Complex c4(2, 3); 
     Complex addNum = c4 + 5.0;
     Complex subNum = c4 - 2.0;
@@ -27,7 +29,7 @@ int main() {
     std::cout << c4; std::cout << " - "; std::cout << 2.0; std::cout << " : "; std::cout << subNum; std::cout << std::endl;
     std::cout << std::endl;
 
-    // Arithmetic (double op Complex)
+    // double op Complex
     Complex c5(2, 3);
     Complex numAdd = 10.0 + c5;
     Complex numSub = 10.0 - c5;
@@ -60,10 +62,8 @@ int main() {
     std::cout << std::endl;
 
     Complex c11(5, 3);
-    Complex zero(0, 0);
+    Complex zero;
     // Complex result = c11 / zero;
-    std::cout << "c1 = " << c1 << std::endl;
-    std::cout << "c2 = " << c2 << std::endl;
 
     return 0;
 }

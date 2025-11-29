@@ -203,14 +203,24 @@ Complex operator/(double n, const Complex& c) {
 }
 
 std::ostream& operator<<(std::ostream& os, const Complex& c) {
-    if (c.getImg() < 0) 
+    if (c.getImg() == 0) {
+        return os << c.getReal();
+    } else if (c.getImg() == 1) {
+        return os << c.getReal() << "+i";
+    } else if (c.getImg() == -1) {
+        return os << c.getReal() << "-i";
+    } else if (c.getImg() < 0) {
         return os << c.getReal() << c.getImg() << "i";
+    }
     return os << c.getReal() << "+" << c.getImg() << "i";
 }
 
 std::istream& operator>>(std::istream& is, Complex& c) {
     double real, img;
-    is >> real >> img ;
+    std::cout << "Input real: ";
+    is >> real;
+    std::cout << "Input img: ";
+    is >> img;
     c.setReal(real);
     c.setImg(img);
     return is;
