@@ -9,20 +9,21 @@ class String {
         char* str;
 
     public:
-        String(const char* str = "");
-        String(int n);
+        String(int size);
+        String(const char* inputString = "");
+        String(const String &other);
         ~String();
-        int getSize();
         void setSize(int n);
-        char *getStr();
+        int getSize();
         void setStr(char *);
+        char *getStr();
         void fullPrint();
-        char& operator[](int idx);
-        // copy
+        String &operator=(const String &other);
+        char& operator[](int idx); // modifiable
+        const char& operator[](int idx) const; //readonly
 };
 
 std::ostream &operator<<(std::ostream &os, String &s);
-// std::istream &operator>>(std::istream &is, String &s);
-
+std::istream &operator>>(std::istream &is, String &s);
 
 #endif
