@@ -5,9 +5,10 @@
 // Constructors & Destructor --------------------
 
 String::String(int size) {
-    this->str = new char[size];
-    this->str[0] = '\0';
+    if (size < 1) throw std::invalid_argument("Size must cannot be less than 1");
     this->size = size;
+    this->str = new char[size]();
+    this->str[size - 1] = '\0';
 }
 
 String::String(const char* inputString) {
@@ -17,7 +18,7 @@ String::String(const char* inputString) {
     }
     this->size = len + 1;
 
-    this->str = new char[this->size];
+    this->str = new char[this->size]();
     for (int i = 0; i < len; i++) {
         this->str[i] = inputString[i];
     }
@@ -31,7 +32,7 @@ String::String(const String& other) {
     }
     this->size = len + 1;
 
-    this->str = new char[this->size];
+    this->str = new char[this->size]();
     for (int i = 0; i < len; i++) {
         this->str[i] = other[i];
     }
@@ -47,7 +48,7 @@ String::~String() {
 void String::setSize(int newSize) {
     if (newSize < 1) throw std::invalid_argument("Size cannot be less than 1");
 
-    char *newStr = new char[newSize];
+    char *newStr = new char[newSize]();
     int limit = (newSize < this->size) ? newSize - 1: this->size - 1;
     for (int i = 0; i < limit; i++) {
         newStr[i] = this->str[i];
@@ -69,7 +70,7 @@ void String::setStr(const char* newStr) {
     if (newLen + 1 > this->size) {
         delete[] str;
         this->size = newLen + 1;
-        this->str = new char[this->size];
+        this->str = new char[this->size]();
     }
 
     for (int i = 0; i < newLen; i++) {
@@ -97,7 +98,7 @@ bool String::isEmpty() const {
 }
 
 void String::resize(int newSize) {
-    char *newStr = new char[newSize];
+    char *newStr = new char[newSize]();
     int limit = (newSize < this->size) ? newSize - 1: this->size - 1;
     for (int i = 0; i < limit; i++) {
         newStr[i] = this->str[i];
@@ -119,7 +120,6 @@ String& String::operator=(const char *inputString) {
     }
     newLen++;
     
-    // delete[] this->str;
     this->setStr(inputString);
     this->setSize(newLen);
     return *this;
@@ -130,7 +130,6 @@ String& String::operator=(const String& other) {
         return *this;
     }
 
-    // delete[] this->str;
     int newLen = other.getSize();
     this->setStr(other.getStr());
     this->setSize(newLen);
