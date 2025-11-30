@@ -43,21 +43,31 @@ int main() {
     // String s3 = String();
     // s3.fullPrint();
     
+    // String s4 = String(5);
     // std::cout << s4.length() << std::endl;
     // s4.setSize(5);
     // std::cout << s4.length() << std::endl;
     // s4.fullPrint();
     // s4.fullPrint();
-    String s4 = String(5);
-    s4.setStr("balabizo");
-    s4.resize(10);
-    s4.resize(2);
-    s4.fullPrint();
-    s4.clear();
-    s4.fullPrint();
-    s4.resize(3);
-    s4[0] = 'h';
-    s4[1] = s4[0];
-    s4.fullPrint();
+    // s4.setStr("balabizo");
+    // s4.resize(10);
+    // s4.resize(2);
+    // s4.fullPrint();
+    // s4.clear();
+    // s4.fullPrint();
+    // s4.resize(3);
+    // s4[0] = 'h';
+    // s4[1] = s4[0];
+    // s4.fullPrint();
+
+    String s1 = "hello";
+    String s2 = " world";
+    s1.fullPrint();
+    s1.append(s2);
+    s1.fullPrint();
+
+    s1+="!";
+    s1.fullPrint();
+
     return 0;
 }

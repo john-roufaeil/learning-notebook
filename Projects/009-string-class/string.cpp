@@ -136,6 +136,102 @@ String& String::operator=(const String& other) {
     return *this;
 }
 
+void String::append(const String& s) {
+    int oldLen = this->length();
+    int addLen = s.length();
+
+    this->resize(oldLen + addLen + 1);
+
+    for (int i = 0; i < addLen; i++)
+        this->str[oldLen + i] = s[i];
+
+    this->str[oldLen + addLen] = '\0';
+}
+
+void String::append(const char* s) {
+    int oldLen = this->length();
+
+    int addLen = 0;
+    while (s[addLen] != '\0') addLen++;
+
+    this->resize(oldLen + addLen + 1);
+
+    for (int i = 0; i < addLen; i++)
+        this->str[oldLen + i] = s[i];
+
+    this->str[oldLen + addLen] = '\0';
+}
+
+void String::append(const char c) {
+    int oldLen = this->length();
+
+    this->resize(oldLen + 2);
+
+    this->str[oldLen] = c;
+    this->str[oldLen + 1] = '\0';
+}
+
+String String::operator+(const String& other) const {
+    String result(this->length() + other.length() + 1);
+
+    for (int i = 0; i < this->length(); i++) {
+        result[i] = this->str[i];
+    }
+    for (int i = 0; i < other.length(); i++) {
+        result[i + this->length()] = other[i];
+    }
+
+    result[this->length() + other.length() + 1] = '\0';
+    return result;
+}
+
+String String::operator+(const char* other) const {
+    int otherLen = 0;
+    while (other[otherLen] != '\0') otherLen++;
+
+    String result(this->length() + otherLen + 1);
+
+    for (int i = 0; i < this->length(); i++){
+        result[i] = this->str[i];
+    }
+    for (int i = 0; i < otherLen; i++) {
+        result[i + this->length()] = other[i];
+    }
+
+    result[this->length() + otherLen + 1] = '\0';
+    return result;
+}
+
+String String::operator+(const char c) const {
+    String result(this->length() + 2);
+
+    for (int i = 0; i < this->length(); i++) {
+        result[i] = this->str[i];
+    }
+
+    result[this->length()] = c;
+    result[this->length() + 1] = '\0';
+    return result;
+}
+
+String& String::operator+=(const String& s) {
+    this->append(s);
+    return *this;
+}
+
+String& String::operator+=(const char* s) {
+    this->append(s);
+    return *this;
+}
+
+
+String& String::operator+=(char c) {
+    this->append(c);
+    return *this;
+}
+
+
+
 char& String::operator[](int idx) {
     if (idx >= this-> size) throw std::invalid_argument("Index out of bound.");
     return this->str[idx];
@@ -154,3 +250,4 @@ std::ostream& operator<<(std::ostream& os, const String& s) {
     os << s.getStr();
     return os;
 }
+
