@@ -2,6 +2,8 @@
 #include <stdexcept>
 #include <iostream>
 
+// Constructors & Destructor --------------------
+
 String::String(int size) {
     this->str = new char[size];
     this->str[0] = '\0';
@@ -40,6 +42,8 @@ String::~String() {
     delete[] this->str;
 }
 
+// Setters & Getters ----------------------------
+
 void String::setSize(int newSize) {
     if (newSize < 1) throw std::invalid_argument("Size cannot be less than 1");
 
@@ -63,7 +67,7 @@ void String::setStr(const char* newStr) {
     int newLen = 0;
     while (newStr[newLen] != '\0') newLen++;
     if (newLen + 1 > this->size) {
-        delete str;
+        delete[] str;
         this->size = newLen + 1;
         this->str = new char[this->size];
     }
@@ -74,29 +78,63 @@ void String::setStr(const char* newStr) {
     this->str[newLen] = '\0';
 }
 
-char* String::getStr() const {
+const char* String::getStr() const {
     return this->str;
 }
 
-void String::fullPrint() const {
-    std::cout << "Size: " << this->getSize() << " chars, Data: " << this->getStr() << std::endl;
+// Core Fns -------------------------------------
+
+int String::length() const {
+    int idx = 0;
+    while (this->str[idx] != '\0') {
+        idx++;
+    }
+    return idx;
+}
+
+bool String::isEmpty() const {
+    return this->str[0] == '\0';
+}
+
+void String::resize(int newSize) {
+    char *newStr = new char[newSize];
+    int limit = (newSize < this->size) ? newSize - 1: this->size - 1;
+    for (int i = 0; i < limit; i++) {
+        newStr[i] = this->str[i];
+    }
+    newStr[limit] = '\0';
+    delete[] this->str;
+    this->str = newStr;
+    this->size = newSize;
+}
+
+void String::clear() {
+    this->str[0] = '\0';
+}
+
+String& String::operator=(const char *inputString) { 
+    int newLen = 0;
+    while(inputString[newLen] != '\0') {
+        newLen++;
+    }
+    newLen++;
+    
+    // delete[] this->str;
+    this->setStr(inputString);
+    this->setSize(newLen);
+    return *this;
 }
 
 String& String::operator=(const String& other) {
-    int newLen = 0;
-    while(other[newLen] != '\0') {
-        newLen++;
-    }
-    if (newLen + 1 > this->size) {
-        delete str;
-        this->setSize(newLen + 1);
-        this->setStr(new char[this->size]);
+    if (this == &other) {
+        return *this;
     }
 
-    for (int i = 0; i < newLen; i++) {
-        this->str[i] = other[i];
-    }
-    this->str[newLen] = '\0';
+    // delete[] this->str;
+    int newLen = other.getSize();
+    this->setStr(other.getStr());
+    this->setSize(newLen);
+    return *this;
 }
 
 char& String::operator[](int idx) {
@@ -109,12 +147,11 @@ const char& String::operator[](int idx) const {
     return this->str[idx];
 }
 
+void String::fullPrint() const {
+    std::cout << "Size: " << this->getSize() << " chars, Data: " << this->getStr() << std::endl;
+}
+
 std::ostream& operator<<(std::ostream& os, const String& s) {
     os << s.getStr();
     return os;
-}
-
-std::istream& operator>>(std::istream& is, String& s) {
-    
-    return is;
 }

@@ -17,14 +17,14 @@ class String {
         void setSize(int n);
         int getSize() const;
         void setStr(const char * inputString);
-        char *getStr() const;
+        const char *getStr() const;
 
         int length() const;
         bool isEmpty() const;
         void resize(int newSize);
         void clear();
-        String &operator=(const char *inputString);
-        String &operator=(const String &other);
+        String& operator=(const char *inputString);
+        String& operator=(const String &other);
         char& operator[](int idx); // modifiable
         const char& operator[](int idx) const; //readonly
         
@@ -42,6 +42,7 @@ class String {
         bool operator==(const char *other) const;
         bool operator!=(const String &other) const;
         bool operator!=(const char *other) const;
+        
         bool operator>(const String &other) const;
         bool operator<(const String &other) const;
         bool operator>=(const String &other) const;

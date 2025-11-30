@@ -29,6 +29,8 @@ int main() {
     s1 = s1;
     s1[0] = 'b';
     s1.fullPrint();
-    std::cout << String("Hello"); 
+    std::cout << String("Hello") << std::endl;
+    s1 = "jhndsfg jklvhndfsag";
+    s1.fullPrint();
     return 0;
 }
