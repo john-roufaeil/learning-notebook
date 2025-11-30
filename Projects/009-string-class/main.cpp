@@ -68,6 +68,32 @@ int main() {
 
     s1+="!";
     s1.fullPrint();
-
+    String s3 = String("hello world!");
+    String s4 = String("hi");
+    // std::cout << (s1 == s2);
+    if (s1 == s3)
+        std::cout << "yes";
+    else
+        std::cout << "no";
+    if (s1 == s4)
+        std::cout << "yes";
+    else
+        std::cout << "no";
+    if (s3 == s1)
+        std::cout << "yes";
+    else
+        std::cout << "no";
+    if (s4 == s1)
+        std::cout << "yes";
+    else
+        std::cout << "no";
+    if (s3 == s4)
+        std::cout << "yes";
+    else
+        std::cout << "no";
+    if (s3 < s4)
+        std::cout << "less";
+    else
+        std::cout << "not less";
     return 0;
 }

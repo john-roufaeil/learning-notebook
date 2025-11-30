@@ -230,7 +230,57 @@ String& String::operator+=(char c) {
     return *this;
 }
 
+bool String::operator==(const String& other) const {
+    int i = 0;
+    while (this->str[i] != '\0' && other[i] != '\0') {
+        if (this->str[i] != other[i]) {
+            return false;
+        }
+        i++;
+    }
+    return true;
+}
 
+bool String::operator==(const char* other) const {
+    int i = 0;
+    while (this->str[i] != '\0' && other[i] != '\0') {
+        if (this->str[i] != other[i]) {
+            return false;
+        }
+        i++;
+    }
+    return true;
+}
+
+bool String::operator!=(const String& other) const {
+    return !(*this == other);
+}
+
+bool String::operator!=(const char* other) const {
+    return !(*this == other);
+}
+
+bool String::operator<(const String& other) const {
+    int i = 0;
+    while (this->str[i] != '\0' && other[i] != '\0') {
+        if (this->str[i] < other[i]) return true;
+        if (this->str[i] > other[i]) return false;
+        i++;
+    }
+    return this->length() < other.length();
+}
+
+bool String::operator>(const String& other) const {
+    return other < *this;
+}
+
+bool String::operator<=(const String& other) const {
+    return !(*this > other);
+}
+
+bool String::operator>=(const String& other) const {
+    return !(*this < other);
+}
 
 char& String::operator[](int idx) {
     if (idx >= this-> size) throw std::invalid_argument("Index out of bound.");
