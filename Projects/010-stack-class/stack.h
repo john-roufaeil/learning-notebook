@@ -10,7 +10,6 @@ class Stack {
         Stack(int size = 10);
         ~Stack();
 
-        
         void push(int number);
         int pop();
         int peek();

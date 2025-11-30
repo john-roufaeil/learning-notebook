@@ -1,4 +1,5 @@
 #include <iostream>
+#include <stdexcept>
 #include "stack.h"
 
 Stack::Stack(int size) {

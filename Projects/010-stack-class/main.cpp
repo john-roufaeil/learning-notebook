@@ -26,6 +26,11 @@ int main() {
     s.push(60);
     s.push(40);
     s.push(50);
+    // s.push(40);
+    // s.push(50);
+    // s.push(60);
+    // s.push(40);
+    // s.push(50);
 
     std::cout << "Stack after filling: ";
     s.print();
