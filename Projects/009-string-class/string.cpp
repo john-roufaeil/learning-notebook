@@ -282,6 +282,38 @@ bool String::operator>=(const String& other) const {
     return !(*this < other);
 }
 
+int String::toInt() const {
+    int value = 0;
+    bool isNegative = false;
+    int start = 0;
+    if (this->length() > 1 && this->str[0] == '-') {
+        isNegative = true;
+        start = 1;
+    }
+    for (int i = start; i < this->length(); i++) {
+        if ((this->str[i] > '9' || this->str[i] < '0')) {
+            throw std::invalid_argument("String is not an integer");
+        }
+        value = value * 10 + (this->str[i] - '0');
+    }
+
+    return isNegative ? -value : value;
+}
+
+void String::toLower() {
+    for (int i = 0; i < this->length(); i++) {
+        if (str[i] >= 'A' && str[i] <= 'Z')
+            str[i] = str[i] - 'A' + 'a';
+    }
+}
+
+void String::toUpper() {
+    for (int i = 0; i < this->length(); i++) {
+        if (str[i] >= 'a' && str[i] <= 'z')
+            str[i] = str[i] - 'a' + 'A';
+    }
+}
+
 char& String::operator[](int idx) {
     if (idx >= this-> size) throw std::invalid_argument("Index out of bound.");
     return this->str[idx];

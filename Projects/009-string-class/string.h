@@ -42,22 +42,18 @@ class String {
         bool operator==(const char *other) const;
         bool operator!=(const String &other) const;
         bool operator!=(const char *other) const;
-        
+
         bool operator>(const String &other) const;
         bool operator<(const String &other) const;
         bool operator>=(const String &other) const;
         bool operator<=(const String &other) const;
 
-        bool contains(const String &searchTerm) const;
         int toInt() const;
-        double toDouble() const;
         void toLower();
         void toUpper();
-        void trim();
         void fullPrint() const;
 };
 
 std::ostream &operator<<(std::ostream &os, const String &s);
-std::istream &operator>>(std::istream &is, String &s);
 
 #endif
