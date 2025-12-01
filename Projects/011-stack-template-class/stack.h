@@ -51,22 +51,22 @@ class Stack {
             return valToReturn;
         }
 
-        T peek() {
+        T peek() const {
             if (topIdx == -1) {
                 throw std::invalid_argument("Out of bound");
             }
             return this->ptr[topIdx];
         }
 
-        bool isEmpty() {
+        bool isEmpty() const {
             return topIdx == -1;
         }
 
-        bool isFull() {
+        bool isFull() const {
             return topIdx == this->size - 1;
         }
 
-        void print() {
+        void print() const {
             for (int i = 0; i < this->topIdx + 1; i++) {
                 std::cout << this->ptr[i] << " ";
             }
