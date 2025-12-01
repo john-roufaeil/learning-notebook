@@ -16,6 +16,8 @@ class Stack {
         bool isEmpty();
         bool isFull();
         void print();
+
+        Stack &operator=(const Stack &other);
 };
 
 #endif

@@ -37,5 +37,12 @@ int main() {
     std::cout << "Is empty? " << s.isEmpty() << "\n";
     std::cout << "Is full? " << s.isFull() << "\n";
 
+    Stack s2 = Stack();
+    std::cout << "New stack created: ";
+    s2.print();
+    s2 = s;
+    std::cout << "New stack copied: ";
+    s2.print();
+
     return 0;
 }

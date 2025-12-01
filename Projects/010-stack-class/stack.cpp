@@ -56,3 +56,17 @@ void Stack::print() {
     }
     std::cout << std::endl;
 }
+
+Stack& Stack::operator=(const Stack& other) {
+    if (this == &other) {
+        return *this;
+    }
+    delete[] this->ptr;
+    this->size = other.size;
+    this->topIdx = other.topIdx;
+    this->ptr = new int[this->size];
+    for (int i = 0; i < this->topIdx + 1; i++) {
+        this->ptr[i] = other.ptr[i];
+    }
+    return *this;
+}
