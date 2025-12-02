@@ -3,6 +3,11 @@
 
 #include <string>
 
+enum BoolValues {
+    TRUE,
+    FALSE
+};
+
 enum ItemType {
     INT,
     CHAR,
@@ -23,11 +28,16 @@ class ListItem {
             double doubleValue;
         };
         std::string stringValue;
-        
-        ListItem(int intValue = 0, ItemType type=INT);
+
+        ListItem();
+        ListItem(int value);
+        ListItem(char value);
+        ListItem(bool value);
+        ListItem(float value);
+        ListItem(double value);
+        ListItem(std::string value);
         ListItem(const ListItem &other);
         ListItem& operator=(const ListItem &other);
-        ~ListItem();
 };
 
 class List {
