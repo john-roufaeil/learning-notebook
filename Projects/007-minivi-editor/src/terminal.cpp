@@ -197,14 +197,6 @@ TerminalSize getTerminalSize() {
 #endif
 }
 
-void delay(int milliseconds) {
-#ifdef _WIN32
-    Sleep(milliseconds);
-#else
-    usleep(milliseconds * 1000);
-#endif
-}
-
 const char *getCurrentUsername() {
 #ifdef _WIN32
     static char username[UNLEN + 1]; // UNLEN is a macro defined in <windows.h> for max username length
