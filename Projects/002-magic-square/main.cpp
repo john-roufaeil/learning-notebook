@@ -41,10 +41,10 @@ void takeValidInput(int &n) {
     gotoxy(4, 4);
     typeText("Enter an odd number for the size of the magic square: ", 50);
     std::cin >> n;
-    while (n % 2 == 0 || n < 1 || n > 31) {
+    while (n % 2 == 0 || n < 3 || n > 31) {
         gotoxy(4, 5);
         changeColor("red");
-        typeText("Invalid input. Please enter a positive odd number between 1 and 31.", 50);
+        typeText("Invalid input. Please enter a positive odd number between 3 and 31.", 50);
         changeColor("reset");
         gotoxy(4, 4);
         const std::string prompt = "Enter an odd number for the size of the magic square: ";
