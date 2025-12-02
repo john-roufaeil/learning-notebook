@@ -13,24 +13,21 @@ bool isAlpha(const std::string &input) {
 }   
 
 bool isValidDOB(const std::string &input) {
-    std::regex dobRegex("^(0[1-9]|[12][0-9]|3[01]) (0[1-9]|1[0-2]) (19[2-9][0-9]|20[01]\\d|202[0-4])$");
+    std::regex dobRegex("^(0[1-9]|[12][0-9]|3[01]) (0[1-9]|1[0-2]) (19[2-9][0-9]|20[01][0-9]|202[0-4])$");
     return std::regex_match(input, dobRegex);
 }
 
 DOB extractDOB(std::string input) { //DD MM YYYY
     DOB dob{0,0,0};
-    input += " ";
-    int part = 1; 
     int currNum = 0;
-    for (int i = 0; i < input.length(); i++) {
-        if  (input[i] != ' ') {
+    for (int i = 0; i <= input.length(); i++) {
+        if  (input[i] != ' ' && i != input.length()) {
             currNum = currNum * 10 + (input[i] - '0');
         } else {
-            if (part == 1) dob.day = currNum;
-            else if (part == 2) dob.month = currNum;
-            else if (part == 3) dob.year = currNum;
+            if (dob.day == 0) dob.day = currNum;
+            else if (dob.month == 0) dob.month = currNum;
+            else dob.year = currNum;
             currNum = 0;
-            part++;
         }
     }
     return dob;
