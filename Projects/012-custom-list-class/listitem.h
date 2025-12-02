@@ -30,9 +30,11 @@ class ListItem {
         ListItem(float value);
         ListItem(double value);
         ListItem(std::string value);
+        ListItem(const char* value);
         ListItem(const ListItem &other);
         ListItem& operator=(const ListItem &other);
         ItemType getType();
+        std::string getTypeAsString();
 
         int getInt();
         char getChar();

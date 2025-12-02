@@ -26,11 +26,13 @@ class List {
         void add(float value);
         void add(double value);
         void add(std::string value);
+        void add(const char* value); 
 
         void remove();
         void clear();
         void fullPrint();
-        
+        void detailPrint();
+
         ListItem& operator[](int idx); // modifiable
         const ListItem& operator[](int idx) const; //readonly
         ListItem& getValue(int indx);

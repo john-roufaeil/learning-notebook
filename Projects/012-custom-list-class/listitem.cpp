@@ -31,6 +31,10 @@ ListItem::ListItem(std::string value) {
     this->type = STRING;
     this->stringValue = value;
 }
+ListItem::ListItem(const char* value) {
+    this->type = STRING;
+    this->stringValue = std::string(value);
+}
 
 ListItem::ListItem(const ListItem &other) {
     this->type = other.type;
@@ -85,6 +89,18 @@ ListItem& ListItem::operator=(const ListItem &other) {
 
 ItemType ListItem::getType() {
     return this->type;
+}
+
+std::string ListItem::getTypeAsString() {  
+    switch (this->type) {
+        case INT:    return "INT";
+        case CHAR:   return "CHAR";
+        case BOOL:   return "BOOL";
+        case FLOAT:  return "FLOAT";
+        case DOUBLE: return "DOUBLE";
+        case STRING: return "STRING";
+        default:     return "UNKNOWN";
+    }
 }
 
 int ListItem::getInt() {
