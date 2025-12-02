@@ -1,89 +1,6 @@
+#include "listitem.h"
 #include "list.h"
-
-// ListItem ---
-
-ListItem::ListItem() {
-    this->type = INT;
-    this->intValue = 0;
-}
-
-ListItem::ListItem(int value) {
-    this->type = INT;
-    this->intValue = value;
-}
-ListItem::ListItem(char value) {
-    this->type = CHAR;
-    this->charValue = value;
-}
-ListItem::ListItem(bool value) {
-    this->type = BOOL;
-    this->boolValue = value;
-}
-ListItem::ListItem(float value) {
-    this->type = FLOAT;
-    this->floatValue = value;
-}
-ListItem::ListItem(double value) {
-    this->type = DOUBLE;
-    this->doubleValue = value;
-}
-ListItem::ListItem(std::string value) {
-    this->type = STRING;
-    this->stringValue = value;
-}
-
-ListItem::ListItem(const ListItem &other) {
-    this->type = other.type;
-    switch (other.type) {
-        case INT:
-            this->intValue = other.intValue;
-            break;
-        case CHAR:
-            this->charValue = other.charValue;
-            break;
-        case BOOL:
-            this->boolValue = other.boolValue;
-            break;
-        case FLOAT:
-            this->floatValue = other.floatValue;
-            break;
-        case DOUBLE:
-            this->doubleValue = other.doubleValue;
-            break;
-        case STRING:
-            this->stringValue = other.stringValue;
-            break;
-    }
-}
-
-ListItem& ListItem::operator=(const ListItem &other) {
-    if (this == &other) return *this;
-
-    this->type = other.type;
-    switch (other.type) {
-        case INT:
-            this->intValue = other.intValue;
-            break;
-        case CHAR:
-            this->charValue = other.charValue;
-            break;
-        case BOOL:
-            this->boolValue = other.boolValue;
-            break;
-        case FLOAT:
-            this->floatValue = other.floatValue;
-            break;
-        case DOUBLE:
-            this->doubleValue = other.doubleValue;
-            break;
-        case STRING:
-            this->stringValue = other.stringValue;
-            break;
-    }
-    return *this;
-}
-
-// List ---
+#include <iostream>
 
 List::List(int size) {
     this->totalCapacity = size;
@@ -105,3 +22,97 @@ List::~List() {
     delete[] this->ptr;
 }
 
+List& List::operator=(const List& other) {
+    if (this == &other) {
+        return *this;
+    }
+
+    this->filledSize = other.filledSize;
+    this->totalCapacity = other.totalCapacity;
+    for (int i = 0; i < other.filledSize; i++) {
+        this->ptr[i] = other.ptr[i];
+    }
+    return *this;
+}
+
+void List::growIfNeeded() {
+    if (this->filledSize == this->totalCapacity - 1) {
+        this->setSize(2 * this->totalCapacity);
+    }
+}
+
+int List::getSize() {
+    return this->totalCapacity;
+}
+
+void List::setSize(int size) {
+    if (this->totalCapacity < size) {
+        ListItem *newPtr = new ListItem[size];
+        for (int i = 0; i < this->filledSize; i++) {
+            newPtr[i] = this->ptr[i];
+        }
+        delete[] this->ptr;
+        this->ptr = newPtr;
+    } else {
+        this->totalCapacity = size;
+    }
+}
+
+void List::add(int value) {
+    this->growIfNeeded();
+    int indexToAddAt = this->filledSize;
+    this->ptr[indexToAddAt] = ListItem(value);
+    this->filledSize++;
+}
+
+void List::add(char value) {
+    this->growIfNeeded();
+    int indexToAddAt = this->filledSize;
+    this->ptr[indexToAddAt] = ListItem(value);
+    this->filledSize++;
+}
+
+void List::add(bool value) {
+    this->growIfNeeded();
+    int indexToAddAt = this->filledSize;
+    this->ptr[indexToAddAt] = ListItem(value);
+    this->filledSize++;
+}
+
+void List::add(float value) {
+    this->growIfNeeded();
+    int indexToAddAt = this->filledSize;
+    this->ptr[indexToAddAt] = ListItem(value);
+    this->filledSize++;
+}
+
+void List::add(double value) {
+    this->growIfNeeded();
+    int indexToAddAt = this->filledSize;
+    this->ptr[indexToAddAt] = ListItem(value);
+    this->filledSize++;
+}
+
+void List::add(std::string value) {
+    this->growIfNeeded();
+    int indexToAddAt = this->filledSize;
+    this->ptr[indexToAddAt] = ListItem(value);
+    this->filledSize++;
+}
+
+void List::remove() {
+    this->ptr[filledSize] = ListItem();
+    this->filledSize--;
+}
+
+void List::clear() {
+    for (int i = 0; i < this->filledSize; i++) {
+        this->ptr[i] = ListItem();
+    }
+}
+
+// void List::fullPrint() {
+//     for (int i = 0; i < this->filledSize; i++) {
+//         std::cout << "Index: " << i << " Type: " << this->ptr[i].getType() << " Value: " << this->ptr[i]. << std::endl;
+//     }
+// }

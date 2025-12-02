@@ -1,56 +1,21 @@
 #ifndef LIST_H
 #define LIST_H
 
+#include "listitem.h"
 #include <string>
-
-enum BoolValues {
-    TRUE,
-    FALSE
-};
-
-enum ItemType {
-    INT,
-    CHAR,
-    BOOL,
-    FLOAT,
-    DOUBLE,
-    STRING
-};
-
-class ListItem {
-    public:
-        ItemType type;
-        union {
-            int intValue;
-            char charValue;
-            bool boolValue;
-            float floatValue;
-            double doubleValue;
-        };
-        std::string stringValue;
-
-        ListItem();
-        ListItem(int value);
-        ListItem(char value);
-        ListItem(bool value);
-        ListItem(float value);
-        ListItem(double value);
-        ListItem(std::string value);
-        ListItem(const ListItem &other);
-        ListItem& operator=(const ListItem &other);
-};
 
 class List {
     private:
         ListItem *ptr;
         int filledSize;
         int totalCapacity;
-        void grow();
+        void growIfNeeded();
 
     public:
         List(int size = 10);
         List(const List &other);
         ~List();
+        List& operator=(const List &other);
 
         int getSize();
         void setSize(int size);
@@ -60,19 +25,15 @@ class List {
         void add(bool value);
         void add(float value);
         void add(double value);
-        void add(const std::string &value);
+        void add(std::string value);
 
         void remove();
         void clear();
         void fullPrint();
         
-        ItemType getType(int index);
-        int getInt(int index);
-        char getChar(int index);
-        bool getBool(int index);
-        float getFloat(int index);
-        double getDouble(int index);
-        std::string getString(int index);
+        ListItem& operator[](int idx); // modifiable
+        const ListItem& operator[](int idx) const; //readonly
+        ListItem& getValue(int indx);
         void printAt(int index);
 };
 
