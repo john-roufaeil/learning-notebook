@@ -59,7 +59,7 @@ Complex Complex::operator/(const Complex &other) const {
 }
 
 Complex Complex::operator[](int n) const {
-    if (n == 1) {
+    if (n == 0) {
         return this->getReal();
     }
     return this->getImg();

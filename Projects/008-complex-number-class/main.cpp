@@ -14,6 +14,9 @@ int main() {
     std::cout << "c3: "; std::cout << c3; std::cout << std::endl;
     std::cout << std::endl;
 
+    std::cout << c1[0] << std::endl;
+    std::cout << c1[1] << std::endl;
+
     // Complex op Complex
     Complex add = c1 + c2;
     Complex sub = c1 - c2;
