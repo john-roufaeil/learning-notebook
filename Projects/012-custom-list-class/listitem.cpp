@@ -6,7 +6,6 @@ ListItem::ListItem() {
     this->type = INT;
     this->intValue = 0;
 }
-
 ListItem::ListItem(int value) {
     this->type = INT;
     this->intValue = value;
@@ -103,21 +102,32 @@ std::string ListItem::getTypeAsString() {
     }
 }
 
-int ListItem::getInt() {
+int ListItem::getInt() const {
     return this->intValue;
 }
-char ListItem::getChar() {
+char ListItem::getChar() const {
     return this->charValue;
 }
-bool ListItem::getBool() {
+bool ListItem::getBool() const {
     return this->boolValue;
 }
-float ListItem::getFloat() {
+float ListItem::getFloat() const {
     return this->floatValue;
 }
-double ListItem::getDouble() {
+double ListItem::getDouble() const {
     return this->doubleValue;
 }
-std::string ListItem::getString() {
+std::string ListItem::getString() const {
     return this->stringValue;
+}
+
+std::string ListItem::getValueToString() const {
+    switch (this->type) {
+        case INT:    return std::to_string(intValue);
+        case CHAR:   return std::string(1, charValue);
+        case BOOL:   return boolValue ? "true" : "false";
+        case FLOAT:  return std::to_string(floatValue) + "f";
+        case DOUBLE: return std::to_string(doubleValue);
+        case STRING: return stringValue;
+    }
 }

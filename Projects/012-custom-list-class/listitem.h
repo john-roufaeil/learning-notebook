@@ -33,15 +33,18 @@ class ListItem {
         ListItem(const char* value);
         ListItem(const ListItem &other);
         ListItem& operator=(const ListItem &other);
+        
         ItemType getType();
         std::string getTypeAsString();
+        
+        int getInt() const;
+        char getChar() const;
+        bool getBool() const;
+        float getFloat() const;
+        double getDouble() const;
+        std::string getString() const;
 
-        int getInt();
-        char getChar();
-        bool getBool();
-        float getFloat();
-        double getDouble();
-        std::string getString();
+        std::string getValueToString() const;
 };
 
 #endif

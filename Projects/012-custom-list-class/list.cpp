@@ -120,9 +120,11 @@ void List::remove() {
 }
 
 void List::clear() {
-    for (int i = 0; i < this->filledSize; i++) {
+    for (int i = 0; i < this->filledSize; i++)
+    {
         this->ptr[i] = ListItem();
     }
+    this->filledSize = 0;
 }
 
 ListItem& List::operator[](int idx) {
@@ -178,6 +180,7 @@ void List::fullPrint() {
             std::cout << "\"" << this->ptr[this->filledSize-1].getString() << "\"]";
             break;
         }
+        std::cout << std::endl;
 }
 
 void List::detailPrint() {
@@ -207,8 +210,4 @@ void List::detailPrint() {
     }
 }
 
-
-// void fullPrint();
-
 // ListItem& getValue(int indx);
-// void printAt(int index);

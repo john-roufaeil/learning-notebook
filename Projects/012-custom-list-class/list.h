@@ -35,8 +35,7 @@ class List {
 
         ListItem& operator[](int idx); // modifiable
         const ListItem& operator[](int idx) const; //readonly
-        ListItem& getValue(int indx);
-        void printAt(int index);
+        
 };
 
 #endif
