@@ -94,7 +94,7 @@ int getValidDOB(Employee &e) {
         std::cout << "                     ";
         changeColor("red");
         gotoxy(4, 11);
-        std::cout << "Enter numbers only (DD MM YYYY) between 01/01/1920 and 31/12/2024";
+        std::cout << "Enter numbers only (DD MM YYYY) between 01/01/1920 and 31/12/2005";
         resetColor();
         gotoxy(4 + dobPrompt.length(), 10);
     }
