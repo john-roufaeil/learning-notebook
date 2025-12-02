@@ -58,6 +58,13 @@ Complex Complex::operator/(const Complex &other) const {
     return Complex(resultRealNumerator / resultDenominator, resultImgNumerator / resultDenominator);
 }
 
+Complex Complex::operator[](int n) const {
+    if (n == 1) {
+        return this->getReal();
+    }
+    return this->getImg();
+}
+
 Complex Complex::operator+(double n) const {
     return Complex(this->getReal() + n, this->getImg());
 }
