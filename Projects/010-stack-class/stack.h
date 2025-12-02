@@ -8,6 +8,8 @@ class Stack {
         int topIdx;
     public:
         Stack(int size = 10);
+        Stack(const Stack &other);
+        Stack& operator=(const Stack &other);
         ~Stack();
 
         void push(int number);
@@ -17,7 +19,6 @@ class Stack {
         bool isFull();
         void print();
 
-        Stack &operator=(const Stack &other);
 };
 
 #endif

@@ -11,6 +11,15 @@ Stack::Stack(int size) {
     this->ptr = new int[size];
 }
 
+Stack::Stack(const Stack& other) {
+    this->size = other.size;
+    this->topIdx = other.topIdx;
+    this->ptr = new int[this->size];
+    for (int i = 0; i < this->topIdx; i++) {
+        this->ptr[i] = other.ptr[i];
+    }
+}
+
 Stack::~Stack() {
     delete[] this->ptr;
 }
