@@ -27,9 +27,12 @@ List& List::operator=(const List& other) {
         return *this;
     }
 
+    delete[] this->ptr;
     this->filledSize = other.filledSize;
     this->totalCapacity = other.totalCapacity;
-    for (int i = 0; i < other.filledSize; i++) {
+    this->ptr = new ListItem[this->totalCapacity];
+    for (int i = 0; i < other.filledSize; i++)
+    {
         this->ptr[i] = other.ptr[i];
     }
     return *this;
@@ -46,15 +49,17 @@ int List::getSize() {
 }
 
 void List::setSize(int size) {
-    if (this->totalCapacity < size) {
+    if (size <= 0) size = 1;
+    if (this->totalCapacity != size) {
         ListItem *newPtr = new ListItem[size];
-        for (int i = 0; i < this->filledSize; i++) {
+        int limit = (size < this->filledSize) ? size : this->filledSize;
+        for (int i = 0; i < limit; i++) {
             newPtr[i] = this->ptr[i];
         }
         delete[] this->ptr;
         this->ptr = newPtr;
-    } else {
         this->totalCapacity = size;
+        this->filledSize = limit;
     }
 }
 
@@ -101,8 +106,10 @@ void List::add(std::string value) {
 }
 
 void List::remove() {
-    this->ptr[filledSize] = ListItem();
-    this->filledSize--;
+    if (this->filledSize > 0) {
+        this->ptr[filledSize] = ListItem();
+        this->filledSize--;
+    }
 }
 
 void List::clear() {
