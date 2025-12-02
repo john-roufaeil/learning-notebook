@@ -8,64 +8,34 @@ class Shape {
     
     public:
         virtual float calculateArea() = 0;
-        float getD1() {
-            return d1;
-        }
-        float getD2() {
-            return d2;
-        }
-        void setD1(float d1) {
-            this->d1 = d1;
-        }
-        void setD2(float d2) {
-            this->d2 = d2;
-        }
+        float getD1();
+        float getD2();
+        void setD1(float d1);
+        void setD2(float d2);
 };
 
 class Triangle : public Shape {
     public:
-        float calculateArea() override {
-            return 0.5f * d1 * d2;
-        }
+        float calculateArea() override;
 };
 
 class Rectangle : public Shape {
-    public: 
-        float calculateArea() override {
-            return d1 * d2;
-        }
+    public:
+        float calculateArea() override;
 };
 
 class Square : private Rectangle {
     public:
-        void setSide(float d) {
-            setD1(d);
-            setD2(d);
-        }
-
-        float getSide() {
-            return getD1();
-        }
-
-        float calculateArea() {
-            return d1 * d1;
-        }
+        void setSide(float d);
+        float getSide();
+        float calculateArea();
 };
 
 class Circle : private Shape {
     public:
-        void setRadius(float r) {
-            setD1(r);
-            setD2(r);
-        }
-
-        float getRadius() {
-            return getD1();
-        }
-
-        float calculateArea() {
-            return 3.14f * d1 * d1;
-        }
+        void setRadius(float r);
+        float getRadius();
+        float calculateArea();
 };
 
 #endif
