@@ -28,7 +28,8 @@ class List {
         void add(float value);
         void add(double value);
         void add(std::string value);
-        void add(const char* value); 
+        void add(const char* value);
+        void add(const ListItem& value);
 
         void remove();
         void clear();

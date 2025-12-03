@@ -3,6 +3,16 @@
 #include <iostream>
 
 int main() {
+    std::cout << "Enter items on separate lines:\n";
+    List l0 = {};
+    ListItem inputItem;
+    std::cin >> inputItem;
+    while (inputItem.getString() != "exit") {
+        l0.add(inputItem);
+        std::cin >> inputItem;
+    }
+    l0.fullPrint();
+    l0.detailPrint();
     List l1 = {};
     l1.add(5);
     l1.add("Hello");

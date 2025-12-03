@@ -132,3 +132,54 @@ std::string ListItem::toString() const {
     }
     return "UNKNOWN";
 }
+
+std::istream& operator>>(std::istream& is, ListItem& item) {
+    std::string input;
+    std::getline(is, input);
+    
+    int len = input.length();
+    
+    if (len == 0) {
+        item = ListItem("");
+    } else if (input == "true") {
+        item = ListItem(true);
+    } else if (input == "false") {
+        item = ListItem(false);
+    } else if (len == 1 && (input[0] < '0' || input[0] > '9')) {
+        item = ListItem(input[0]);
+    } else {
+        int start = 0;
+        if (input[0] == '-') start = 1;
+        
+        bool hasDigits = false;
+        bool hasOneDot = false;
+        bool hasF = false;
+        bool validNum = true;
+        
+        for (int i = start; i < len; i++) {
+            char c = input[i];
+            if (c >= '0' && c <= '9') {
+                hasDigits = true;
+            } else if (c == '.' && !hasOneDot) {
+                hasOneDot = true;
+            } else if (i == len - 1 && c == 'f') {
+                hasF = true;
+            } else {
+                validNum = false;
+                break;
+            }
+        }
+        
+        if (validNum && hasDigits && !hasOneDot && !hasF) {
+            item = ListItem(std::stoi(input));
+        } else if (validNum && hasDigits && hasOneDot && hasF) {
+            item = ListItem(std::stof(input));
+        } else if (validNum && hasDigits && hasOneDot && !hasF) {
+            item = ListItem(std::stod(input));
+        } else {
+            item = ListItem(input);
+        }
+    }
+    
+    return is;
+}

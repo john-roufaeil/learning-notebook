@@ -45,6 +45,8 @@ class ListItem {
         double getDouble() const;
         std::string getString() const;
         std::string toString() const;
+
+        friend std::istream& operator>>(std::istream& is, ListItem& item);
 };
 
 #endif

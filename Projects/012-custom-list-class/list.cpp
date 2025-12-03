@@ -124,6 +124,13 @@ void List::add(const char* value) {
     this->filledSize++;
 }
 
+void List::add(const ListItem& value) {
+    this->growIfNeeded();
+    int indexToAddAt = this->filledSize;
+    this->ptr[indexToAddAt] = ListItem(value);
+    this->filledSize++;
+}
+
 void List::remove() {
     if (this->filledSize > 0) {
         this->ptr[filledSize] = ListItem();
