@@ -3,6 +3,7 @@
 
 #include "listitem.h"
 #include <string>
+#include <iostream>
 
 class List {
     private:
@@ -14,10 +15,11 @@ class List {
     public:
         List(int size = 10);
         List(const List &other);
+        List(std::initializer_list<ListItem> items);
         ~List();
         List& operator=(const List &other);
 
-        int getSize();
+        int getSize() const;
         void setSize(int size);
 
         void add(int value);
@@ -32,10 +34,7 @@ class List {
         void clear();
         void fullPrint();
         void detailPrint();
-
-        ListItem& operator[](int idx); // modifiable
-        const ListItem& operator[](int idx) const; //readonly
-        
+        ListItem& operator[](int idx);
 };
 
 #endif

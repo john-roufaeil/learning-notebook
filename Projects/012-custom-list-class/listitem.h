@@ -31,6 +31,7 @@ class ListItem {
         ListItem(double value);
         ListItem(std::string value);
         ListItem(const char* value);
+
         ListItem(const ListItem &other);
         ListItem& operator=(const ListItem &other);
         
@@ -43,8 +44,7 @@ class ListItem {
         float getFloat() const;
         double getDouble() const;
         std::string getString() const;
-
-        std::string getValueToString() const;
+        std::string toString() const;
 };
 
 #endif

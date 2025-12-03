@@ -121,13 +121,14 @@ std::string ListItem::getString() const {
     return this->stringValue;
 }
 
-std::string ListItem::getValueToString() const {
+std::string ListItem::toString() const {
     switch (this->type) {
-        case INT:    return std::to_string(intValue);
-        case CHAR:   return std::string(1, charValue);
-        case BOOL:   return boolValue ? "true" : "false";
-        case FLOAT:  return std::to_string(floatValue) + "f";
-        case DOUBLE: return std::to_string(doubleValue);
-        case STRING: return stringValue;
+        case INT:    return std::to_string(this->getInt());
+        case CHAR:   return std::string("'") + this->getChar() + std::string("'");
+        case BOOL:   return (this->getBool() ? "true" : "false");
+        case FLOAT:  return std::to_string(this->getFloat()) + "f";
+        case DOUBLE: return std::to_string(this->getDouble());
+        case STRING: return std::string("\"") + this->getString() + std::string("\"");
     }
+    return "UNKNOWN";
 }
