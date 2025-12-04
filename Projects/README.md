@@ -1,17 +1,21 @@
-# Mini-VI Editor
+# Mini Educational Projects
 
-## Resources
-- [Windows Handle](https://learn.microsoft.com/en-us/windows/win32/sysinfo/handles-and-objects)
-- [Linux Termios](https://pubs.opengroup.org/onlinepubs/7908799/xsh/termios.h.html)
-- [Linux terminal escape characters](https://stackoverflow.com/questions/38770996/linux-moving-the-console-cursor-visual)
-- [Linux terminal coloring](https://stackoverflow.com/questions/2616906/how-do-i-output-coloured-text-to-a-linux-terminal)
-https://www.geeksforgeeks.org/cpp/how-to-change-console-color-in-cpp/
+## Table of Content
 
-- [Windows coloring](https://stackoverflow.com/questions/4053837/colorizing-text-in-the-console-with-c)
-- [Windows set input mode](https://learn.microsoft.com/en-us/windows/console/setconsolemode)
-- https://learn.microsoft.com/en-us/windows/console/getconsolemode
-- https://www.reddit.com/r/cpp_questions/comments/16r50l4/whats_dword_and_lpword_supposed_to_be_used_for/ 
-- https://stackoverflow.com/questions/9292231/unechoed-string-input-in-c
-- (Linux arrow codes)[https://stackoverflow.com/questions/10463201/getch-and-arrow-codes]
-- (Terminal Size)[https://stackoverflow.com/questions/23369503/get-size-of-terminal-window-rows-columns]
-- (filesystem)[https://en.cppreference.com/w/cpp/filesystem.html]
+1. C++
+    - [Console Menu](./001-console-menu)
+    - [Magic Square](./002-magic-square)
+    - [String Implementation](./003-string-implementation)
+    - [Employee Menu](./004-employee-menu)
+    - [Swap Methods](./005-swap)
+    - [2D Array](./006-2d-array)
+    - [Mini VI Editor](./007-minivi-editor)
+    - [Complex Number Class](./008-complex-number-class)
+    - [String Class](./009-string-class)
+    - [Stack Class](./010-stack-class)
+    - [Stack Template Class](./011-stack-template-class)
+    - [Dynamic List Class](./012-custom-list-class)
+    - [Shapes](./013-shapes)
+    - [Draw Shapes](./014-draw-shapes)
+2. Java
+    - [Binary Search, Find Min, Find Max](./015-java-day-1/)
