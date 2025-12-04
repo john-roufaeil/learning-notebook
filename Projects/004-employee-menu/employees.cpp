@@ -59,7 +59,10 @@ int getValidSalary(Employee &e) {
         std::cout << "                                                                             ";
         if (salaryInput.empty()) return 1;
         
-        if (isInt(salaryInput) && std::stoi(salaryInput) >= 1000 && std::stoi(salaryInput) <= 1000000) {
+        if (isInt(salaryInput) && 
+            std::stoi(salaryInput) >= 1000 && 
+            std::stoi(salaryInput) <= 1000000
+        ) {
             e.salary = std::stoi(salaryInput);
             return 0;
         }
@@ -68,8 +71,10 @@ int getValidSalary(Employee &e) {
         std::cout << "           ";
         changeColor("red");
         gotoxy(4, 9);
-        if (!isInt(salaryInput)) std::cout << "Salary must be a valid integer.";
-        else if (e.salary < 1000 || e.salary > 1000000) std:: cout<< "Salary must be between 1,000 and 1,000,000.";
+        if (!isInt(salaryInput)) 
+            std::cout << "Salary must be a valid integer.";
+        else if (e.salary < 1000 || e.salary > 1000000) 
+            std:: cout<< "Salary must be between 1,000 and 1,000,000.";
         resetColor();
         gotoxy(4 + salaryPrompt.length(), 8);
     }
@@ -95,7 +100,8 @@ int getValidDOB(Employee &e) {
         std::cout << "                     ";
         changeColor("red");
         gotoxy(4, 11);
-        std::cout << "Enter numbers only (DD MM YYYY) between 01/01/1920 and 31/12/2005";
+        std::cout << "Enter numbers only (DD MM YYYY) "
+            "between 01/01/1920 and 31/12/2005";
         resetColor();
         gotoxy(4 + dobPrompt.length(), 10);
     }

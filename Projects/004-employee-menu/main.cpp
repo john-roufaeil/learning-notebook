@@ -63,8 +63,10 @@ void displayScreen(Employee employees[], int employeeCount) {
     gotoxy(4, 4);
     for (int i = 0; i < employeeCount; i++) {
         gotoxy(4, 4 + i);
-        std::cout << i + 1 << ". " << employees[i].firstName << " " << employees[i].lastName << " " << 
-        employees[i].salary << " " << employees[i].dob.day << "/" << employees[i].dob.month << "/" << employees[i].dob.year;
+        std::cout << i + 1 << ". " << employees[i].firstName << " " 
+        << employees[i].lastName << " " <<  employees[i].salary << " "
+        << employees[i].dob.day << "/" << employees[i].dob.month << "/"
+        << employees[i].dob.year;
     }
     while (true) {
         Key key = getKeyPress();
@@ -77,7 +79,10 @@ void displayScreen(Employee employees[], int employeeCount) {
     }
 }
 
-void getMenuInput(int &selectedIndex, int menuSize, int &employeeCount, Employee employees[]) {
+void getMenuInput(
+    int &selectedIndex, int menuSize, 
+    int &employeeCount, Employee employees[]
+) {
     Key key = getKeyPress();
         switch (key) {
             case UP:
