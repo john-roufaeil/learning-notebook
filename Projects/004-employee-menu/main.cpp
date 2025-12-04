@@ -2,39 +2,54 @@
 #include "terminal.h"
 #include "helpers.h"
 #include "employees.h"
-#define MAX_EMPLOYEES 100
+#define MAX_EMPLOYEES 10
 
 void newScreen(Employee employees[], int &employeeCount) {
     clearScreen();
-    changeColor("cyan");
     gotoxy(4, 2);
-    std::cout << "=== Register a New Employee ===";
-    resetColor();
+    if (employeeCount < MAX_EMPLOYEES) {
+        changeColor("cyan");
+        std::cout << "=== Register a New Employee ===";
+        resetColor();
 
-    Employee e;
-    if (getValidFirstName(e) == 1) return;
-    if (getValidLastName(e) == 1) return;
-    if (getValidSalary(e) == 1) return;
-    if (getValidDOB(e) == 1) return;
+        Employee e;
+        if (getValidFirstName(e) == 1) return;
+        if (getValidLastName(e) == 1) return;
+        if (getValidSalary(e) == 1) return;
+        if (getValidDOB(e) == 1) return;
 
-    employees[employeeCount] = e;
-    employeeCount++;
+        employees[employeeCount] = e;
+        employeeCount++;
 
-    gotoxy(4, 12);
-    changeColor("lightgreen");
-    std::cout << "Employee registered successfully!";
+        gotoxy(4, 12);
+        changeColor("lightgreen");
+        std::cout << "Employee registered successfully!";
 
-    gotoxy(4, 13);
-    changeColor("yellow");
-    std::cout << "TAB > add another Employee | BACKSPACE > Main Menu.";
-    resetColor();
+        gotoxy(4, 13);
+        changeColor("yellow");
+        std::cout << "TAB > add another Employee | BACKSPACE > Main Menu.";
+        resetColor();
 
-    while (true) {
-        Key key = getKeyPress();
-        if (key == BACKSPACE) return;
-        if (key == TAB) { 
-            newScreen(employees, employeeCount);
-            return;
+        while (true) {
+            Key key = getKeyPress();
+            if (key == BACKSPACE) return;
+            if (key == TAB) { 
+                newScreen(employees, employeeCount);
+                return;
+            }
+        }
+    } else {
+        changeColor("red");
+        std::cout << "=== Maximum Amount of Employees Registered ===";
+
+        gotoxy(4, 4);
+        changeColor("yellow");
+        std::cout << "BACKSPACE > Main Menu.";
+        resetColor();
+
+        while (true) {
+            Key key = getKeyPress();
+            if (key == BACKSPACE) return;
         }
     }
 }

@@ -2,10 +2,10 @@
 
 ## Description
 
-- Portable on both Linux and Windows OS
-- Terminal App with navigation, commands interpretation and usage of structs & pointers
+- Terminal App with navigation, commands interpretation and usage of structs
 - Add employees with their first & last names, salary, and DOB
 - Validates input for each type and reprompt user if input is invalid
+- Portable on both Linux and Windows OS
 
 ## Structure of the App
 
