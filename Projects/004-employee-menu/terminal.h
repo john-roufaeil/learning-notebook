@@ -1,5 +1,5 @@
-#ifndef LIBRARY_H
-#define LIBRARY_H
+#ifndef TERMINAL_H
+#define TERMINAL_H
 
 #include <string>
 

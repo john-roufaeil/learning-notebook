@@ -1,4 +1,5 @@
 #include <iostream>
+#include "terminal.h"
 #include "helpers.h"
 #include "employees.h"
 

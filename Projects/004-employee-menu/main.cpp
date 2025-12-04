@@ -1,6 +1,6 @@
 #include <iostream>
+#include "terminal.h"
 #include "helpers.h"
-#include "library.h"
 #include "employees.h"
 #define MAX_EMPLOYEES 100
 

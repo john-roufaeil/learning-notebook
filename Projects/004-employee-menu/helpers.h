@@ -2,19 +2,7 @@
 #define HELPERS_H
 
 #include <string>
-
-struct DOB {
-    int day;
-    int month;
-    int year;
-};
-
-struct Employee {
-    int salary;
-    DOB dob;
-    std::string firstName;
-    std::string lastName;
-};
+#include "employees.h"
 
 bool isInt(const std::string &input);
 bool isAlpha(const std::string &input);
