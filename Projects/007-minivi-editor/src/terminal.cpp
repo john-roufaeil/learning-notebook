@@ -51,16 +51,16 @@ void setColor(const std::string &textColor, const std::string &bgColor) {
     int textColorCode = getColorCode(textColor);
 #ifdef _WIN32
     HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
-    if(bgColor == "none")
+    if(bgColor == "none") {
         SetConsoleTextAttribute(consoleHandle, textColorCode);
-    else {
+    } else {
         int bgColorCode = getColorCode(bgColor);
         SetConsoleTextAttribute(consoleHandle, textColorCode + bgColorCode * 16);
     }
 #else
-    if (bgColor == "none")
+    if (bgColor == "none") {
         std::cout << "\033[" << textColorCode << "m";
-    else {
+    } else {
         int bgColorCode = getColorCode(bgColor);
         std::cout << "\033[" << textColorCode << ";" << bgColorCode + 10 << "m";
     }
@@ -104,8 +104,7 @@ void setInputMode(InputMode mode) {
     if (mode == CMDMODE)  {
         dwMode &= ~(ENABLE_ECHO_INPUT | ENABLE_LINE_INPUT);
         hideCursor(true);
-    }
-    else {
+    } else {
         dwMode |= (ENABLE_ECHO_INPUT | ENABLE_LINE_INPUT);
         hideCursor(false);
     }
@@ -192,7 +191,6 @@ TerminalSize getTerminalSize() {
 #else
     struct winsize w;
     ioctl(STDOUT_FILENO, TIOCGWINSZ, &w); // terminal i/o control get window size
-
     return TerminalSize{w.ws_col, w.ws_row};
 #endif
 }

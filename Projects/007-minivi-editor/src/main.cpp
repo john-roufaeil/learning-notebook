@@ -17,8 +17,10 @@ void newScreen() {
     write(std::string(rowWidth, '-'), START_X, START_Y + 4, "lightblue");
 
     // placeholder highlight for input area
+    setColor("white", "lightblue");
     for (int i = 0; i < count; i++) {
-        write(" ", START_X + (i % rowWidth), START_Y + 6 + (i / rowWidth), "white", "lightlblue");
+        gotoxy(START_X + (i % rowWidth), START_Y + 6 + (i / rowWidth));
+        std::cout << " ";
     }
 
     char *fileContent = (char*)malloc(count + 1);
