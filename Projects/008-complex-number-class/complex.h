@@ -23,7 +23,7 @@ class Complex {
         Complex operator-(double n) const;
         Complex operator*(double n) const;
         Complex operator/(double n) const;
-        Complex operator[](int n) const;
+        double operator[](int n) const;
         Complex operator++(int); // Postfix
         Complex operator--(int);
         Complex& operator++(); // Prefix

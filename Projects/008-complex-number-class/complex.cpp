@@ -58,7 +58,7 @@ Complex Complex::operator/(const Complex &other) const {
     return Complex(resultRealNumerator / resultDenominator, resultImgNumerator / resultDenominator);
 }
 
-Complex Complex::operator[](int n) const {
+double Complex::operator[](int n) const {
     if (n == 0) {
         return this->getReal();
     }
