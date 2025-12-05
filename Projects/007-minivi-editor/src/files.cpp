@@ -4,7 +4,6 @@
 #include <iostream>
 #include "files.h"
 #include "terminal.h"
-#include "helpers.h"
 
 #define START_X 4
 #define START_Y 2

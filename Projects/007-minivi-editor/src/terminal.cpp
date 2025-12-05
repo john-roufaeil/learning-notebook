@@ -1,7 +1,6 @@
 #include <iostream>
 #include <filesystem>
 #include "terminal.h"
-#include "helpers.h"
 
 #ifdef _WIN32
     #include <windows.h>

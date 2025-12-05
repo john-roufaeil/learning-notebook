@@ -1,6 +1,6 @@
 #include <iostream>
 #include "terminal.h"
-#include "helpers.h"
+#include "validators.h"
 #include "files.h"
 
 #define START_X 4

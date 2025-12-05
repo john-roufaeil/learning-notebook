@@ -1,5 +1,5 @@
 #include <iostream>
-#include "helpers.h"
+#include "validators.h"
 #include "terminal.h"
 
 #define START_X 4

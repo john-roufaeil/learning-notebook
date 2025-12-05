@@ -1,5 +1,5 @@
-#ifndef HELPERS_H
-#define HELPERS_H
+#ifndef VALIDATORS_H
+#define VALIDATORS_H
 
 #include <string>
 
