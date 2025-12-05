@@ -123,8 +123,8 @@ void getMenuInput(
 int main() {
     Employee employees[MAX_EMPLOYEES];
     int employeeCount = 0;
-
-    std::string menuItems[] = { "New Employee", "Display Employees", "Exit" };
+    
+    const char* menuItems[] = { "New Employee", "Display Employees", "Exit" };
     int menuSize = sizeof(menuItems) / sizeof(menuItems[0]);
     int selectedIndex = 0;
 
@@ -146,7 +146,7 @@ int main() {
             }
         }
         getMenuInput(selectedIndex, menuSize, employeeCount, employees);
-     }
-
+    }
+    *menuItems = nullptr;
     return 0;
 }
