@@ -4,8 +4,8 @@
 #include <string>
 
 enum InputMode {
-    CMDMODE,    // Keys are interpreted but not displayed (used for commands)
-    ECHOMODE    // Keys are displayed on terminal
+    CMDMODE,
+    ECHOMODE
 };
 
 enum SpecialKey {

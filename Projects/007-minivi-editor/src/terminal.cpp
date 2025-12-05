@@ -5,7 +5,6 @@
 #ifdef _WIN32
     #include <windows.h>
     #include <conio.h>
-    #include <Lmcons.h>
 #else
     #include <unistd.h>
     #include <termios.h>
@@ -188,10 +187,9 @@ TerminalSize getTerminalSize() {
 
 const char *getCurrentUsername() {
 #ifdef _WIN32
-    static char username[UNLEN + 1]; // UNLEN is a macro defined in <windows.h> for max username length
-    DWORD size = UNLEN + 1;
-    if (GetUserNameA(username, &size))
-        return username;
+    static char username[255];
+    DWORD size = sizeof(username);
+    if (GetUserNameA(username, &size)) return username;
     return "user";
 #else
     char* name = getpwuid(getuid())->pw_name;
