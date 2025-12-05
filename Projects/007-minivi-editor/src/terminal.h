@@ -3,14 +3,12 @@
 
 #include <string>
 
-enum InputMode
-{
+enum InputMode {
     CMDMODE,    // Keys are interpreted but not displayed (used for commands)
     ECHOMODE    // Keys are displayed on terminal
 };
 
-enum SpecialKey
-{
+enum SpecialKey {
     UP,
     DOWN,
     RIGHT,
@@ -26,7 +24,6 @@ enum SpecialKey
 
 struct Key {
     bool isSpecial;
-    bool isShift;
     bool isCtrl;
     union
     {

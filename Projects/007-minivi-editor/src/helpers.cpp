@@ -116,7 +116,7 @@ int getValidFileSize() {
         else if (!isPositive)
             std::cout<<"File size must be a positive integer.";
         else if (fileSize >= 500) {
-            std::cout<<"File size must be less than 500.";
+            std::cout << "File size must be less than 500.";
         }
         resetColor();
         gotoxy(START_X + fileSizePrompt.size(), START_Y + 3);

@@ -130,54 +130,50 @@ Key getKeyPress() {
     if (ch == 0 || ch == 224) {
         int ch2 = _getch();
         switch(ch2) {
-            case 71: return Key{true, false, false, HOME};
-            case 72: return Key{true, false, false, UP};
-            case 75: return Key{true, false, false, LEFT};
-            case 77: return Key{true, false, false, RIGHT};
-            case 79: return Key{true, false, false, END};
-            case 80: return Key{true, false, false, DOWN};
+            case 71: return Key{true, false, HOME};
+            case 72: return Key{true, false, UP};
+            case 75: return Key{true, false, LEFT};
+            case 77: return Key{true, false, RIGHT};
+            case 79: return Key{true, false, END};
+            case 80: return Key{true, false, DOWN};
         }
     }
     switch (ch)
     {
-        case 8: return Key{true, false, false, BACKSPACE};
-        case 9: return Key{true, false, false, TAB};
-        case 13: return Key{true, false, false, ENTER};
-        case 27: return Key{true, false, false, ESC};
+        case 8: return Key{true, false, BACKSPACE};
+        case 9: return Key{true, false, TAB};
+        case 13: return Key{true, false, ENTER};
+        case 27: return Key{true, false, ESC};
     }
     if (ch >= 1 && ch <= 26) // Ctrl+A - Ctrl+Z
-        return Key{false, false, true, static_cast<char>(ch + 'a' - 1)};
-    if (ch >= 65 && ch <= 90) // Shift+A - Shift+Z
-        return Key{false, true, false, static_cast<char>(ch + 32)};
-    if (ch >= 32 && ch <= 126) // Lowercase char, numbers, symbols
-        return Key{false, false, false, static_cast<char>(ch)};
-    return Key{true, false, false, UNKNOWN};
+        return Key{false, true, static_cast<char>(ch + 'a' - 1)};
+    if (ch >= 32 && ch <= 126) // alphabetic, numbers, symbols
+        return Key{false, false, static_cast<char>(ch)};
+    return Key{true, false, UNKNOWN};
 #else
     int ch = getchar();
     if (ch == 27) {
         int next1 = getchar();
         if (next1 == '[') {
             int next2 = getchar();
-            if (next2 == '1' || next2 == '7') return Key{true, false, false, HOME};
-            if (next2 == '4' || next2 == '8') return Key{true, false, false, END};
-            if (next2 == 'A') return Key{true, false, false, UP};
-            if (next2 == 'B') return Key{true, false, false, DOWN};
-            if (next2 == 'C') return Key{true, false, false, RIGHT};
-            if (next2 == 'D') return Key{true, false, false, LEFT};
-            if (next2 == 'H') return Key{true, false, false, HOME};
-            if (next2 == 'F') return Key{true, false, false, END};
+            if (next2 == '1' || next2 == '7') return Key{true, false, HOME};
+            if (next2 == '4' || next2 == '8') return Key{true, false, END};
+            if (next2 == 'A') return Key{true, false, UP};
+            if (next2 == 'B') return Key{true, false, DOWN};
+            if (next2 == 'C') return Key{true, false, RIGHT};
+            if (next2 == 'D') return Key{true, false, LEFT};
+            if (next2 == 'H') return Key{true, false, HOME};
+            if (next2 == 'F') return Key{true, false, END};
         }
-        return Key{true, false, false, ESC};
+        return Key{true, false, ESC};
     }
-    if (ch == 10) return Key{true, false, false, ENTER};
-    if (ch == 127) return Key{true, false, false, BACKSPACE};
+    if (ch == 10) return Key{true, false, ENTER};
+    if (ch == 127) return Key{true, false, BACKSPACE};
     if (ch >= 1 && ch <= 26) // Ctrl+A - Ctrl+Z
-        return Key{false, false, true, static_cast<char>(ch + 'a' - 1)};
-    // if (ch >= 65 && ch <= 90) // Shift+A - Shift+Z
-    //     return Key{false, true, false, static_cast<char>(ch + 32)};
-    if (ch >= 32 && ch <= 126) // Lowercase char, numbers, symbols
-        return Key{false, false, false, static_cast<char>(ch)};
-    return Key{true, false, false, UNKNOWN};
+        return Key{false, true, (char)(ch + 'a' - 1)};
+    if (ch >= 32 && ch <= 126) // alphabetic, numbers, symbols
+        return Key{false, false, (char)ch};
+    return Key{true, false, UNKNOWN};
 #endif
 }
 
