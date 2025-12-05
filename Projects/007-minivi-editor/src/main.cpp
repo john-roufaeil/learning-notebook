@@ -6,89 +6,36 @@
 #define START_X 4
 #define START_Y 2
 
-void waitForBackOrExit() {
-    while (true) {
-        Key key = getKeyPress();
-        if (key.isSpecial && key.sk == BACKSPACE) break;
-        if (key.isSpecial && key.sk == ESC) {
-            clearScreen();
-            exit(0);
-        }
-    }
-}
-
 void newScreen() {
-    int rowWidth = getTerminalSize().cols - 2 * START_X;
+    int rowWidth = getTerminalSize().cols - START_X * 2;
     clearScreen();
-    setColor("lightmagenta");
-    gotoxy(START_X, START_Y);
-    std::cout << "=== Create a New File ===";
-    resetColor();
+    write("=== Create a New File ===", START_X, START_Y, "lightmagenta");
 
     std::string fileName = getValidFilename();
     int count = getValidFileSize();
 
-    gotoxy(START_X, START_Y + 4);
-    setColor("lightblue");
-    std::cout << std::string(getTerminalSize().cols - START_X * 2, '-');
+    write(std::string(rowWidth, '-'), START_X, START_Y + 4, "lightblue");
 
     // placeholder highlight for input area
-    gotoxy(START_X, START_Y + 6);
-    setColor("white", "lightblue");
     for (int i = 0; i < count; i++) {
-        gotoxy(START_X + (i % rowWidth), START_Y + 6 + (i / rowWidth));
-        std::cout << " ";
+        write(" ", START_X + (i % rowWidth), START_Y + 6 + (i / rowWidth), "white", "lightlblue");
     }
 
-    char *fileContent = (char *)malloc(sizeof(char) * (count + 1));
+    char *fileContent = (char*)malloc(count + 1);
     if (fileContent) {
         for (int i = 0; i < count; i++) {
             fileContent[i] = ' ';
         }
+        fileContent[count] = '\0';
     }
     takeFileInput(count, fileContent, const_cast<char*>(fileName.c_str()));
     free(fileContent);
-    // waitForBackOrExit();
+    fileContent = nullptr;
 }
 
-void displayScreen() {
-    displayExistingFiles();
-}
-
-void mainMenu() {
-    setInputMode(CMDMODE);
-    std::string menuItems[] = { "New File", "Display Files", "Exit" };
-    int menuSize = sizeof(menuItems) / sizeof(menuItems[0]);
-    int selectedIndex = 0;
-    while (true) {
-        clearScreen();
-        // header
-        setColor("lightmagenta");
-        gotoxy(START_X, START_Y);
-        std::cout << "Hi, " << getCurrentUsername() << "! Welcome to MiniVi Editor" << std::endl;
-        resetColor();
-
-        // menu
-        for (short i = 0; i < menuSize; i++) {
-            gotoxy(START_X, START_Y + 2 + i);
-            if (i == selectedIndex) {
-                setColor("lightcyan");
-                std::cout << "> " << menuItems[i];
-                resetColor();
-            } else {
-                std::cout << "  " << menuItems[i];
-            }
-        }
-        resetColor();
-
-        // instructions
-        gotoxy(START_X, getTerminalSize().rows - START_Y);
-        setColor("yellow");
-        std::cout << "Arrow Keys, Home, End > Navigate | Enter > Select | Esc > Exit";
-        resetColor();
-
-        Key key = getKeyPress();
-        if (key.isSpecial)
+void getKeyPressInMainMenu(int menuSize, int &selectedIndex) {
+    Key key = getKeyPress();
+        if (key.isSpecial) {
             switch (key.sk) {
                 case UP:
                 case LEFT:
@@ -97,36 +44,47 @@ void mainMenu() {
                     break;
                 case DOWN:
                 case RIGHT:
-                    if (selectedIndex == menuSize - 1)
-                        selectedIndex = 0;
+                    if (selectedIndex == menuSize - 1) selectedIndex = 0;
                     else selectedIndex++;
                     break;
-                case HOME:
-                    selectedIndex = 0;
-                    break;
-                case END:
-                    selectedIndex = menuSize - 1;
-                    break;
+                case HOME:  selectedIndex = 0;  break;
+                case END:  selectedIndex = menuSize - 1; break;
                 case ENTER:
-                    if (selectedIndex == 0) {
-                        newScreen();
-                    } else if (selectedIndex == 1) {
-                        displayScreen();
-                    } else if (selectedIndex ==  2) {
-                        clearScreen();
-                        exit(0);
+                    switch(selectedIndex) {
+                        case 0: newScreen(); break;
+                        case 1: displayExistingFiles(); break;
+                        case 2: clearScreen(); exit(0);
                     }
                     break;
-                case ESC:
-                    clearScreen();
-                    exit(0);
-                default:
-                    break;
+                case ESC: clearScreen(); exit(0);
             }
-    }
+        }
 }
 
 int main() {
-    mainMenu();
+    std::string menuItems[] = { "New File", "Display Files", "Exit" };
+    std::string username = getCurrentUsername();
+    int menuSize = sizeof(menuItems) / sizeof(menuItems[0]);
+    int selectedIndex = 0;
+
+    setInputMode(CMDMODE);
+    while (true) {
+        clearScreen();
+        write("Hi, " + username + "! Welcome to MiniVi Editor", START_X, START_Y, "lightmagenta");
+
+        for (short i = 0; i < menuSize; i++) {
+            if (i == selectedIndex) {
+                write("> " + menuItems[i], START_X, START_Y + 2 + i, "lightcyan");
+            } else {
+                write("  " + menuItems[i], START_X, START_Y + 2 + i);
+            }
+        }
+
+        write("Arrow Keys, Home, End > Navigate | Enter > Select | Esc > Exit", 
+            START_X, getTerminalSize().rows - START_Y, "yellow");
+
+        getKeyPressInMainMenu(menuSize, selectedIndex);
+    }
+
     return 0;
 }

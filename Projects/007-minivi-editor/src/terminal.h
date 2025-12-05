@@ -51,5 +51,9 @@ void setInputMode(InputMode mode); // Allow or disallow user input text to be sh
 Key getKeyPress();
 TerminalSize getTerminalSize();
 const char *getCurrentUsername();
+void write(
+    const std::string &text, short x, short y, 
+    const std::string &textColor = "white", const std::string &bgColor = "none"
+);
 
 #endif

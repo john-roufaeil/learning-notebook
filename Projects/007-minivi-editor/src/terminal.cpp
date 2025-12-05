@@ -209,3 +209,15 @@ const char *getCurrentUsername() {
     return name ? name : "user";
 #endif
 }
+
+void write(
+    const std::string &text, short x, short y, 
+    const std::string &textColor, const std::string &bgColor
+) {
+    setColor(textColor, bgColor);
+    gotoxy(x, y);
+    std::cout << text;
+    resetColor();
+}
+
+
