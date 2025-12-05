@@ -208,5 +208,3 @@ void write(
     std::cout << text;
     resetColor();
 }
-
-
