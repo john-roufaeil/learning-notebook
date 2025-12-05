@@ -27,6 +27,11 @@ Complex::Complex(double real, double img) {
     this->img = img;
 }
 
+Complex::Complex(const Complex &other) {
+    this->real = other.real;
+    this->img = other.img;
+}
+
 Complex Complex::operator+(const Complex &other) const {
     double resultReal = this->getReal() + other.getReal();
     double resultImg = this->getImg() + other.getImg();

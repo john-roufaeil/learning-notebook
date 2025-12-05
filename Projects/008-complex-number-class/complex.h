@@ -9,6 +9,7 @@ class Complex {
         double img;
     public:
         Complex(double real = 0, double img = 0);
+        Complex(const Complex &other);
 
         void setReal(double real);
         double getReal() const;
