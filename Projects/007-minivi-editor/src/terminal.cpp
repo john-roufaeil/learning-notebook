@@ -199,7 +199,7 @@ const char *getCurrentUsername() {
 #endif
 }
 
-void write(
+void printAt(
     const std::string &text, short x, short y, 
     const std::string &textColor, const std::string &bgColor
 ) {

@@ -9,12 +9,12 @@
 void newScreen() {
     int rowWidth = getTerminalSize().cols - START_X * 2;
     clearScreen();
-    write("=== Create a New File ===", START_X, START_Y, "lightmagenta");
+    printAt("=== Create a New File ===", START_X, START_Y, "lightmagenta");
 
     std::string fileName = getValidFilename();
     int count = getValidFileSize();
 
-    write(std::string(rowWidth, '-'), START_X, START_Y + 4, "lightblue");
+    printAt(std::string(rowWidth, '-'), START_X, START_Y + 4, "lightblue");
 
     // placeholder highlight for input area
     setColor("white", "lightblue");
@@ -72,17 +72,17 @@ int main() {
     setInputMode(CMDMODE);
     while (true) {
         clearScreen();
-        write("Hi, " + username + "! Welcome to MiniVi Editor", START_X, START_Y, "lightmagenta");
+        printAt("Hi, " + username + "! Welcome to MiniVi Editor", START_X, START_Y, "lightmagenta");
 
         for (short i = 0; i < menuSize; i++) {
             if (i == selectedIndex) {
-                write("> " + menuItems[i], START_X, START_Y + 2 + i, "lightcyan");
+                printAt("> " + menuItems[i], START_X, START_Y + 2 + i, "lightcyan");
             } else {
-                write("  " + menuItems[i], START_X, START_Y + 2 + i);
+                printAt("  " + menuItems[i], START_X, START_Y + 2 + i);
             }
         }
 
-        write("Arrow Keys, Home, End > Navigate | Enter > Select | Esc > Exit", 
+        printAt("Arrow Keys, Home, End > Navigate | Enter > Select | Esc > Exit", 
             START_X, getTerminalSize().rows - START_Y, "yellow");
 
         getKeyPressInMainMenu(menuSize, selectedIndex);

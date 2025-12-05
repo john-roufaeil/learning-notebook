@@ -56,7 +56,7 @@ int strToInt(const std::string &input) {
 std::string getValidFilename() {
     std::string fileNameInput;
     std::string fileNamePrompt = "Enter File Name: ";
-    write(fileNamePrompt, START_X, START_Y + 2);
+    printAt(fileNamePrompt, START_X, START_Y + 2);
     while (true) {
         setInputMode(ECHOMODE);
         std::getline(std::cin, fileNameInput);
@@ -69,16 +69,10 @@ std::string getValidFilename() {
         std::cout << std::string(80, ' ');
         
         if (!empty && !hasInvalid && !fileExists) return fileNameInput;
-        
-        gotoxy(START_X, START_Y + 3);
-        setColor("white", "red");
-        if (empty)
-            std::cout<<"File name cannot be empty. Please enter a valid file name.";
-        else if (hasInvalid)
-            std::cout<<"File name contains invalid characters. Please enter a different file name.";
-        else if (fileExists)
-            std::cout<<"File already exists. Please enter a different file name.";
-        resetColor();
+        else if (empty) printAt("File name cannot be empty.", START_X, START_Y + 3, "white", "red");
+        else if (hasInvalid) printAt("File name contains invalid characters.", START_X, START_Y + 3, "white", "red");
+        else if (fileExists) printAt("File already exists.", START_X, START_Y + 3, "white", "red");
+
         gotoxy(START_X + fileNamePrompt.size(), START_Y + 2);
         std::cout << "                  ";
         gotoxy(START_X + fileNamePrompt.size(), START_Y + 2);
@@ -99,26 +93,15 @@ int getValidFileSize() {
         int fileSize = strToInt(fileSizeInput);
         bool isPositive = fileSize > 0;
 
-        if (!empty && isInteger && isPositive && fileSize < 500){
-            gotoxy(START_X, START_Y + 4);
-            std::cout << std::string(80, ' ');
-            return fileSize;
-        }
-        
         gotoxy(START_X, START_Y + 4);
         std::cout << std::string(80, ' ');
-        gotoxy(START_X, START_Y + 4);
-        setColor("white", "red");
-        if (empty)
-            std::cout<<"File size cannot be empty.";
-        else if (!isInteger)
-            std::cout<<"File size contains invalid characters.";
-        else if (!isPositive)
-            std::cout<<"File size must be a positive integer.";
-        else if (fileSize >= 500) {
-            std::cout << "File size must be less than 500.";
-        }
-        resetColor();
+        
+        if (!empty && isInteger && isPositive && fileSize < 500) return fileSize;
+        else if (empty) printAt("File size cannot be empty.", START_X, START_Y + 4, "white", "red");
+        else if (!isInteger) printAt("File size contains invalid characters.", START_X, START_Y + 4, "white", "red");
+        else if (!isPositive) printAt("File size must be a positive integer.", START_X, START_Y + 4, "white", "red"); 
+        else if (fileSize >= 500) printAt("File size must be less than 500.", START_X, START_Y + 4, "white", "red");
+
         gotoxy(START_X + fileSizePrompt.size(), START_Y + 3);
         std::cout << "                  ";
         gotoxy(START_X + fileSizePrompt.size(), START_Y + 3);

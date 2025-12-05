@@ -9,7 +9,6 @@
 #define START_Y 2
 #define MAX_NUMBER_OF_FILES 100
 
-
 void takeFileInput(int count, char *fileContent, char *fileName) {
     int rowWidth = getTerminalSize().cols - 2 * START_X;
     resetColor();
@@ -17,7 +16,7 @@ void takeFileInput(int count, char *fileContent, char *fileName) {
     std::cout << std::string(rowWidth, ' ');
     gotoxy(START_X, getTerminalSize().rows - START_Y);
     std::cout << std::string(rowWidth, ' ');
-    write("Esc > Stop Input", START_X, getTerminalSize().rows - START_Y, "yellow");
+    printAt("Esc > Stop Input", START_X, getTerminalSize().rows - START_Y, "yellow");
 
     setInputMode(CMDMODE);
     hideCursor(false);
@@ -61,8 +60,8 @@ void endFileInput(int count, char *fileContent, char *fileName ) {
     std::string savePrompt = "Would you like to save the file?";
     std::string options[2] = {" Yes ", " Cancel "};
     int selectedIndex = 0;
-    write(savePrompt, START_X, getTerminalSize().rows - START_Y - 1, "yellow");
-    write("Enter > Select | Arrows > Navigate | Esc > Exit", START_X, getTerminalSize().rows - START_Y, "yellow");
+    printAt(savePrompt, START_X, getTerminalSize().rows - START_Y - 1, "yellow");
+    printAt("Enter > Select | Arrows > Navigate | Esc > Exit", START_X, getTerminalSize().rows - START_Y, "yellow");
 
     while (true) {
         gotoxy(START_X * 2 + savePrompt.length(), getTerminalSize().rows - START_Y - 1);
@@ -121,14 +120,14 @@ void displayExistingFiles() {
 
     while(true) {
         clearScreen();
-        write("=== DISPLAY ===", START_X, START_Y, "cyan");
-        write("Arrows > Navigate | Enter > Select | Backspace > Back | Esc > Exit", 
+        printAt("=== DISPLAY ===", START_X, START_Y, "cyan");
+        printAt("Arrows > Navigate | Enter > Select | Backspace > Back | Esc > Exit", 
             START_X, getTerminalSize().rows - START_Y, "yellow");
 
         for (int i = 0; i < fileCount; i++) {
             gotoxy(START_X, START_Y + 2 + i);
-            if (i == selectedIndex) write("> " + files[i],START_X, START_Y + 2 + i, "lightcyan");
-            else write("  " + files[i],START_X, START_Y + 2 + i);
+            if (i == selectedIndex) printAt("> " + files[i],START_X, START_Y + 2 + i, "lightcyan");
+            else printAt("  " + files[i],START_X, START_Y + 2 + i);
         }
 
         Key key = getKeyPress();
@@ -153,22 +152,14 @@ void displayExistingFiles() {
 
 void viewFileContent(const std::string &filename) {
     clearScreen();
-    gotoxy(START_X, START_Y);
-    setColor("cyan");
-    std::cout << "=== " << filename << " ===";
-    gotoxy(START_X, getTerminalSize().rows - START_Y);
-    setColor("yellow");
-    std::cout << "Backspace > Back | Esc > Exit";
-    resetColor();
-    gotoxy(START_X, START_Y + 1);
-    std::cout << std::string(getTerminalSize().cols - 2 * START_X, '-');
-    resetColor();
+    int rowWidth = getTerminalSize().cols - 2 * START_X;
+    printAt("=== " + filename + " ===", START_X, START_Y, "cyan");
+    printAt("Backspace > Back | Esc > Exit", START_X,  getTerminalSize().rows - START_Y, "yellow");
+    printAt(std::string(rowWidth, '-'), START_X, START_Y + 1);
 
     // read file
     std::string path = "./Files/" + filename;
     std::ifstream file(path);
-
-    int rowWidth = getTerminalSize().cols - 2 * START_X;
 
     std::string line;
     std::getline(file, line);
@@ -179,8 +170,7 @@ void viewFileContent(const std::string &filename) {
     
     while (true) {
         Key key = getKeyPress();
-        if (key.isSpecial && key.sk == BACKSPACE)
-            return;
+        if (key.isSpecial && key.sk == BACKSPACE) return;
         if (key.isSpecial && key.sk == ESC) {
             clearScreen();
             exit(0);

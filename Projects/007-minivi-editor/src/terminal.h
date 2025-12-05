@@ -45,7 +45,7 @@ void setInputMode(InputMode mode);
 Key getKeyPress();
 TerminalSize getTerminalSize();
 const char *getCurrentUsername();
-void write(
+void printAt(
     const std::string &text, short x, short y, 
     const std::string &textColor = "white", const std::string &bgColor = "none"
 );
