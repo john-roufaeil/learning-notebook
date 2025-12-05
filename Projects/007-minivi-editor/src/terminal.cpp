@@ -130,50 +130,46 @@ Key getKeyPress() {
     if (ch == 0 || ch == 224) {
         int ch2 = _getch();
         switch(ch2) {
-            case 71: return Key{true, false, HOME};
-            case 72: return Key{true, false, UP};
-            case 75: return Key{true, false, LEFT};
-            case 77: return Key{true, false, RIGHT};
-            case 79: return Key{true, false, END};
-            case 80: return Key{true, false, DOWN};
+            case 71: return Key{true, HOME};
+            case 72: return Key{true, UP};
+            case 75: return Key{true, LEFT};
+            case 77: return Key{true, RIGHT};
+            case 79: return Key{true, END};
+            case 80: return Key{true, DOWN};
         }
     }
     switch (ch)
     {
-        case 8: return Key{true, false, BACKSPACE};
-        case 9: return Key{true, false, TAB};
-        case 13: return Key{true, false, ENTER};
-        case 27: return Key{true, false, ESC};
+        case 8: return Key{true, BACKSPACE};
+        case 9: return Key{true, TAB};
+        case 13: return Key{true, ENTER};
+        case 27: return Key{true, ESC};
     }
-    if (ch >= 1 && ch <= 26) // Ctrl+A - Ctrl+Z
-        return Key{false, true, static_cast<char>(ch + 'a' - 1)};
     if (ch >= 32 && ch <= 126) // alphabetic, numbers, symbols
-        return Key{false, false, static_cast<char>(ch)};
-    return Key{true, false, UNKNOWN};
+        return Key{false, static_cast<char>(ch)};
+    return Key{true, UNKNOWN};
 #else
     int ch = getchar();
     if (ch == 27) {
         int next1 = getchar();
         if (next1 == '[') {
             int next2 = getchar();
-            if (next2 == '1' || next2 == '7') return Key{true, false, HOME};
-            if (next2 == '4' || next2 == '8') return Key{true, false, END};
-            if (next2 == 'A') return Key{true, false, UP};
-            if (next2 == 'B') return Key{true, false, DOWN};
-            if (next2 == 'C') return Key{true, false, RIGHT};
-            if (next2 == 'D') return Key{true, false, LEFT};
-            if (next2 == 'H') return Key{true, false, HOME};
-            if (next2 == 'F') return Key{true, false, END};
+            if (next2 == '1' || next2 == '7') return Key{true, HOME};
+            if (next2 == '4' || next2 == '8') return Key{true, END};
+            if (next2 == 'A') return Key{true, UP};
+            if (next2 == 'B') return Key{true, DOWN};
+            if (next2 == 'C') return Key{true, RIGHT};
+            if (next2 == 'D') return Key{true, LEFT};
+            if (next2 == 'H') return Key{true, HOME};
+            if (next2 == 'F') return Key{true, END};
         }
-        return Key{true, false, ESC};
+        return Key{true, ESC};
     }
-    if (ch == 10) return Key{true, false, ENTER};
-    if (ch == 127) return Key{true, false, BACKSPACE};
-    if (ch >= 1 && ch <= 26) // Ctrl+A - Ctrl+Z
-        return Key{false, true, (char)(ch + 'a' - 1)};
+    if (ch == 10) return Key{true, ENTER};
+    if (ch == 127) return Key{true, BACKSPACE};
     if (ch >= 32 && ch <= 126) // alphabetic, numbers, symbols
-        return Key{false, false, (char)ch};
-    return Key{true, false, UNKNOWN};
+        return Key{false, (char)ch};
+    return Key{true, UNKNOWN};
 #endif
 }
 

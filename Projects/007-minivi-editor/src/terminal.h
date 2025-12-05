@@ -24,16 +24,13 @@ enum SpecialKey {
 
 struct Key {
     bool isSpecial;
-    bool isCtrl;
-    union
-    {
+    union {
         char c;
         SpecialKey sk;
     };
 };
 
-struct TerminalSize
-{
+struct TerminalSize {
     int cols;
     int rows;
 };
@@ -44,7 +41,7 @@ void setColor(const std::string &textColor, const std::string &bgColor = "none")
 void resetColor();
 void clearScreen();
 void hideCursor(bool hide);
-void setInputMode(InputMode mode); // Allow or disallow user input text to be shown on terminal
+void setInputMode(InputMode mode);
 Key getKeyPress();
 TerminalSize getTerminalSize();
 const char *getCurrentUsername();
