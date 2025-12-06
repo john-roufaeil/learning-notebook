@@ -5,7 +5,7 @@
 
 class String {
     private:
-        int size;
+        int size; // including null terminator
         char* str;
 
     public:
@@ -55,5 +55,6 @@ class String {
 };
 
 std::ostream &operator<<(std::ostream &os, const String &s);
+std::istream &operator>>(std::istream &ios, String &s);
 
 #endif

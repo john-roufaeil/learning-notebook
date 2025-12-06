@@ -181,7 +181,7 @@ String String::operator+(const String& other) const {
         result[i + this->length()] = other[i];
     }
 
-    result[this->length() + other.length() + 1] = '\0';
+    result[this->length() + other.length()] = '\0';
     return result;
 }
 
@@ -315,13 +315,13 @@ void String::toUpper() {
 }
 
 char& String::operator[](int idx) {
-    if (idx >= this-> size) throw std::invalid_argument("Index out of bound.");
-    return this->str[idx];
+    if (idx < 0 || idx >= length()) throw std::invalid_argument("Index out of bound.");
+    return str[idx];
 }
 
 const char& String::operator[](int idx) const {
-    if (idx >= this-> size) throw std::invalid_argument("Index out of bound.");
-    return this->str[idx];
+    if (idx < 0 || idx >= length()) throw std::invalid_argument("Index out of bound.");
+    return str[idx];
 }
 
 void String::fullPrint() const {
@@ -333,3 +333,10 @@ std::ostream& operator<<(std::ostream& os, const String& s) {
     return os;
 }
 
+std::istream& operator>>(std::istream& is, String& s) {
+    std::cout << "Input string: ";
+    char buffer[1024];
+    is >> buffer;
+    s = buffer;
+    return is;
+}
