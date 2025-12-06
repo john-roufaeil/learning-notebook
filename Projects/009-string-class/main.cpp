@@ -54,12 +54,12 @@ int main() {
     s4.fullPrint();
     s4.fullPrint();
     s4.setStr("balabizo");
-    s4.resize(10);
-    s4.resize(2);
+    s4.setSize(10);
+    s4.setSize(2);
     s4.fullPrint();
     s4.clear();
     s4.fullPrint();
-    s4.resize(3);
+    s4.setSize(3);
     s4[0] = 'h';
     s4[1] = s4[0];
     s4.fullPrint();

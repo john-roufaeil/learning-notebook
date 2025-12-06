@@ -25,7 +25,6 @@ class String {
 
         int length() const;
         bool isEmpty() const;
-        void resize(int newSize);
         void clear();
         char& operator[](int idx); // modifiable
         const char& operator[](int idx) const; //readonly
@@ -44,7 +43,6 @@ class String {
         bool operator==(const char *other) const;
         bool operator!=(const String &other) const;
         bool operator!=(const char *other) const;
-
         bool operator>(const String &other) const;
         bool operator<(const String &other) const;
         bool operator>=(const String &other) const;
