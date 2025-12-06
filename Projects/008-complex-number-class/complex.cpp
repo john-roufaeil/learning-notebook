@@ -233,7 +233,8 @@ std::ostream& operator<<(std::ostream& os, const Complex& c) {
         return os << img << "i";
     } else {
         os << real;
-        if (abs(img - 1) < EPSILON) os << "+i";
+        if (abs(img) < EPSILON) os << "";
+        else if (abs(img - 1) < EPSILON) os << "+i";
         else if (abs(img + 1) < EPSILON) os << "-i";
         else if (img > 0) os << "+" << img << "i";
         else os << img << "i";
