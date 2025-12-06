@@ -69,6 +69,7 @@ String& String::operator=(const String& other) {
     for (int i = 0; i < size - 1; i++) {
         str[i] = other[i];
     }
+    str[size - 1] = '\0'; 
     return *this;
 }
 
