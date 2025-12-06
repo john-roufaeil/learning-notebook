@@ -27,11 +27,6 @@ int main() {
     s.push(60);
     s.push(40);
     s.push(50);
-    // s.push(40);
-    // s.push(50);
-    // s.push(60);
-    // s.push(40);
-    // s.push(50);
 
     std::cout << "Stack after filling: ";
     s.print();
@@ -59,6 +54,14 @@ int main() {
     std::cout << "Copy constructor string: ";
     Stack<std::string> s4 = s3;
     s4.print();
+
+    Stack<std::string> s5(std::move(s4));
+    std::cout << "s5: "; s5.print();
+
+    Stack<std::string> s6;
+    s6 = std::move(s3);
+    std::cout << "s6: "; s6.print();
+    std::cout << "s6 count: " << s6.count() << std::endl;
 
     return 0;
 }
