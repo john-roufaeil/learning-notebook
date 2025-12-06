@@ -67,6 +67,7 @@ int main() {
     Complex c11(5, 3);
     Complex zero;
     // Complex result = c11 / zero;
-
+    Complex cnew = c1;
+    std::cout << cnew;
     return 0;
 }
