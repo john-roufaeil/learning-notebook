@@ -13,8 +13,8 @@ class Complex {
         Complex& operator=(const Complex& other);
         /* Useless to have move constructor & assignment
            data is only doubles will be copied anyway(no heap resources to steal)
-           Complex(Complex &&other) noexcept; 
-           Complex &operator=(Complex &&other) noexcept; */
+           Complex(Complex &&other); 
+           Complex &operator=(Complex &&other); */
 
         void setReal(double real);
         double getReal() const;
