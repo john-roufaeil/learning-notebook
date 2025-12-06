@@ -7,21 +7,59 @@ Stack::Stack(int size) {
         throw std::invalid_argument("Stack size cannot be non positive.");
     }
     this->size = size;
-    this->topIdx = -1;
-    this->ptr = new int[size];
+    topIdx = -1;
+    ptr = new int[size];
 }
 
 Stack::Stack(const Stack& other) {
-    this->size = other.size;
-    this->topIdx = other.topIdx;
-    this->ptr = new int[this->size];
-    for (int i = 0; i < this->topIdx; i++) {
-        this->ptr[i] = other.ptr[i];
+    size = other.size;
+    topIdx = other.topIdx;
+    ptr = new int[size];
+    for (int i = 0; i < topIdx + 1; i++) {
+        ptr[i] = other.ptr[i];
     }
 }
 
+Stack& Stack::operator=(const Stack& other) {
+    if (this == &other) {
+        return *this;
+    }
+    delete[] ptr;
+    size = other.size;
+    topIdx = other.topIdx;
+    ptr = new int[size];
+    for (int i = 0; i < topIdx + 1; i++) {
+        ptr[i] = other.ptr[i];
+    }
+    return *this;
+}
+
+Stack::Stack(Stack &&other) {
+    size = other.size;
+    topIdx = other.topIdx;
+    ptr = other.ptr;
+    other.size = 0;
+    other.topIdx = 0;
+    other.ptr = nullptr;
+}
+
+Stack& Stack::operator=(Stack &&other) {
+    if (this == &other) {
+        return *this;
+    }
+    delete[] ptr;
+    size = other.size;
+    topIdx = other.topIdx;
+    ptr = other.ptr;
+    other.size = 0;
+    other.topIdx = 0;
+    other.ptr = nullptr;
+    return *this;
+}
+
 Stack::~Stack() {
-    delete[] this->ptr;
+    delete[] ptr;
+    ptr = nullptr;
 }
 
 void Stack::push(int num) {
@@ -36,7 +74,7 @@ void Stack::push(int num) {
 int Stack::pop() {
     int valToReturn = 0;
     if (topIdx != -1) {
-        valToReturn = this->ptr[topIdx];
+        valToReturn = ptr[topIdx];
         topIdx--;
     } else {
         throw std::invalid_argument("Out of bound");
@@ -44,38 +82,32 @@ int Stack::pop() {
     return valToReturn;
 }
 
-int Stack::peek() {
+int Stack::peek() const {
     if (topIdx == -1) {
         throw std::invalid_argument("Out of bound");
     }
-    return this->ptr[topIdx];
+    return ptr[topIdx];
 }
 
-bool Stack::isEmpty() {
+int Stack::count() const {
+    return topIdx + 1;
+}
+
+bool Stack::isEmpty() const {
     return topIdx == -1;
 }
 
-bool Stack::isFull() {
-    return topIdx == this->size - 1;
+bool Stack::isFull() const {
+    return topIdx == size - 1;
 }
 
-void Stack::print() {
-    for (int i = 0; i < this->topIdx + 1; i++) {
-        std::cout << this->ptr[i] << " ";
+void Stack::print() const {
+     if (!ptr) {
+        std::cout << "ptr is not existing\n";
+        return;
+    }
+    for (int i = 0; i < topIdx + 1; i++) {
+        std::cout << ptr[i] << " ";
     }
     std::cout << std::endl;
-}
-
-Stack& Stack::operator=(const Stack& other) {
-    if (this == &other) {
-        return *this;
-    }
-    delete[] this->ptr;
-    this->size = other.size;
-    this->topIdx = other.topIdx;
-    this->ptr = new int[this->size];
-    for (int i = 0; i < this->topIdx + 1; i++) {
-        this->ptr[i] = other.ptr[i];
-    }
-    return *this;
 }

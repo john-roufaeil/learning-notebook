@@ -26,14 +26,10 @@ int main() {
     s.push(60);
     s.push(40);
     s.push(50);
-    // s.push(40);
-    // s.push(50);
-    // s.push(60);
-    // s.push(40);
-    // s.push(50);
 
     std::cout << "Stack after filling: ";
     s.print();
+    std::cout << s.count() << std::endl;
     std::cout << "Is empty? " << s.isEmpty() << "\n";
     std::cout << "Is full? " << s.isFull() << "\n";
 
@@ -43,6 +39,23 @@ int main() {
     s2 = s;
     std::cout << "New stack copied: ";
     s2.print();
+
+
+    Stack a(5);
+    a.push(10);
+    a.push(20);
+    a.push(30);
+
+    std::cout << "Stack a before move: ";
+    a.print();
+
+    Stack b(std::move(a));
+
+    std::cout << "Stack a after move: ";
+    a.print();
+
+    std::cout << "Stack b after move: ";
+    b.print();   
 
     return 0;
 }
