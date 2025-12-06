@@ -7,8 +7,8 @@
 String::String(int size) {
     if (size < 1) throw std::invalid_argument("Size must cannot be less than 1");
     this->size = size;
-    this->str = new char[size]();
-    this->str[size - 1] = '\0';
+    str = new char[size];
+    str[size - 1] = '\0';
 }
 
 String::String(const char* inputString) {
@@ -16,31 +16,75 @@ String::String(const char* inputString) {
     while (inputString[len] != '\0') {
         len++;
     }
-    this->size = len + 1;
+    size = len + 1;
 
-    this->str = new char[this->size]();
+    str = new char[size];
     for (int i = 0; i < len; i++) {
-        this->str[i] = inputString[i];
+        str[i] = inputString[i];
     }
-    this->str[len] = '\0';
+    str[len] = '\0';
 }
 
 String::String(const String& other) {
-    int len = 0;
-    while (other[len] != '\0') {
-        len++;
-    }
-    this->size = len + 1;
+    size = other.size;
 
-    this->str = new char[this->size]();
-    for (int i = 0; i < len; i++) {
-        this->str[i] = other[i];
+    str = new char[size];
+    for (int i = 0; i < other.length(); i++) {
+        str[i] = other[i];
     }
-    this->str[len] = '\0';
+    str[other.length()] = '\0';
+}
+
+String::String(String&& other) {
+    str = other.str;
+    size = other.size;
+    other.str = nullptr;
+    other.size = 0;
+}
+
+String& String::operator=(const char *inputString) { 
+    int newLen = 0;
+    while(inputString[newLen] != '\0') {
+        newLen++;
+    }
+    newLen++;
+
+    if (newLen != size) {
+        delete[] str;
+        size = newLen;
+        str = new char[size];
+    }
+    for (int i = 0; i < size - 1; i++) {
+        str[i] = inputString[i];
+    }
+    str[size - 1] = '\0';
+    return *this;
+}
+
+String& String::operator=(const String& other) {
+    if (this == &other) return *this;
+    delete[] str;
+    size = other.size;
+    str = new char[size];
+    for (int i = 0; i < size - 1; i++) {
+        str[i] = other[i];
+    }
+    return *this;
+}
+
+String& String::operator=(String && other) {
+    if (this == &other) return *this;
+
+    delete[] str;
+    str = other.str;
+    size = other.size;
+    other.str = nullptr;
+    other.size = 0;
+    return *this;
 }
 
 String::~String() {
-    delete[] this->str;
+    delete[] str;
 }
 
 // Setters & Getters ----------------------------
@@ -111,29 +155,6 @@ void String::resize(int newSize) {
 
 void String::clear() {
     this->str[0] = '\0';
-}
-
-String& String::operator=(const char *inputString) { 
-    int newLen = 0;
-    while(inputString[newLen] != '\0') {
-        newLen++;
-    }
-    newLen++;
-    
-    this->setStr(inputString);
-    this->setSize(newLen);
-    return *this;
-}
-
-String& String::operator=(const String& other) {
-    if (this == &other) {
-        return *this;
-    }
-
-    int newLen = other.getSize();
-    this->setStr(other.getStr());
-    this->setSize(newLen);
-    return *this;
 }
 
 void String::append(const String& s) {

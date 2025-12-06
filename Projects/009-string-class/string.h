@@ -12,6 +12,10 @@ class String {
         String(int size);
         String(const char* inputString = "");
         String(const String &other);
+        String(String &&other);
+        String& operator=(const char *inputString);
+        String& operator=(const String &other);
+        String& operator=(String &&other);
         ~String();
 
         void setSize(int n);
@@ -23,8 +27,6 @@ class String {
         bool isEmpty() const;
         void resize(int newSize);
         void clear();
-        String& operator=(const char *inputString);
-        String& operator=(const String &other);
         char& operator[](int idx); // modifiable
         const char& operator[](int idx) const; //readonly
         
