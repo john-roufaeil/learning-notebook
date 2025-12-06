@@ -49,7 +49,9 @@ int main() {
     std::cout << "Stack a before move: ";
     a.print();
 
-    Stack b(std::move(a));
+    // Stack b(std::move(a)); // Move Constructor
+    Stack b;
+    b = std::move(a); // Move Assignment
 
     std::cout << "Stack a after move: ";
     a.print();

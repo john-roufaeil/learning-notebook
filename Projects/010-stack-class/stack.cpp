@@ -3,9 +3,7 @@
 #include "stack.h"
 
 Stack::Stack(int size) {
-    if (size <= 0) {
-        throw std::invalid_argument("Stack size cannot be non positive.");
-    }
+    if (size <= 0) throw std::invalid_argument("Stack size cannot be non positive.");
     this->size = size;
     topIdx = -1;
     ptr = new int[size];
@@ -21,9 +19,7 @@ Stack::Stack(const Stack& other) {
 }
 
 Stack& Stack::operator=(const Stack& other) {
-    if (this == &other) {
-        return *this;
-    }
+    if (this == &other) return *this;
     delete[] ptr;
     size = other.size;
     topIdx = other.topIdx;
@@ -39,20 +35,18 @@ Stack::Stack(Stack &&other) {
     topIdx = other.topIdx;
     ptr = other.ptr;
     other.size = 0;
-    other.topIdx = 0;
+    other.topIdx = -1;
     other.ptr = nullptr;
 }
 
 Stack& Stack::operator=(Stack &&other) {
-    if (this == &other) {
-        return *this;
-    }
+    if (this == &other) return *this;
     delete[] ptr;
     size = other.size;
     topIdx = other.topIdx;
     ptr = other.ptr;
     other.size = 0;
-    other.topIdx = 0;
+    other.topIdx = -1;
     other.ptr = nullptr;
     return *this;
 }
@@ -83,9 +77,7 @@ int Stack::pop() {
 }
 
 int Stack::peek() const {
-    if (topIdx == -1) {
-        throw std::invalid_argument("Out of bound");
-    }
+    if (topIdx == -1) throw std::invalid_argument("Out of bound");
     return ptr[topIdx];
 }
 
@@ -98,16 +90,16 @@ bool Stack::isEmpty() const {
 }
 
 bool Stack::isFull() const {
-    return topIdx == size - 1;
+    return topIdx + 1 == size;
 }
 
 void Stack::print() const {
      if (!ptr) {
         std::cout << "ptr is not existing\n";
-        return;
+    } else {
+        for (int i = 0; i < topIdx + 1; i++) {
+            std::cout << ptr[i] << " ";
+        }
+        std::cout << std::endl;
     }
-    for (int i = 0; i < topIdx + 1; i++) {
-        std::cout << ptr[i] << " ";
-    }
-    std::cout << std::endl;
 }
