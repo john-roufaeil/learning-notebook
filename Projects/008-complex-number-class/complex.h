@@ -55,10 +55,10 @@ class Complex {
         bool operator<=(const Complex& other) const;
         bool operator>=(const Complex& other) const;
 
-        double magnitude() const;
+        double operator()() const;
         Complex conjugate() const;
-    };
-    
+};
+
 Complex operator+(double n, const Complex& c);
 Complex operator-(double n, const Complex& c);
 Complex operator*(double n, const Complex& c);

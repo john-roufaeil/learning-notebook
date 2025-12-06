@@ -178,22 +178,22 @@ bool Complex::operator!=(const Complex &other) const {
 }
 
 bool Complex::operator<(const Complex& other) const {
-    return magnitude() < other.magnitude();
+    return (*this)() < other();
 }
 
 bool Complex::operator>(const Complex& other) const {
-    return magnitude() > other.magnitude();
+    return (*this)() > other();
 }
 
 bool Complex::operator<=(const Complex& other) const {
-    return magnitude() <= other.magnitude();
+    return (*this)() <= other();
 }
 
 bool Complex::operator>=(const Complex& other) const{
-    return magnitude() >= other.magnitude();
+    return (*this)() >= other();
 }
 
-double Complex::magnitude() const {
+double Complex::operator()() const {
     double underRoot = (img * img) + (real * real);
     return sqrt(underRoot);
 }
