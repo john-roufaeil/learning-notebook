@@ -53,7 +53,6 @@ Stack& Stack::operator=(Stack &&other) {
 
 Stack::~Stack() {
     delete[] ptr;
-    ptr = nullptr;
 }
 
 void Stack::push(int num) {
