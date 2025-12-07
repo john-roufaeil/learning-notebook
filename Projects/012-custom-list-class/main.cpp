@@ -3,7 +3,7 @@
 #include <iostream>
 
 int main() {
-    std::cout << "Enter items on separate lines:\n";
+    std::cout << "Enter items on separate lines: \n";
     List l0 = {};
     ListItem inputItem;
     std::cin >> inputItem;
@@ -13,6 +13,9 @@ int main() {
     }
     l0.fullPrint();
     l0.detailPrint();
+
+    std::cout << std::endl;
+
     List l1 = {};
     l1.add(5);
     l1.add("Hello");
@@ -25,11 +28,13 @@ int main() {
     l1.detailPrint();
     l1.fullPrint();
 
-    std::cout << l1[0].toString() << std::endl;
-    std::cout << l1[1].toString() << std::endl;
-    std::cout << l1[2].toString() << std::endl;
-    std::cout << l1[3].toString() << std::endl;
-    std::cout << l1[4].toString() << std::endl;
+    std::cout << l1[0].toString() << " " << l1[0].getTypeAsString() << std::endl;
+    std::cout << l1[1].toString() << " " << l1[1].getTypeAsString() << std::endl;
+    std::cout << l1[2].toString() << " " << l1[2].getTypeAsString() << std::endl;
+    std::cout << l1[3].toString() << " " << l1[3].getTypeAsString() << std::endl;
+    std::cout << l1[4].toString() << " " << l1[4].getTypeAsString() << std::endl;
+
+    std::cout << std::endl;
 
     l1[0] = 3939;
     l1.detailPrint();

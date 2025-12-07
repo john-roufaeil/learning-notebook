@@ -12,7 +12,7 @@ enum ItemType {
 };
 
 class ListItem {
-    public:
+    private:
         ItemType type;
         union {
             int intValue;
@@ -22,6 +22,7 @@ class ListItem {
             double doubleValue;
         };
         std::string stringValue;
+    public:
         
         ListItem();
         ListItem(int value);
@@ -34,9 +35,12 @@ class ListItem {
 
         ListItem(const ListItem &other);
         ListItem& operator=(const ListItem &other);
-        
-        ItemType getType();
-        std::string getTypeAsString();
+        ListItem(ListItem &&other);
+        ListItem &operator=(ListItem &&other);
+        ~ListItem();
+
+        ItemType getType() const;
+        std::string getTypeAsString() const;
         
         int getInt() const;
         char getChar() const;

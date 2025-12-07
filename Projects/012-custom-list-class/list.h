@@ -13,11 +13,13 @@ class List {
         void growIfNeeded();
 
     public:
-        List(int size = 10);
+        List(int size = 1);
         List(const List &other);
+        List(List &&other);
         List(std::initializer_list<ListItem> items);
-        ~List();
         List& operator=(const List &other);
+        List &operator=(List &&other);
+        ~List();
 
         int getSize() const;
         void setSize(int size);
@@ -33,9 +35,9 @@ class List {
 
         void remove();
         void clear();
-        void fullPrint();
-        void detailPrint();
-        ListItem& operator[](int idx);
+        void fullPrint() const;
+        void detailPrint() const;
+        ListItem& operator[](int idx) const;
 };
 
 #endif

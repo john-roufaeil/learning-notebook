@@ -3,95 +3,99 @@
 #include <string>
 
 ListItem::ListItem() {
-    this->type = INT;
-    this->intValue = 0;
+    type = INT;
+    intValue = 0;
 }
 ListItem::ListItem(int value) {
-    this->type = INT;
-    this->intValue = value;
+    type = INT;
+    intValue = value;
 }
 ListItem::ListItem(char value) {
-    this->type = CHAR;
-    this->charValue = value;
+    type = CHAR;
+    charValue = value;
 }
 ListItem::ListItem(bool value) {
-    this->type = BOOL;
-    this->boolValue = value;
+    type = BOOL;
+    boolValue = value;
 }
 ListItem::ListItem(float value) {
-    this->type = FLOAT;
-    this->floatValue = value;
+    type = FLOAT;
+    floatValue = value;
 }
 ListItem::ListItem(double value) {
-    this->type = DOUBLE;
-    this->doubleValue = value;
+    type = DOUBLE;
+    doubleValue = value;
 }
 ListItem::ListItem(std::string value) {
-    this->type = STRING;
-    this->stringValue = value;
+    type = STRING;
+    stringValue = value;
 }
 ListItem::ListItem(const char* value) {
-    this->type = STRING;
-    this->stringValue = std::string(value);
+    type = STRING;
+    stringValue = std::string(value);
 }
 
 ListItem::ListItem(const ListItem &other) {
-    this->type = other.type;
+    type = other.type;
     switch (other.type) {
-        case INT:
-            this->intValue = other.intValue;
-            break;
-        case CHAR:
-            this->charValue = other.charValue;
-            break;
-        case BOOL:
-            this->boolValue = other.boolValue;
-            break;
-        case FLOAT:
-            this->floatValue = other.floatValue;
-            break;
-        case DOUBLE:
-            this->doubleValue = other.doubleValue;
-            break;
-        case STRING:
-            this->stringValue = other.stringValue;
-            break;
+        case INT: intValue = other.intValue; break;
+        case CHAR: charValue = other.charValue; break;
+        case BOOL: boolValue = other.boolValue; break;
+        case FLOAT: floatValue = other.floatValue; break;
+        case DOUBLE: doubleValue = other.doubleValue; break;
+        case STRING: stringValue = other.stringValue; break;
     }
 }
 
 ListItem& ListItem::operator=(const ListItem &other) {
     if (this == &other) return *this;
 
-    this->type = other.type;
+    type = other.type;
     switch (other.type) {
-        case INT:
-            this->intValue = other.intValue;
-            break;
-        case CHAR:
-            this->charValue = other.charValue;
-            break;
-        case BOOL:
-            this->boolValue = other.boolValue;
-            break;
-        case FLOAT:
-            this->floatValue = other.floatValue;
-            break;
-        case DOUBLE:
-            this->doubleValue = other.doubleValue;
-            break;
-        case STRING:
-            this->stringValue = other.stringValue;
-            break;
+        case INT: intValue = other.intValue; break;
+        case CHAR: charValue = other.charValue; break;
+        case BOOL: boolValue = other.boolValue; break;
+        case FLOAT: floatValue = other.floatValue; break;
+        case DOUBLE: doubleValue = other.doubleValue; break;
+        case STRING: stringValue = other.stringValue; break;
     }
     return *this;
 }
 
-ItemType ListItem::getType() {
-    return this->type;
+ListItem::ListItem(ListItem &&other) {
+    type = other.type;
+    switch(type) {
+        case INT: intValue = other.intValue; break;
+        case CHAR: charValue = other.charValue; break;
+        case BOOL: boolValue = other.boolValue; break;
+        case FLOAT: floatValue = other.floatValue; break;
+        case DOUBLE: doubleValue = other.doubleValue; break;
+        case STRING: stringValue = other.stringValue; break;
+    }
 }
 
-std::string ListItem::getTypeAsString() {  
-    switch (this->type) {
+ListItem& ListItem::operator=(ListItem &&other) {
+    if (this == &other) return *this;
+    type = other.type;
+    switch(type) {
+        case INT: intValue = other.intValue; break;
+        case CHAR: charValue = other.charValue; break;
+        case BOOL: boolValue = other.boolValue; break;
+        case FLOAT: floatValue = other.floatValue; break;
+        case DOUBLE: doubleValue = other.doubleValue; break;
+        case STRING: stringValue = other.stringValue; break;
+    }
+    return *this;
+}
+
+ListItem::~ListItem() {}
+
+ItemType ListItem::getType() const {
+    return type;
+}
+
+std::string ListItem::getTypeAsString() const {  
+    switch (type) {
         case INT:    return "INT";
         case CHAR:   return "CHAR";
         case BOOL:   return "BOOL";
@@ -103,32 +107,32 @@ std::string ListItem::getTypeAsString() {
 }
 
 int ListItem::getInt() const {
-    return this->intValue;
+    return intValue;
 }
 char ListItem::getChar() const {
-    return this->charValue;
+    return charValue;
 }
 bool ListItem::getBool() const {
-    return this->boolValue;
+    return boolValue;
 }
 float ListItem::getFloat() const {
-    return this->floatValue;
+    return floatValue;
 }
 double ListItem::getDouble() const {
-    return this->doubleValue;
+    return doubleValue;
 }
 std::string ListItem::getString() const {
-    return this->stringValue;
+    return stringValue;
 }
 
 std::string ListItem::toString() const {
-    switch (this->type) {
-        case INT:    return std::to_string(this->getInt());
-        case CHAR:   return std::string("'") + this->getChar() + std::string("'");
-        case BOOL:   return (this->getBool() ? "true" : "false");
-        case FLOAT:  return std::to_string(this->getFloat()) + "f";
-        case DOUBLE: return std::to_string(this->getDouble());
-        case STRING: return std::string("\"") + this->getString() + std::string("\"");
+    switch (type) {
+        case INT:    return std::to_string(getInt());
+        case CHAR:   return std::string("'") + getChar() + std::string("'");
+        case BOOL:   return (getBool() ? "true" : "false");
+        case FLOAT:  return std::to_string(getFloat()) + "f";
+        case DOUBLE: return std::to_string(getDouble());
+        case STRING: return std::string("\"") + getString() + std::string("\"");
     }
     return "UNKNOWN";
 }
