@@ -1,7 +1,7 @@
 package courseregistration.course;
 
 public class Course {
-    private static Integer coursesCount;
+    private static Integer coursesCount = 0;
     private Integer courseId;
     private String courseName;
     private Integer creditHours;
