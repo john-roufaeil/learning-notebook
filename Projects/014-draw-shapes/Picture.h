@@ -5,59 +5,42 @@
 #include "Line.h"
 #include "Rectangle.h"
 #include "Circle.h"
+#include "Shape.h"
 #include <iostream>
 
 class Picture {
     private:
-        int linesCount;
-        int rectanglesCount;
-        int circlesCount;
-        Line *pLines;
-        Rectangle *pRectangles;
-        Circle *pCircles;
+        Shape **shapes;
+        int count;
+        int capacity;
     public:
-        Picture() {
-            linesCount = 0;
-            rectanglesCount = 0;
-            circlesCount = 0;
-            pLines = nullptr;
-            pRectangles = nullptr;
-            pCircles = nullptr;
+        Picture(int initialCapacity = 10) {
+            count = 0;
+            capacity = initialCapacity;
+            shapes = new Shape *[capacity];
         }
 
-        Picture(int lc, int rc, int cc, Line* lines, Rectangle* rectangles, Circle* circles) {
-            linesCount = lc;
-            rectanglesCount = rc;
-            circlesCount = cc;
-            pLines = lines;
-            pRectangles = rectangles;
-            pCircles = circles;
+        ~Picture() {
+            delete[] shapes;
         }
 
-        void setLines(int lc, Line* lines) {
-            linesCount = lc;
-            pLines = lines;
-        }
-
-        void setRectangles(int rc, Rectangle* rectangles) {
-            rectanglesCount = rc;
-            pRectangles = rectangles;
-        }
-
-        void setCircles(int cc, Circle* circles) {
-            circlesCount = cc;
-            pCircles = circles;
+        void addShape(Shape *shape) {
+            if (count == capacity) {
+                capacity *= 2;
+                Shape **newShapes = new Shape *[capacity];
+                for (int i = 0; i < count; i++) {
+                    newShapes[i] = shapes[i];
+                }
+                delete[] shapes;
+                shapes = newShapes;
+            }
+            shapes[count] = shape;
+            count++;
         }
 
         void draw() {
-            for (int i = 0; i < linesCount; i++) {
-                pLines[i].draw();
-            }
-            for (int i = 0; i < rectanglesCount; i++) {
-                pRectangles[i].draw();
-            }
-            for (int i = 0; i < circlesCount; i++) {
-                pCircles[i].draw();
+            for (int i = 0; i < count; i++) {
+                shapes[i]->draw();
             }
         }
 };

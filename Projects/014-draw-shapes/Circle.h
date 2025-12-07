@@ -2,20 +2,21 @@
 #define CIRCLE_H
 
 #include "Point.h"
+#include "Shape.h"
 #include <iostream>
 
-class Circle {
+class Circle : public Shape {
     private:
         Point center;
         int radius;
     public:
         Circle() {
-            this->center = Point();
-            this->radius = 0;
+            center = Point();
+            radius = 0;
         }
 
         Circle(int x, int y, int radius) {
-            this->center = Point(x, y);
+            center = Point(x, y);
             this->radius = radius;
         }
 
