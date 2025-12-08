@@ -2,7 +2,7 @@ package courseregistration.course;
 
 public class Course {
     private static Integer coursesCount = 0;
-    private Integer courseId;
+    private final Integer courseId;
     private String courseName;
     private Integer creditHours;
 
@@ -11,6 +11,10 @@ public class Course {
         this.courseName = courseName;
         this.creditHours = creditHours;
         coursesCount++;
+    }
+
+    public static Integer getCoursesCount() {
+        return coursesCount;
     }
 
     public Integer getCourseId() {
