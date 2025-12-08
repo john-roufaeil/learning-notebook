@@ -15,6 +15,10 @@ public class Student {
         this.registrations = new ArrayList<>();
         studentsCount++;
     }
+
+    public static Integer getStudentsCount() {
+        return studentsCount;
+    }
     
     public Integer getStudentId() {
         return studentId;
