@@ -18,7 +18,7 @@ public class Student implements Verifiable {
     }
 
     public static Student addStudent(String studentName) {
-        Student student = new Student(studentName);
+        Student student = new Student(studentName.trim());
         student.verify();
         students.add(student);
         studentsCount++;
@@ -31,6 +31,10 @@ public class Student implements Verifiable {
     
     public Integer getStudentId() {
         return studentId;
+    }
+
+    public static ArrayList<Student> getStudents() {
+        return students;
     }
 
     public String getStudentName() {
@@ -73,7 +77,7 @@ public class Student implements Verifiable {
         if (studentName == null) throw new IllegalArgumentException("Name cannot be null");
 
         for (int i = 0; i < studentsCount; i++) {
-            if (students.get(i).getStudentName().equals(studentName)) {
+            if (students.get(i).getStudentName().trim().equalsIgnoreCase(studentName.trim())) {
                 throw new IllegalArgumentException("Student already exists.");
             }
         }

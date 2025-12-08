@@ -17,7 +17,7 @@ public class Course implements Verifiable {
     }
 
     public static Course addCourse(String courseName, Integer creditHours) {
-        Course course = new Course(courseName, creditHours);
+        Course course = new Course(courseName.trim(), creditHours);
         course.verify();
         courses.add(course);
         coursesCount++;
@@ -26,6 +26,10 @@ public class Course implements Verifiable {
 
     public static Integer getCoursesCount() {
         return coursesCount;
+    }
+
+    public static ArrayList<Course> getCourses() {
+        return courses;
     }
 
     public Integer getCourseId() {
