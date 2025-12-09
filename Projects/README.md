@@ -20,3 +20,10 @@
 2. Java
     - [Binary Search, Find Min, Find Max](./015-java-day-1/)
     - [Count occurences in String, Interpret IP address](./016-java-day-2/)
+    - [Java Interface](./017-java-interface/)
+    - [Course Registration Console App](./018-course-registration/)
+    - [Non-Alphanumeric Exception](./019-non-alphanumeric-exception/)
+    - [Java Shapes](./020-java-shapes/)
+    - [Java Complex Numbers](./021-java-complex-number/)
+    - [Better String Lambda Comparison](./022-better-string/)
+    - [Check String Is Only Alphabet](./023-is-only-alphabet/)
