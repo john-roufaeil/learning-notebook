@@ -1,14 +1,14 @@
 public class Main {
     public static void main(String[] args) {
-        Complex<Integer> c1 = new Complex(3, -2);
+        Complex<Integer> c1 = new Complex<>(3, -2);
         System.out.print("Complex 1 (integer): ");
         c1.print();
 
-        Complex<Float> c2 = new Complex(1, -1f);
+        Complex<Float> c2 = new Complex<>(1f, -1f);
         System.out.print("Complex 2 (float): ");
         c2.print();
         
-        Complex<Double> c3 = new Complex(5, 5);
+        Complex<Double> c3 = new Complex<>(5.0, 5.0);
         System.out.print("Complex 3 (double): ");
         c3.print();
         

@@ -8,12 +8,12 @@ public class Main {
         String username2 = "john@f";
         String password2 = "john@123";
         String message2 = "Hello!";
+        
         try {
             Strings.validateUsername(username1);
             System.out.println(username1 + " is a valid username");
         } catch (NonAlphaNumericException e) {
             System.err.println(e.getMessage());
-            e.getStackTrace();
         }
 
         try {
@@ -21,7 +21,6 @@ public class Main {
             System.out.println(username2 + " is a valid username");
         } catch (NonAlphaNumericException e) {
             System.err.println(e.getMessage());
-            e.getStackTrace();
         }
 
         try {
@@ -29,7 +28,6 @@ public class Main {
             System.out.println(password1 + " is a valid password");
         } catch (NonAlphaNumericException e) {
             System.err.println(e.getMessage());
-            e.getStackTrace();
         }
 
         try {
@@ -37,7 +35,6 @@ public class Main {
             System.out.println(password2 + " is a valid password");
         } catch (NonAlphaNumericException e) {
             System.err.println(e.getMessage());
-            e.getStackTrace();
         }
 
         try {
@@ -45,7 +42,6 @@ public class Main {
             System.out.println(message1 + " is a valid alphanumeric string");
         } catch (NonAlphaNumericException e) {
             System.err.println(e.getMessage());
-            e.getStackTrace();
         }
 
         try {
@@ -53,7 +49,6 @@ public class Main {
             System.out.println(message2 + " is a valid alphanumeric string");
         } catch (NonAlphaNumericException e) {
             System.err.println(e.getMessage());
-            e.getStackTrace();
         }
     }
 }

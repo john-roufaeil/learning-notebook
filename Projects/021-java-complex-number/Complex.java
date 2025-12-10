@@ -1,27 +1,19 @@
 public class Complex<T extends Number> {
-    T real;
-    T img;
+    private T real;
+    private T img;
 
     public Complex(T real, T img) {
         this.real = real;
         this.img = img;
     }
 
-    public T getReal() {
-        return real;
-    }
+    public T getReal() { return real; }
 
-    public T getImg() {
-        return img;
-    }
+    public T getImg() { return img; }
 
-    public void setReal(T real) {
-        this.real = real;
-    }
+    public void setReal(T real) { this.real = real; }
 
-    public void setImg(T img) {
-        this.img = img;
-    }
+    public void setImg(T img) { this.img = img; }
 
     public void print() {
         Boolean isNegImg = getImg().doubleValue() < 0;

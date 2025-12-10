@@ -1,20 +1,22 @@
 
+import java.util.Comparator;
+import java.util.List;
 
 public class Exercise1 {
 
    public static void main(String[] args) {
       CountryDao countryDao= InMemoryWorldDao.getInstance();
-      // countryDao.findAllCountries().stream().forEach(country -> {
-      //    String countryName = country.getName();
-      //    List<City> countryCities = country.getCities();
+      countryDao.findAllCountries().stream().forEach(country -> {
+         String countryName = country.getName();
+         List<City> countryCities = country.getCities();
 
-      //    countryCities.stream()
-      //       .max(Comparator.comparingInt(City::getPopulation))
-      //       .ifPresent(city -> System.out.println(
-      //          city.getName() + " in " + countryName + 
-      //          " has population of " + city.getPopulation()
-      //       ));
-      // });
+         countryCities.stream()
+            .max(Comparator.comparingInt(City::getPopulation))
+            .ifPresent(city -> System.out.println(
+               city.getName() + " in " + countryName + 
+               " has population of " + city.getPopulation()
+            ));
+      });
    }
 }
 

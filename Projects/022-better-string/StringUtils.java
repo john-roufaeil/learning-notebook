@@ -2,7 +2,7 @@ public class StringUtils {
     
     @FunctionalInterface
     public interface Tester<T> {
-        public Boolean test(T item1, T item2);
+        Boolean test(T item1, T item2);
     }
 
     public static String betterString(String s1, String s2, Tester<String> condition) {
