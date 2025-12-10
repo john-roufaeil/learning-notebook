@@ -30,13 +30,13 @@ public class Complex<T extends Number> {
         }
     }
 
-    public Complex<Double> add(Complex<? extends Number> other) {
+    public <U extends Number> Complex<Double> add(Complex<U> other) {
         double newReal = getReal().doubleValue() + other.getReal().doubleValue();
         double newImg = getImg().doubleValue() + other.getImg().doubleValue();
         return new Complex<>(newReal, newImg);
     }
     
-    public Complex<Double> sub(Complex<? extends Number> other) {
+    public <U extends Number> Complex<Double> sub(Complex<U> other) {
         double newReal = getReal().doubleValue() - other.getReal().doubleValue();
         double newImg = getImg().doubleValue() - other.getImg().doubleValue();
         return new Complex<>(newReal, newImg);
