@@ -1,5 +1,3 @@
-
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -11,15 +9,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-
-
-
 public class InMemoryWorldDao implements WorldDao {
 	private Map<String, Country> countries;
 	private Map<Integer, City> cities;
 	private Set<String> continents;
-	
-	
 	
 	public static void main(String args[]) {
 		InMemoryWorldDao worldDao=	InMemoryWorldDao.getInstance();
@@ -34,10 +27,9 @@ public class InMemoryWorldDao implements WorldDao {
 	}
 	
 	public void writeCountriesToFile(Map<String, Country> map,String path) {
-
 	        //new file object
 	        File file = new File(path);	      
-	        BufferedWriter bf = null;;	        
+	        BufferedWriter bf = null;	        
 	        try{	            
 	            //create new BufferedWriter for the output file
 	            bf = new BufferedWriter( new FileWriter(file) );	 
@@ -4815,7 +4807,7 @@ public class InMemoryWorldDao implements WorldDao {
 				390757.00, 5951.00, 4068));
 	}
 
-		@Override
+	@Override
 	public Country findCountryByCode(String code) {
 		return countries.get(code);
 	}
@@ -4889,6 +4881,5 @@ public class InMemoryWorldDao implements WorldDao {
 	@Override
 	public List<City> findCitiesByCountryCode(String countryCode) {
 		return findCountryByCode(countryCode).getCities();
-	}
-	
+	}	
 }

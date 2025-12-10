@@ -1,8 +1,5 @@
-
-
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class Country {
 	private String code;
@@ -13,13 +10,9 @@ public class Country {
 	private double gnp;
 	private int capital;
 	private List<City> cities;
-	{
-		cities = new ArrayList<>();
-	}
 
-	public Country() {
-	}
-
+	// { cities = new ArrayList<>(); }
+	
 	public Country(String code, String name, String continent, int population,
 			double surfaceArea, double gnp, int capital) {
 		this.code = code;
@@ -29,67 +22,38 @@ public class Country {
 		this.population = population;
 		this.capital = capital;
 		this.gnp = gnp;
+		cities = new ArrayList<>();
 	}
 
-	public String getCode() {
-		return code;
-	}
+	public String getCode() { return code; }
 
-	public void setCode(String code) {
-		this.code = code;
-	}
+	public void setCode(String code) { this.code = code; }
 
-	public String getName() {
-		return name;
-	}
+	public String getName() { return name; }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+	public void setName(String name) { this.name = name; }
 
-	public String getContinent() {
-		return continent;
-	}
+	public String getContinent() { return continent; }
 
-	public void setContinent(String continent) {
-		this.continent = continent;
-	}
+	public void setContinent(String continent) { this.continent = continent; }
 
-	public double getSurfaceArea() {
-		return surfaceArea;
-	}
+	public double getSurfaceArea() { return surfaceArea; }
 
-	public void setSurfaceArea(double surfaceArea) {
-		this.surfaceArea = surfaceArea;
-	}
+	public void setSurfaceArea(double surfaceArea) { this.surfaceArea = surfaceArea; }
 
-	public double getGnp() {
-		return gnp;
-	}
+	public double getGnp() { return gnp; }
 
-	public void setGnp(double gnp) {
-		this.gnp = gnp;
-	}
+	public void setGnp(double gnp) { this.gnp = gnp; }
 
-	public int getCapital() {
-		return capital;
-	}
+	public int getCapital() { return capital;	}
 
-	public void setCapital(int capital) {
-		this.capital = capital;
-	}
+	public void setCapital(int capital) { this.capital = capital; }
 
-	public void setPopulation(int population) {
-		this.population = population;
-	}
+	public void setPopulation(int population) { this.population = population; }
 
-	public int getPopulation() {
-		return population;
-	}
+	public int getPopulation() { return population; }
 
-	public List<City> getCities() {
-		return cities;
-	}
+	public List<City> getCities() { return cities; }
 
 	@Override
 	public int hashCode() {
@@ -122,6 +86,7 @@ public class Country {
 //				+ population + "]";
 //	}
 	
+	@Override
 	public String toString() {
 		return  name + ", " + population ;
 	}

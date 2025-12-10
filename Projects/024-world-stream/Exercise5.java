@@ -1,13 +1,9 @@
+// import java.util.Objects;
+// import java.util.Optional;
 
-
-
-
-import java.util.Objects;
-import java.util.Optional;
-
-import static java.lang.System.out;
-import static java.util.Comparator.comparing;
-import static java.util.stream.Collectors.maxBy;
+// import static java.lang.System.out;
+// import static java.util.Comparator.comparing;
+// import static java.util.stream.Collectors.maxBy;
 
 public class Exercise5 {
 
@@ -18,3 +14,4 @@ public class Exercise5 {
     }
 
 }
+

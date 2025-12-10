@@ -1,6 +1,1 @@
-
-
-
-public interface WorldDao extends CountryDao,CityDao {
-
-}
+public interface WorldDao extends CountryDao,CityDao {}

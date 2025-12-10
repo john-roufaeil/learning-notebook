@@ -1,7 +1,4 @@
-
-
 import java.util.List;
-
 
 public interface CityDao {
 	City findCityById(int id);
