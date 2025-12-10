@@ -1,13 +1,26 @@
-// import java.util.List;
-// import java.util.stream.Collectors;
-// import java.util.Comparator;
-// import java.util.Optional;
+
+import java.util.Comparator;
+import java.util.List;
 
 public class Exercise1 {
 
    public static void main(String[] args) {
       CountryDao countryDao= InMemoryWorldDao.getInstance();
-      // StringBuilder outputString = new StringBuilder();
+      countryDao.findAllCountries().stream().forEach(country -> {
+         String countryName = country.getName();
+         List<City> countryCities = country.getCities();
+
+         countryCities.stream()
+            .max(Comparator.comparingInt(City::getPopulation))
+            .ifPresent(city -> System.out.println(
+               city.getName() + " in " + countryName + 
+               " has population of " + city.getPopulation()
+            ));
+      });
+   }
+}
+
+ // StringBuilder outputString = new StringBuilder();
       // countryDao
       //    .findAllCountries()
       //    .stream()
@@ -23,5 +36,22 @@ public class Exercise1 {
       //       }
       //    );
       // System.out.println(outputString);
-   }
-}
+
+
+//  countryDao.findAllCountries().stream().forEach(new Consumer<Country>() {
+         //     @Override
+         //     public void accept(Country country) {
+         //         String countryName = country.getName();
+         //         List<City> countryCities = country.getCities();
+         //     }
+         // }
+         
+         // Optional<City> maxPopulatedCity = countryCities.stream()
+         //          .max(Comparator.comparingInt(City::getPopulation));
+         // if (maxPopulatedCity.isPresent()) {
+         //    System.out.println(
+         //       maxPopulatedCity.get().getName() + " in "  + 
+         //       countryName + " has population of " + 
+         //       maxPopulatedCity.get().getPopulation()
+         //    );
+         // }
