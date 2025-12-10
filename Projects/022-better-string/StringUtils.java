@@ -1,4 +1,6 @@
 public class StringUtils {
+    
+    @FunctionalInterface
     public interface Tester<T> {
         public Boolean test(T item1, T item2);
     }
