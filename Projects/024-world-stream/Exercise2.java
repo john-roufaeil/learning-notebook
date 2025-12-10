@@ -1,16 +1,22 @@
-// import java.util.Comparator;
-// import java.util.Map;
-// import java.util.Optional;
-// import java.util.function.BiConsumer;
-// import java.util.stream.Collector;
-// import java.util.stream.Collectors;
+
+import java.util.Comparator;
+import java.util.List;
 
 public class Exercise2 {
 
     public static void main(String[] args) {
         CountryDao countryDao = InMemoryWorldDao.getInstance();
-        //write your answer here
-
+        countryDao.getAllContinents().stream().forEach(continent -> {
+            List<Country> countriesInContinent = countryDao.findCountriesByContinent(continent);
+            countriesInContinent.stream()
+                .flatMap(country -> country.getCities().stream())
+                .max(Comparator.comparingInt(City::getPopulation))
+                .ifPresent(city -> System.out.println(
+                    "In " + continent + ", " + city.getName() + " in " + 
+                    countryDao.findCountryByCode(city.getCountryCode()).getName() + 
+                    " has population of " + city.getPopulation()
+                )
+            );
+        });
     }
-
 }
