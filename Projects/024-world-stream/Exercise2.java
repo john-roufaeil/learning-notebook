@@ -1,14 +1,10 @@
-
 import java.util.Comparator;
-import java.util.List;
 
 public class Exercise2 {
-
     public static void main(String[] args) {
         CountryDao countryDao = InMemoryWorldDao.getInstance();
         countryDao.getAllContinents().stream().forEach(continent -> {
-            List<Country> countriesInContinent = countryDao.findCountriesByContinent(continent);
-            countriesInContinent.stream()
+            countryDao.findCountriesByContinent(continent).stream()
                 .flatMap(country -> country.getCities().stream())
                 .max(Comparator.comparingInt(City::getPopulation))
                 .ifPresent(city -> System.out.println(
