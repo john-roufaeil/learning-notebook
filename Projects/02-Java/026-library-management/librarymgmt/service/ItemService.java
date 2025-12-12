@@ -7,10 +7,7 @@ import librarymgmt.model.CRUDOperations;
 import librarymgmt.model.LibraryItem;
 
 public class ItemService<T extends LibraryItem> implements CRUDOperations<T> {
-    private ArrayList<T> items;
-
-    public ArrayList<T> getItems() { return items; }
-    public void setItems(ArrayList<T> newItems) { items = newItems; }
+    private final ArrayList<T> items = new ArrayList<>();
 
     @Override
     public void create(T item) throws ObjectNotValidException {
@@ -24,12 +21,17 @@ public class ItemService<T extends LibraryItem> implements CRUDOperations<T> {
 
     @Override
     public T read(int id) throws ObjectNotFoundException {
-        for (T item : items) {
-            if (item.getId() == id) {
-                return item;
-            }
-        }
-        throw new ObjectNotFoundException("The item with id " + id + " is not found.");
+        return items.stream()
+            .filter(item -> item.getId() == id)
+            .findFirst()
+            .orElseThrow(
+                () -> new ObjectNotFoundException("The item with id " + id + " is not found.")
+            );
+    }
+
+    @Override
+    public ArrayList<T> readAll() {
+        return items;
     }
 
     @Override
@@ -52,6 +54,11 @@ public class ItemService<T extends LibraryItem> implements CRUDOperations<T> {
             }
         }
         throw new ObjectNotFoundException("The item with id " + id + " is not found.");
+    }
+
+    @Override
+    public void deleteAll() {
+        items.clear();
     }
 
     public void displayItems() {

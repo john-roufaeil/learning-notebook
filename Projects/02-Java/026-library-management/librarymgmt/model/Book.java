@@ -6,19 +6,21 @@ import librarymgmt.utils.BookValidator;
 public class Book extends LibraryItem {
     private String author;
     private int pages;
-    private static final BookValidator validator = (title, author, pages) -> {
+    private static final BookValidator validator = (title, author, pages, stock) -> {
         if (title == null || title.isBlank()) {
             throw new IllegalArgumentException("Book title cannot be empty.");
         } else if (author == null || author.isBlank()) {
             throw new IllegalArgumentException("Author name cannot be empty.");
         } else if (pages <= 0) {
             throw new IllegalArgumentException("Page count must be positive");
+        } else if (stock <= 0) {
+            throw new IllegalArgumentException("Stock must be positive");
         }
     };
 
-    public Book(String title, String author, int pages) throws ObjectNotValidException {
-        super(title);
-        validator.validate(title, author, pages);
+    public Book(String title, String author, int pages, int stock) throws ObjectNotValidException {
+        super(title, stock);
+        validator.validate(title, author, pages, stock);
         this.author = author;
         this.pages = pages;
     }
@@ -27,12 +29,12 @@ public class Book extends LibraryItem {
     public int getPages() { return pages; }
 
     public void setAuthor(String newAuthor) throws ObjectNotValidException {
-        validator.validate(getTitle(), newAuthor, pages);
+        validator.validate(getTitle(), newAuthor, pages, getStock());
         author = newAuthor;
     }
 
     public void setPages(int newPages) throws ObjectNotValidException { 
-        validator.validate(getTitle(), author, newPages);
+        validator.validate(getTitle(), author, newPages, getStock());
         pages = newPages;
     }
 

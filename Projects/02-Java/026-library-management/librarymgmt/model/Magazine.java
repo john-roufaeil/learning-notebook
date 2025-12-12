@@ -5,24 +5,26 @@ import librarymgmt.utils.MagazineValidator;
 
 public class Magazine extends LibraryItem {
     private int pages;
-    private static final MagazineValidator validator = (title, pages) -> {
+    private static final MagazineValidator validator = (title, pages, stock) -> {
         if (title == null || title.isBlank()) {
             throw new IllegalArgumentException("Magazine title cannot be empty.");
         } else if (pages <= 0) {
             throw new IllegalArgumentException("Page count must be positive");
+        } else if (stock <= 0) {
+            throw new IllegalArgumentException("Stock must be positive");
         }
     };
 
-    public Magazine(String title, int pages) throws ObjectNotValidException {
-        super(title);
-        validator.validate(title, pages);
+    public Magazine(String title, int pages, int stock) throws ObjectNotValidException {
+        super(title, stock);
+        validator.validate(title, pages, stock);
         this.pages = pages;
     }
 
     public int getPages() { return pages; }
 
     public void setPages(int newPages) throws ObjectNotValidException { 
-        validator.validate(getTitle(), newPages);
+        validator.validate(getTitle(), newPages, getStock());
         pages = newPages;
     }
 

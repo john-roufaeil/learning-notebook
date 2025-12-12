@@ -1,5 +1,7 @@
 package librarymgmt.model;
 
+import java.util.ArrayList;
+import librarymgmt.exception.ObjectNotFoundException;
 import librarymgmt.exception.ObjectNotValidException;
 import librarymgmt.utils.ClientValidator;
 
@@ -8,6 +10,7 @@ public class Client {
     private final int id;
     private String name;
     private String email;
+    private final ArrayList<LibraryItem> borrowedItems = new ArrayList<>();
     private static final ClientValidator validator = (name, email) -> {
         if (name == null || name.isBlank()) {
             throw new ObjectNotValidException("Client name cannot be empty.");
@@ -28,6 +31,15 @@ public class Client {
     public int getId() { return id; }
     public String getName() { return name; }
     public String getEmail() { return email; }
+    public ArrayList<LibraryItem> getBorrowedItems() { return borrowedItems; }
+    public LibraryItem getBorrowedItem(int itemId) throws ObjectNotFoundException { 
+        for (LibraryItem item : borrowedItems) {
+            if (item.getId() == itemId) {
+                return item;
+            }
+        }
+        throw new ObjectNotFoundException(name + " has not borrowed item with id " + itemId + ".");
+    }
 
     public void setName(String newName) throws ObjectNotValidException {
         validator.validate(newName, email);

@@ -4,5 +4,5 @@ import librarymgmt.exception.ObjectNotValidException;
 
 @FunctionalInterface
 public interface NewspaperValidator {
-    void validate(String title, String journal) throws ObjectNotValidException;
+    void validate(String title, String journal, int stock) throws ObjectNotValidException;
 }
