@@ -39,8 +39,8 @@ public class ConsoleHelper {
         return input.equals("y") || input.equals("yes");
     }
     
-    public static void pressEnterToContinue() {
-        System.out.print("\nPress Enter to continue");
+    public static void pressEnterToReturn() {
+        System.out.print("\nPress Enter to go back");
         scanner.nextLine();
     }
 

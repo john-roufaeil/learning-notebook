@@ -54,7 +54,7 @@ public class Client {
         sb.append("| Client #").append(id).append(" Details");
         sb.append("\n| Name: ").append(name);
         sb.append("\n| Email: ").append(email);
-        sb.append("\n------------------");
+        sb.append("\n+-----------------");
         return sb.toString();
     }
 }

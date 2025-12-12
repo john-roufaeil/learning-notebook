@@ -36,7 +36,7 @@ public class Newspaper extends LibraryItem {
         sb.append("\n| Title: ").append(getTitle());
         sb.append("\n| Journal: ").append(journal);
         sb.append(isAvailable()? "\n| Available" :"\n| Borrowed");
-        sb.append("\n------------------");
+        sb.append("\n+-----------------");
 
         return sb.toString();
     }

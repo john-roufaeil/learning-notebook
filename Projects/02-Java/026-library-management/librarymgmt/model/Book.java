@@ -8,13 +8,13 @@ public class Book extends LibraryItem {
     private int pages;
     private static final BookValidator validator = (title, author, pages, stock) -> {
         if (title == null || title.isBlank()) {
-            throw new IllegalArgumentException("Book title cannot be empty.");
+            throw new ObjectNotValidException("Book title cannot be empty.");
         } else if (author == null || author.isBlank()) {
-            throw new IllegalArgumentException("Author name cannot be empty.");
+            throw new ObjectNotValidException("Author name cannot be empty.");
         } else if (pages <= 0) {
-            throw new IllegalArgumentException("Page count must be positive");
+            throw new ObjectNotValidException("Page count must be positive");
         } else if (stock <= 0) {
-            throw new IllegalArgumentException("Stock must be positive");
+            throw new ObjectNotValidException("Stock must be positive");
         }
     };
 
@@ -47,7 +47,7 @@ public class Book extends LibraryItem {
         sb.append("\n| Author: ").append(author);
         sb.append("\n| Pages: ").append(pages);
         sb.append(isAvailable()? "\n| Available" :"\n| Borrowed");
-        sb.append("\n------------------");
+        sb.append("\n+-----------------");
         return sb.toString();
     }
 }

@@ -16,9 +16,9 @@ public class MainMenu {
             int choice = ConsoleHelper.readChoice("Select an option: ", 1, 3);
 
             switch (choice) {
-                case 1 : LibraryMenu.show(is); break;
-                case 2 : ClientMenu.show(cs); break;
-                case 3 : return;
+                case 1 -> LibraryMenu.show(is);
+                case 2 -> ClientMenu.show(cs);
+                case 3 -> { return; }
             }
         }
     }

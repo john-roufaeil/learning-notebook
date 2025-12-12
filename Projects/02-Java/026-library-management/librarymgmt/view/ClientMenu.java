@@ -13,7 +13,7 @@ public class ClientMenu {
         
         while (true) {
             ConsoleHelper.clearConsole();
-            System.out.println("\n--- Client Menu ---");
+            System.out.println("\n=== Client Menu ===");
             System.out.println("1. Add Client");
             System.out.println("2. View a Client");
             System.out.println("3. View Clients");
@@ -21,15 +21,15 @@ public class ClientMenu {
             System.out.println("5. Delete a Client");
             System.out.println("6. Borrow an Item");
             System.out.println("7. Return an Item");
-            System.out.println("9. View Borrowings of a User");
-            System.out.println("8. Back");
+            System.out.println("8. View Borrowings of a User");
+            System.out.println("9. Back");
             int choice = ConsoleHelper.readChoice("Select option: ", 1, 9);
             if (choice == Integer.MIN_VALUE) return;
 
             switch (choice) {
-                case 1: addClient(); break;
-                case 3: viewClients(); break;
-                case 8: return;
+                case 1 -> addClient();
+                case 3 -> viewClients();
+                case 8 -> { return; }
             }
         }
     }
@@ -48,6 +48,6 @@ public class ClientMenu {
 
     private static void viewClients() {
         clientService.readAll().forEach(c -> System.out.println(c.getClientDetails()));
-        ConsoleHelper.pressEnterToContinue();
+        ConsoleHelper.pressEnterToReturn();
     }
 }
