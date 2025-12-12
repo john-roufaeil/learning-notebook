@@ -10,7 +10,7 @@ public class ItemService<T extends LibraryItem> implements CRUDOperations<T> {
     private final ArrayList<T> items = new ArrayList<>();
 
     @Override
-    public void create(T item) throws ObjectNotValidException {
+    public void add(T item) throws ObjectNotValidException {
         for (T existingItem : items) {
             if (existingItem.getId() == item.getId()) {
                 throw new ObjectNotValidException("This item with id " + item.getId() + " already exists.");

@@ -17,8 +17,13 @@ public class Magazine extends LibraryItem {
 
     public Magazine(String title, int pages, int stock) throws ObjectNotValidException {
         super(title, stock);
-        validator.validate(title, pages, stock);
         this.pages = pages;
+    }
+
+    public static Magazine create(String title, int pages, int stock) 
+        throws ObjectNotValidException {
+        validator.validate(title, pages, stock);
+        return new Magazine(title, pages, stock);
     }
 
     public int getPages() { return pages; }

@@ -38,8 +38,8 @@ public class ClientMenu {
         String name = ConsoleHelper.readString("Enter client name: ");
         String email = ConsoleHelper.readString("Enter client email: ");
         try {
-            Client client = new Client(name, email);
-            clientService.create(client);
+            Client newClient = Client.create(name, email);
+            clientService.add(newClient);
             System.out.println("Client added successfully!");
         } catch (ObjectNotValidException e) {
             System.out.println("Error: " + e.getMessage());

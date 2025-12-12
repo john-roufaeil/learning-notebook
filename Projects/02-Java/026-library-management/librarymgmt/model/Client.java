@@ -22,10 +22,15 @@ public class Client {
     };
 
     public Client(String name, String email) throws ObjectNotValidException {
-        validator.validate(name, email);
         this.id = ++clientsCount;
         this.name = name;
         this.email = email;
+    }
+
+    public static Client create(String name, String email) 
+        throws ObjectNotValidException {
+        validator.validate(name, email);
+        return new Client(name, email);
     }
 
     public int getId() { return id; }
@@ -37,7 +42,6 @@ public class Client {
             .filter(item -> item.getId() == itemId)
             .findFirst()
             .orElse(null);
-            // .orElseThrow(() -> new ObjectNotFoundException(name + " has not borrowed item with id " + itemId + "."));
     }
 
     public void setName(String newName) throws ObjectNotValidException {

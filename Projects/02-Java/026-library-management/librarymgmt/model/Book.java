@@ -20,9 +20,14 @@ public class Book extends LibraryItem {
 
     public Book(String title, String author, int pages, int stock) throws ObjectNotValidException {
         super(title, stock);
-        validator.validate(title, author, pages, stock);
         this.author = author;
         this.pages = pages;
+    }
+
+    public static Book create(String title, String author, int pages, int stock) 
+        throws ObjectNotValidException {
+        validator.validate(title, author, pages, stock);
+        return new Book(title, author, pages, stock);
     }
 
     public String getAuthor() { return author; }

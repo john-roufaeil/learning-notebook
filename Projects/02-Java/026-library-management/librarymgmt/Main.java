@@ -16,10 +16,10 @@ public class Main {
 
 
         try {
-            itemService.create(new Book("Title", "Author", 10, 2));
-            itemService.create(new Magazine("Magazine", 10, 1));
-            itemService.create(new Newspaper("News", "Journal", 3));
-            clientService.create(new Client("John", "John@email.com"));
+            itemService.add(Book.create("Title", "Author", 10, 2));
+            itemService.add(Magazine.create("Magazine", 10, 1));
+            itemService.add(Newspaper.create("News", "Journal", 3));
+            clientService.add(Client.create("John", "John@email.com"));
         } catch (ObjectNotValidException e) {
             e.printStackTrace();
         }

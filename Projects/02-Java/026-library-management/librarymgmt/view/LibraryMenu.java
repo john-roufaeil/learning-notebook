@@ -43,8 +43,8 @@ public class LibraryMenu {
             int stock = ConsoleHelper.readInt("Enter stock: ");
 
             try {
-                Book book = new Book(title, author, pages, stock);
-                itemService.create(book);
+                Book newBook = Book.create(title, author, pages, stock);
+                itemService.add(newBook);
                 System.out.println("\nBook added successfully!");
             } catch (ObjectNotValidException e) {
                 System.out.println("\nError: " + e.getMessage());

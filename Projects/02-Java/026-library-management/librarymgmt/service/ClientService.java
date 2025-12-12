@@ -17,7 +17,7 @@ public class ClientService implements CRUDOperations<Client> {
     }
 
     @Override
-    public void create(Client newClient) throws ObjectNotValidException {
+    public void add(Client newClient) throws ObjectNotValidException {
         for (Client existingClient : clients) {
             if (existingClient.getId() == newClient.getId()) {
                 throw new ObjectNotValidException("This client with id " + newClient.getId() + " already exists.");

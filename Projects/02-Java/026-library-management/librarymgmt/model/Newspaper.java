@@ -17,8 +17,13 @@ public class Newspaper extends LibraryItem {
 
     public Newspaper(String title, String journal, int stock) throws ObjectNotValidException {
         super(title, stock);
-        validator.validate(title, journal, stock);
         this.journal = journal;
+    }
+
+    public static Newspaper create(String title, String journal, int stock) 
+        throws ObjectNotValidException {
+        validator.validate(title, journal, stock);
+        return new Newspaper(title, journal, stock);
     }
 
     public String getJournal() { return journal; }
