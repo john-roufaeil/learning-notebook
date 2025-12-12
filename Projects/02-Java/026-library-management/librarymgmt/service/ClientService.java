@@ -10,7 +10,11 @@ import librarymgmt.model.LibraryItem;
 
 public class ClientService implements CRUDOperations<Client> {
     private final ArrayList<Client> clients = new ArrayList<>();
-    private ItemService itemService;
+    private final ItemService itemService;
+
+    public ClientService(ItemService itemService) {
+        this.itemService = itemService;
+    }
 
     @Override
     public void create(Client newClient) throws ObjectNotValidException {
@@ -48,13 +52,10 @@ public class ClientService implements CRUDOperations<Client> {
 
     @Override
     public void delete(int id) throws ObjectNotFoundException {
-        for (int i = 0; i < clients.size(); i++) {
-            if (clients.get(i).getId() == id) {
-                clients.remove(i);
-                return;
-            }
+        boolean removed = clients.removeIf(client -> client.getId() == id);
+        if (!removed) {
+            throw new ObjectNotFoundException("The client with id " + id + " is not found.");
         }
-        throw new ObjectNotFoundException("The client with id " + id + " is not found.");
     }
 
     @Override
@@ -63,13 +64,15 @@ public class ClientService implements CRUDOperations<Client> {
     }
 
     public void displayClients() {
-        for (Client client : clients) {
-            System.out.println(client.getClientDetails());
-        }
+        clients.stream().map(Client::getClientDetails).forEach(System.out::println);
     }
 
     public void borrowItem(int clientId, int itemId) throws ObjectNotFoundException, ItemNotAvailableException {
         Client client = read(clientId);
+        if (client.getBorrowedItem(itemId) != null) {
+            throw new ItemNotAvailableException("The client has already borrowed the item with id " + itemId + ".");
+        }
+        // Item not borrowed yet, proceed to borrow
         LibraryItem item = itemService.read(itemId);
 
         item.decrementStock();
@@ -80,6 +83,9 @@ public class ClientService implements CRUDOperations<Client> {
     public void returnItem(int clientId, int itemId) throws ObjectNotFoundException, ItemNotAvailableException {
         Client client = read(clientId);
         LibraryItem item = client.getBorrowedItem(itemId);
+        if (item == null) {
+            throw new ItemNotAvailableException("The client has not borrowed the item with id " + itemId + ".");
+        }
 
         item.incrementStock();
         client.getBorrowedItems().remove(item);

@@ -21,7 +21,6 @@ public abstract class LibraryItem {
 
     public void setTitle(String newTitle) { title = newTitle; }
     public void setStock(int stock) { this.stock = stock; }
-
     public void incrementStock() { stock++; }
     public void decrementStock() throws ItemNotAvailableException {
         if (stock <= 0) {

@@ -3,6 +3,7 @@ package librarymgmt.model;
 import java.util.ArrayList;
 import librarymgmt.exception.ObjectNotFoundException;
 import librarymgmt.exception.ObjectNotValidException;
+import librarymgmt.model.items.LibraryItem;
 import librarymgmt.utils.ClientValidator;
 
 public class Client {
@@ -33,12 +34,11 @@ public class Client {
     public String getEmail() { return email; }
     public ArrayList<LibraryItem> getBorrowedItems() { return borrowedItems; }
     public LibraryItem getBorrowedItem(int itemId) throws ObjectNotFoundException { 
-        for (LibraryItem item : borrowedItems) {
-            if (item.getId() == itemId) {
-                return item;
-            }
-        }
-        throw new ObjectNotFoundException(name + " has not borrowed item with id " + itemId + ".");
+        return borrowedItems.stream()
+            .filter(item -> item.getId() == itemId)
+            .findFirst()
+            .orElse(null);
+            // .orElseThrow(() -> new ObjectNotFoundException(name + " has not borrowed item with id " + itemId + "."));
     }
 
     public void setName(String newName) throws ObjectNotValidException {
