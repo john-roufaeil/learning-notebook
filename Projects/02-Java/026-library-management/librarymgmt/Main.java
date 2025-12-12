@@ -1,18 +1,29 @@
 package librarymgmt;
 
+import librarymgmt.exception.ObjectNotValidException;
+import librarymgmt.model.Book;
+import librarymgmt.model.Client;
+import librarymgmt.model.Magazine;
+import librarymgmt.model.Newspaper;
+import librarymgmt.service.ClientService;
+import librarymgmt.service.ItemService;
+import librarymgmt.view.MainMenu;
+
 public class Main {
     public static void main(String[] args) {
-        // ItemsService itemsService = ItemsService.getInstance();
-        // itemsService.addItem(new Book("Hello World", "John", 20));
-        // itemsService.addItem(new Magazine("Magazino", 10));
-        // itemsService.addItem(new Newspaper("title", "Journal"));
-        // itemsService.displayItems();
+        ItemService itemService = new ItemService();
+        ClientService clientService = new ClientService(itemService);
 
-        // System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 
-        // itemsService.removeItemAtIdx(0);
-        // itemsService.displayItems();
-
-        // System.out.println(itemsService.getItemAtIdx(0));
+        try {
+            itemService.create(new Book("Title", "Author", 10, 2));
+            itemService.create(new Magazine("Magazine", 10, 1));
+            itemService.create(new Newspaper("News", "Journal", 3));
+            clientService.create(new Client("John", "John@email.com"));
+        } catch (ObjectNotValidException e) {
+            e.printStackTrace();
+        }
+        
+        MainMenu.show(itemService, clientService);
     }
 }

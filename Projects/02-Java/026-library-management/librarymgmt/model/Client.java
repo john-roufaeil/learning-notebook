@@ -3,7 +3,6 @@ package librarymgmt.model;
 import java.util.ArrayList;
 import librarymgmt.exception.ObjectNotFoundException;
 import librarymgmt.exception.ObjectNotValidException;
-import librarymgmt.model.items.LibraryItem;
 import librarymgmt.utils.ClientValidator;
 
 public class Client {
