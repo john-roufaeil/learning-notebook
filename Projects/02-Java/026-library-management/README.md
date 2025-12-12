@@ -26,6 +26,33 @@ OOP, exception handling, generics, and wildcards
    - Use the menu system to demonstrate CRUD operations for both library items and clients.
 
 
+Additional Requirements
+1. Relation between Client and Library Items:
+Establish a relationship between Client and LibraryItem where a client can rent or borrow items.
+Each Client should have a collection of borrowed library items.
+
+2. Borrow/Rent Feature:
+Add a stock property to each library item to manage multiple copies of the same item.
+Alternatively, manage a single copy per item with an availability property
+Add two methods in the menu:
+borrowItem(userId, itemId): Allows a client to borrow an item.
+returnItem(itemId, userId): Allows a client to return an item.
+
+3. Use of Streams:
+Use Java streams for operations such as filtering library items or finding a client by ID.
+Ensure streams are used wherever applicable for efficiency and simplicity.
+
+4. Validations:
+Ensure unique IDs across all entities (LibraryItem and Client).
+Validate user input, such as checking for item availability or verifying client and item IDs before processing requests.
+
+5. Interfaces:
+Create a CRUD interface implemented by both LibraryItem and Client.
+Define methods like create, read, update, and delete in the interface.
+
+6. User-Friendly Menu:
+Design a clear and user-friendly menu system with descriptive instructions.
+Include meaningful error messages for invalid operations.
 
 ## Requirements
 
