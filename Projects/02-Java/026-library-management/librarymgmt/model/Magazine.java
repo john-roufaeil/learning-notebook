@@ -7,11 +7,11 @@ public class Magazine extends LibraryItem {
     private int pages;
     private static final MagazineValidator validator = (title, pages, stock) -> {
         if (title == null || title.isBlank()) {
-            throw new IllegalArgumentException("Magazine title cannot be empty.");
+            throw new ObjectNotValidException("Magazine title cannot be empty.");
         } else if (pages <= 0) {
-            throw new IllegalArgumentException("Page count must be positive");
+            throw new ObjectNotValidException("Page count must be positive");
         } else if (stock <= 0) {
-            throw new IllegalArgumentException("Stock must be positive");
+            throw new ObjectNotValidException("Stock must be positive");
         }
     };
 

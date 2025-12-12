@@ -7,11 +7,11 @@ public class Newspaper extends LibraryItem {
     private String journal;
     private static final NewspaperValidator validator = (title, journal, stock) -> {
         if (title == null || title.isBlank()) {
-            throw new IllegalArgumentException("Newspaper title cannot be empty.");
+            throw new ObjectNotValidException("Newspaper title cannot be empty.");
         } else if (journal == null || journal.isBlank()) {
-            throw new IllegalArgumentException("Newspaper journal cannot be empty.");
+            throw new ObjectNotValidException("Newspaper journal cannot be empty.");
         } else if (stock <= 0) {
-            throw new IllegalArgumentException("Stock must be positive");
+            throw new ObjectNotValidException("Stock must be positive");
         }
     };
 
