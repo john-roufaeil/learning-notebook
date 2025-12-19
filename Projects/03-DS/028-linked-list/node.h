@@ -3,16 +3,14 @@
 
 template <typename T>
 class Node {
-    private:
-        T data;
-        *Node prev;
-        *Node next;
-
     public:
-        Node<T>(T data) {
-            this.data = data;
-            prev = NULL;
-            next = NULL;
+        T data;
+        Node<T>* prev;
+        Node<T>* next;
+        Node(T data) {
+            this->data = data;
+            prev = nullptr;
+            next = nullptr;
         }
 };
 
