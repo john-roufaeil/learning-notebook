@@ -16,6 +16,16 @@ class LinkedList {
             tail = nullptr;
         }
 
+        ~LinkedList() {
+            Node<T>* nodeIt = head;
+            while (nodeIt) {
+                Node<T>* next = nodeIt->next;
+                delete nodeIt;
+                nodeIt = next;
+            }
+        }
+
+
         void insert(T data) {
             Node<T> *newNode = new Node(data);
             if (!head) {
@@ -117,8 +127,38 @@ class LinkedList {
             throw std::out_of_range("Index out of range");
         }
 
+        void removeFirst(T targetData) {
+            Node<T> *nodeIt = head;
+            while (nodeIt && nodeIt->data != targetData) {
+                nodeIt = nodeIt->next;
+            }
+
+            if (nodeIt) {
+                if (nodeIt->prev) {
+                    nodeIt->prev->next = nodeIt->next;
+                } else {
+                    head = nodeIt->next;
+                }
+                if (nodeIt->next) {
+                    nodeIt->next->prev = nodeIt->prev;
+                } else {
+                    tail = nodeIt->prev;
+                }
+                delete nodeIt;
+            }
+            return;
+        }
         // 5. Remove All Nodes
-        void removeAll(T data) {
+        void removeAll(T targetData) {
+            Node<T> *nodeIt = head;
+
+            while (nodeIt) {
+                Node<T> *nextNode = nodeIt->next;
+                if (nodeIt->data == targetData){
+                    removeFirst(targetData);
+                }
+                nodeIt = nextNode;
+            }
 
         }
 

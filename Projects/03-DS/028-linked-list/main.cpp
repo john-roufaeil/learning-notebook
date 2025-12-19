@@ -25,4 +25,26 @@ int main() {
     ll.print();
     ll.insertAfter(101,100);
     ll.print();
+    ll.removeFirst(0);
+    ll.print();
+    ll.removeFirst(5);
+    ll.print();
+    ll.removeFirst(15);
+    ll.print();
+    ll.removeFirst(101);
+    ll.print();
+    ll.removeFirst(0);
+    ll.print();
+    // ll.insert(5);
+    // ll.insert(5);
+    // ll.insert(5);
+    // ll.insert(5);
+    // ll.insert(5);
+    // ll.insert(15);
+    // ll.insert(15);
+    // ll.print();
+    // ll.removeFirst(15);
+    // ll.print();
+    // ll.removeAll(5);
+    // ll.print();
 }
