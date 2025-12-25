@@ -24,8 +24,7 @@ public class Book extends LibraryItem {
         this.pages = pages;
     }
 
-    public static Book create(String title, String author, int pages, int stock) 
-        throws ObjectNotValidException {
+    public static Book create(String title, String author, int pages, int stock) throws ObjectNotValidException {
         validator.validate(title, author, pages, stock);
         return new Book(title, author, pages, stock);
     }

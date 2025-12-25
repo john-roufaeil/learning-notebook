@@ -27,8 +27,7 @@ public class Client {
         this.email = email;
     }
 
-    public static Client create(String name, String email) 
-        throws ObjectNotValidException {
+    public static Client create(String name, String email) throws ObjectNotValidException {
         validator.validate(name, email);
         return new Client(name, email);
     }

@@ -4,31 +4,50 @@
 #include "linkedList.h"
 #include "node.h"
 
-void insertionSort(LinkedList<int> ll) {
+void insertionSort(LinkedList<int> &ll) {
     Node<int> *head = ll.getHead();
-    Node<int> *lastSorted = head;
+    if (!head || !head->next) return;
     
-    while (lastSorted) {
-        Node<int> *min = lastSorted;
-        Node<int> *innerPtr = lastSorted;
-        while (innerPtr) {
-            if (innerPtr->data < min->data) {
-                min = innerPtr;
+    Node<int> *sorted = head;
+    Node<int> *current = head->next;
+    
+    while (current) {
+        Node<int> *nextNode = current->next;
+        
+        // find insertion position in sorted part
+        if (current->data < head->data) {
+            // insert at beginning
+            current->prev->next = current->next;
+            if (current->next) current->next->prev = current->prev;
+            
+            current->next = head;
+            current->prev = nullptr;
+            head->prev = current;
+            head = current;
+            ll.setHead(head);
+        } else if (current->data >= sorted->data) {
+            // already in correct position
+            sorted = current;
+        } else {
+            // find position in sorted part
+            Node<int> *search = sorted;
+            while (search && search->data > current->data) {
+                search = search->prev;
             }
-            innerPtr = innerPtr->next;
+            
+            // remove current from its position
+            current->prev->next = current->next;
+            if (current->next) current->next->prev = current->prev;
+            
+            // insert after search
+            current->next = search->next;
+            current->prev = search;
+            search->next->prev = current;
+            search->next = current;
         }
-        if (min != lastSorted) {
-            Node<int> *tmp = lastSorted;
-            lastSorted->next->prev = min;
-            min->prev->next = lastSorted;
-            tmp = min->next;
-            min->next = lastSorted->next;
-            lastSorted->next = tmp;
-            tmp = min->prev;
-            min->prev = lastSorted->prev;
-            lastSorted->prev = tmp;
-        }
-        lastSorted = lastSorted->next;
+        
+        current = nextNode;
     }
 }
+
 #endif

@@ -91,7 +91,6 @@ public class LibraryMenu {
         }
     }
 
-
     private static void addNewspaper() {
         while (true) {
             ConsoleHelper.clearConsole();
@@ -225,7 +224,6 @@ public class LibraryMenu {
         }
     }
 }
-
 
     public static void deleteItem() {
         ConsoleHelper.clearConsole();

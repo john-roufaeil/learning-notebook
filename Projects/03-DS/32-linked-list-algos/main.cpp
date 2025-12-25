@@ -11,6 +11,10 @@ int main() {
     ll.insert(12);
     ll.insert(1);
     ll.insert(1);
+    ll.insert(3);
+    ll.insert(353);
+    ll.insert(2);
+    ll.insert(345);
     selectionSort(ll);
     ll.print();
     return 0;

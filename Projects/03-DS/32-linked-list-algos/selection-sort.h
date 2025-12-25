@@ -6,6 +6,8 @@
 
 void selectionSort(LinkedList<int> &ll) {
     Node<int> *head = ll.getHead();
+    if (!head || !head->next) return;
+    
     Node<int> *lastSorted = head;
     
     while (lastSorted && lastSorted->next) {

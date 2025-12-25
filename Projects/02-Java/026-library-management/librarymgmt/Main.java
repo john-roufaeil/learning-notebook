@@ -3,6 +3,7 @@ package librarymgmt;
 import librarymgmt.exception.ObjectNotValidException;
 import librarymgmt.model.Book;
 import librarymgmt.model.Client;
+import librarymgmt.model.LibraryItem;
 import librarymgmt.model.Magazine;
 import librarymgmt.model.Newspaper;
 import librarymgmt.service.ClientService;
@@ -11,7 +12,7 @@ import librarymgmt.view.MainMenu;
 
 public class Main {
     public static void main(String[] args) {
-        ItemService itemService = new ItemService();
+        ItemService<LibraryItem> itemService = new ItemService<>();
         ClientService clientService = new ClientService(itemService);
 
 
