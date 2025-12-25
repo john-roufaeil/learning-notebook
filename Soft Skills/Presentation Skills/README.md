@@ -35,3 +35,18 @@
     - Examples
     - Practical connection to topic
     - Use infographics, charts, images, videos
+
+
+## Presentation
+
+### Presentation Closing
+
+1. Signal closing
+2. recap
+3. takeaway message / conclusion / quote / CTA / question / recommendations / powerful visual
+4. references / links / QR codes / questions time
+5. thank the audience + smile, feedback form
+
+* No new topics
+* Softer tone of voice
+* Hero position
