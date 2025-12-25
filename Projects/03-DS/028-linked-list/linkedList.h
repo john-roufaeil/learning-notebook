@@ -25,6 +25,12 @@ class LinkedList {
             }
         }
 
+        Node<T>* getHead() {
+            return head;
+        }
+        Node<T>* getTail() {
+            return tail;
+        }
 
         void insert(T data) {
             Node<T> *newNode = new Node(data);

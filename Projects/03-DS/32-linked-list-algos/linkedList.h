@@ -32,6 +32,13 @@ class LinkedList {
             return tail;
         }
 
+        void setHead(Node<T>* newHead) {
+            head = newHead;
+        }
+        void setTail(Node<T>* newTail) {
+            tail = newTail;
+        }
+
         int getSize() {
             int size = 0;
             Node<T> *curr = head;
