@@ -1,0 +1,92 @@
+body,
+html {
+    margin: 0;
+    padding: 0;
+}
+
+p,
+div,
+span {
+    font-family: "Lucida Calligraphy";
+}
+
+div>h1 {
+    text-align: center;
+    margin: 0;
+    
+}
+
+div#header {
+    width: 100%;
+    height: 60px;
+    background-color: red;
+}
+
+span#linksbar {
+    width: 25%;
+    background-color: grey;
+    float: left;
+}
+
+span#content {
+    width: 75%;
+    height: 70%;
+    background-color: pink;
+    float: left;
+}
+
+.none-bullet-list {
+    list-style-type: none;
+}
+
+span#linksbar>ul>li>a {
+    color: red;
+    background-color: pink;
+    text-decoration: none;
+}
+
+span#linksbar>ul>li>a:hover {
+    color: pink;
+    background-color: red;
+}
+
+span#content>h2+p {
+    font-weight: bold;
+    font-size: 12px;
+}
+
+div#loginform {
+    border: 2px dashed rgb(20, 70, 60);
+}
+
+input[type="text"] {
+    background-color: yellow;
+}
+
+input[type="text"]:focus {
+    background-color: white;
+}
+
+.tabled-bordered {
+    display: table-cell;
+    padding: 5px;
+    border: 2px solid black;
+}
+
+span>p::after {
+    content: "Read this";
+    color: yellow;
+}
+
+span#content>p#aboutus {
+    color: yellow;
+}
+
+p#aboutus {
+    color: red !important;
+}
+
+.none-bullet-list {
+    list-style-type: none;
+
+}
