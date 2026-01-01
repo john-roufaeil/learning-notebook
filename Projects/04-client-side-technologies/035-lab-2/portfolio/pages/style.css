@@ -1,0 +1,121 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+header * {
+    display: inline;
+    padding-right: 1rem;
+}
+
+header {
+    padding: 1rem;
+    background-color: rgb(2, 2, 107);
+    color: rgb(226, 226, 214);
+}
+
+nav {
+    background-color: lightblue;
+    padding: 1rem;
+}
+
+nav ul {
+    list-style-type: none;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 1rem;
+}
+
+nav a {
+    text-decoration: none;
+    color: darkblue;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+nav a:visited {
+    color: purple;
+}
+
+footer {
+    padding: 1rem;
+    background-color: lightgray;
+}
+
+footer * {
+    display: block;
+    text-align: center;
+}
+
+#cr {
+    color: darkred;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-height: 80vh;
+}
+
+/* first column */
+.col1 {
+    background-color: #eab1b6;
+    width: 25%;
+}
+
+/* middle column (rowspan = 3) */
+.col2 {
+    background-color: #d1ecf1;
+    width: 50%;
+}
+
+/* third column */
+.col3 {
+    background-color: #d4edda;
+    width: 25%;
+}
+
+td {
+    padding: 10px;
+    border: 1px solid #000;
+}
+
+td ul,
+td ol {
+    list-style-position: inside;
+}
+
+main {
+    min-height: 80vh
+}
+
+fieldset {
+    padding: 1rem;
+}
+
+fieldset * {
+    margin-bottom: 0.5rem;
+}
+
+form button img {
+    width: 100px;
+    height: auto;
+    margin: 0;
+    border: none;
+}
+
+form button {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+form button:hover {
+    cursor: pointer;
+}
