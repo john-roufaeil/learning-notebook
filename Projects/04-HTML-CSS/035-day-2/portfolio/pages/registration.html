@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration</title>
+</head>
+
+<body>
+    <h1>Registration Form</h1>
+    <form action="thankyou.html">
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" name="firstName">
+        <br><br>
+
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" name="lastName">
+        <br><br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <br><br>
+
+        <label for="pwd">Password:</label>
+        <input type="password" id="pwd" name="password" required>
+        <br><br>
+
+        <label for="repeatPwd">Repeat Password:</label>
+        <input type="password" id="repeatPwd" name="repeatPwd" required>
+        <br><br>
+
+        <label for="dob">Birth Date:</label>
+        <input type="date" id="dob" name="dob">
+        <br><br>
+
+        <label for="picture">User Picture:</label>
+        <input type="file" id="picture" name="picture">
+        <br><br>
+
+        <fieldset>
+            <legend>Gender</legend>
+            <input type="radio" name="gender" id="male" value="male">
+            <label for="male">Male</label>
+            <input type="radio" name="gender" id="female" value="female">
+            <label for="female">Female</label>
+        </fieldset>
+        <br>
+
+        <label for="faculty">Faculty:</label>
+        <select id="faculty" name="faculty">
+            <option value="">Select Faculty</option>
+            <option value="computer-science">Computer Science</option>
+            <option value="engineering">Engineering</option>
+            <option value="medicine">Medicine</option>
+            <option value="business">Business</option>
+            <option value="arts">Arts</option>
+        </select>
+        <br><br>
+
+        <fieldset>
+            <legend>Interests</legend>
+            <input type="checkbox" id="programming" name="interests" value="programming">
+            <label for="programming">Programming</label>
+            <br>
+            <input type="checkbox" id="reading" name="interests" value="reading">
+            <label for="reading">Reading</label>
+            <br>
+            <input type="checkbox" id="swimming" name="interests" value="swimming">
+            <label for="swimming">Swimming</label>
+            <br>
+            <input type="checkbox" id="music" name="interests" value="music">
+            <label for="music">Music</label>
+            <br>
+            <input type="checkbox" id="sports" name="interests" value="sports">
+            <label for="sports">Sports</label>
+        </fieldset>
+        <br>
+
+        <label for="about">About you:</label>
+        <br>
+        <textarea id="about" name="about" rows="4" cols="50"></textarea>
+        <br><br>
+
+        <input type="checkbox" id="terms" name="terms" required>
+        <label for="terms">I agree to terms and conditions</label>
+        <br><br>
+
+        <input type="submit" value="Submit">
+        <input type="reset" value="Reset">
+    </form>
+</body>
+
+</html>
