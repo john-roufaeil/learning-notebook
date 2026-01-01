@@ -1,0 +1,35 @@
+p {
+    color: red;
+}
+
+p,
+div {
+    background-color: lightyellow;
+}
+
+div#myDiv>p.mainClass {
+    color: green;
+}
+
+div p {
+    color: blue;
+}
+
+input[type="text"].myClass {
+    border: 2px solid orange;
+}
+
+/* select span elements after div */
+div~span {
+    color: gray;
+}
+
+/* select p with class myClass */
+p.myClass {
+    font-weight: bold;
+}
+
+/* select div with id myDiv */
+div#myDiv {
+    border: 1px solid black;
+}
