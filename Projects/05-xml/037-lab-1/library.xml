@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<library>
+    <location>library location</location>
+    <description>library description</description>
+    
+    <librarian>
+        <name>John</name>
+        <email></email>
+    </librarian>
+
+    <books>
+        <book>
+            <title>book title</title>
+            <ISBN>book ISBN</ISBN>
+            <author>book author</author>
+
+            <preface>book preface</preface>
+            <parts>
+                <part id="1">
+                    <title>part title</title>
+                    <chapters>
+                        <chapter id="1.1">
+                            <title>chapter title</title>
+                            <summary>chapter summary</summary>
+                            <sections> <section id="1.1.1">
+                                    <paragraph>
+                                        <![CDATA[
+                                            paragraph with <b>bold</b>
+                                        ]]>
+                                    </paragraph>
+                                </section>
+
+                                <section id="1.1.2">
+                                    <paragraph>
+                                        <![CDATA[]]>
+                                    </paragraph>
+                                </section>
+                            </sections>
+                        </chapter>
+                    </chapters>
+                </part>
+            </parts>
+        </book>
+    </books>
+</library>
