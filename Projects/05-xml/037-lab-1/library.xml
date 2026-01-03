@@ -10,9 +10,8 @@
     </librarian>
 
     <books>
-        <book>
+        <book isbn="001">
             <title>book title</title>
-            <ISBN>book ISBN</ISBN>
             <author>book author</author>
 
             <preface>book preface</preface>
@@ -23,7 +22,8 @@
                         <chapter id="1.1">
                             <title>chapter title</title>
                             <summary>chapter summary</summary>
-                            <sections> <section id="1.1.1">
+                            <sections> 
+                                <section id="1.1.1">
                                     <paragraph>
                                         <![CDATA[
                                             paragraph with <b>bold</b>
