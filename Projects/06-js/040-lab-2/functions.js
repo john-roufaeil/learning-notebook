@@ -5,12 +5,12 @@ function acceptsTwoParameters(param1, param2) {
     return [param1, param2];
 }
 
-function reverseNumbers() {
-    var numbers = [];
-    for (var i = 0; i < arguments.length; i++) {
-        numbers[i] = arguments[i];
-    }
-    return numbers.reverse();
+function reverseNumbers(...args) {
+    // var numbers = [];
+    // for (var i = 0; i < arguments.length; i++) {
+    //     numbers[i] = arguments[i];
+    // }
+    return args.reverse();
 }
 
 function addNumbersOnly() {
@@ -32,5 +32,6 @@ function getDayName(date) {
 console.log("Accepts two paramters", acceptsTwoParameters(5, 10));
 console.log("Reversed numbers", reverseNumbers(1, 2, 3, 4, 5));
 console.log("Sum of numbers only", addNumbersOnly(1, 2, 3, 4));
-console.log("Day name", getDayName(new Date('01/04/2026')));
+console.log("Day name", getDayName(new Date('01/03/2026')));
+// console.log("Accepts two paramters", acceptsTwoParameters(5, 10, 15));
 console.log("Sum of numbers only", addNumbersOnly(1, 'a', 2, 3, 4));
