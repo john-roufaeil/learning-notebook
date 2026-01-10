@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slideshow</title>
+</head>
+
+<body>
+    <h1>Showing Pics</h1>
+    <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+        <button id="prev">Previous</button>
+        <button id="next">Next</button>
+        <button id="show">Slideshow</button>
+        <button id="stop">Stop</button>
+    </div>
+    <img id="img" src="imgs/1.jpg" alt="young girl" height="300">
+    <script>
+        var img = document.getElementById("img");
+        var next = document.getElementById("next");
+        var show = document.getElementById("show");
+        var stop = document.getElementById("stop");
+        var prev = document.getElementById("prev");
+        var rangeMin = 1;
+        var rangeMax = 6;
+        var currIdx = 1;
+        var intervalId = null;
+
+        next.addEventListener('click', function () {
+            if (currIdx < rangeMax) {
+                currIdx++;
+                img.src = "imgs/" + currIdx + ".jpg";
+            }
+        })
+
+        prev.addEventListener('click', function () {
+            if (currIdx > rangeMin) {
+                currIdx--;
+                img.src = "imgs/" + currIdx + ".jpg";
+            }
+        })
+
+        show.addEventListener("click", function () {
+            intervalId = setInterval(function () {
+                currIdx = currIdx < rangeMax ? currIdx + 1 : rangeMin;
+                img.src = "imgs/" + currIdx + ".jpg";
+            }, 2000);
+        });
+
+        stop.addEventListener("click", function () {
+            clearInterval(intervalId);
+        });
+
+    </script>
+</body>
+
+</html>
