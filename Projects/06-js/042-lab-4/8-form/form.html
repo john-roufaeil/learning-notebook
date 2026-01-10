@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        span {
+            color: red;
+            display: none;
+        }
+
+        .invalid {
+            border: 1px solid red;
+        }
+    </style>
+</head>
+
+<body>
+    <form onsubmit="submitContact(event)"
+        style="display:flex; flex-direction: column; gap: 10px; justify-content: center; align-items: center;">
+        <div id="name">
+            <label for="name">Name</label>
+            <input type="text" name="name" onchange="nameInputChange(event)">
+            <span></span>
+        </div>
+
+        <div id="age">
+            <label for="age">Age</label>
+            <input type="text" name="age" onchange="ageInputChange(event)">
+            <span></span>
+        </div>
+
+        <div id="email">
+            <label for="email">Email</label>
+            <input type="email" name="email" onchange="emailInputChange(event)">
+            <span></span>
+        </div>
+        <input type="submit">
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody id="table-body">
+        </tbody>
+    </table>
+    <script src="form.js"></script>
+</body>
+
+</html>

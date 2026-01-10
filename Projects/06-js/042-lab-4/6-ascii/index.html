@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASCII</title>
+</head>
+
+<body>
+    <script>
+        document.addEventListener("keydown", function (e) {
+            var keyPressed = e.key;
+            var asciiCode = e.key.charCodeAt(0);
+            var isAltPressed = e.altKey;
+            var isCtrlPressed = e.ctrlKey;
+            var isShiftPressed = e.shiftKey;
+            alert(
+                "Key Pressed: " + keyPressed +
+                "\nASCII Code: " + asciiCode +
+                "\nAlt Key Pressed: " + isAltPressed +
+                "\nCtrl Key Pressed: " + isCtrlPressed +
+                "\nShift Key Pressed: " + isShiftPressed);
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" oninput="validateInput(event)">
+    <script>
+        function validateInput(e) {
+            var inputValue = e.target.value;
+            if (isNaN(e.target.value[e.target.value.length - 1])) {
+                e.target.value = inputValue.slice(0, -1);
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="container" style="display: flex; justify-content: center; margin-top:150px;">
+        <img id="img1" src="./marble1.jpg" alt="marble">
+        <img id="img2" src="./marble1.jpg" alt="marble">
+        <img id="img3" src="./marble1.jpg" alt="marble">
+        <img id="img4" src="./marble1.jpg" alt="marble">
+        <img id="img5" src="./marble1.jpg" alt="marble">
+    </div>
+    <button id="changeSpeedBtn">Change Speed</button>
+    <script>
+        var img1 = document.getElementById("img1");
+        var img2 = document.getElementById("img2");
+        var img3 = document.getElementById("img3");
+        var img4 = document.getElementById("img4");
+        var img5 = document.getElementById("img5");
+        var speedbtn = document.getElementById("changeSpeedBtn");
+        var container = document.getElementById("container");
+        var currIdx = 1;
+        var speed = 1000;
+        var intervalId = null;
+
+        function startAnimation() {
+            intervalId = setInterval(function () {
+                currIdx = currIdx < 5 ? currIdx + 1 : 1;
+                img1.src = currIdx === 1 ? "./marble2.jpg" : "./marble1.jpg";
+                img2.src = currIdx === 2 ? "./marble2.jpg" : "./marble1.jpg";
+                img3.src = currIdx === 3 ? "./marble2.jpg" : "./marble1.jpg";
+                img4.src = currIdx === 4 ? "./marble2.jpg" : "./marble1.jpg";
+                img5.src = currIdx === 5 ? "./marble2.jpg" : "./marble1.jpg";
+            }, speed)
+        }
+
+        function stopAnimation() {
+            clearInterval(intervalId);
+        }
+
+        startAnimation();
+
+        speedbtn.addEventListener("click", function () {
+            speed = speed === 1000 ? 100 : 1000;
+            stopAnimation();
+            startAnimation();
+        });
+
+        container.addEventListener("mouseenter", stopAnimation);
+        container.addEventListener("mouseleave", startAnimation);
+    </script>
+</body>
+
+</html>
