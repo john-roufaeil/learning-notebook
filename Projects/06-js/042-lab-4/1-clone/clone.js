@@ -12,6 +12,6 @@ mainDiv.addEventListener("click", function (e) {
 
     clone.style.backgroundColor = `rgb(${randomR}, ${randomG}, ${randomB})`;
     clone.firstElementChild.textContent = `rgb(${randomR}, ${randomG}, ${randomB})`;
-
+    console.log(clone.onclick);
     mainDiv.appendChild(clone);
 });

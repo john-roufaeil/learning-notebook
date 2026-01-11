@@ -42,6 +42,7 @@
         })
 
         show.addEventListener("click", function () {
+            clearInterval(intervalId);
             intervalId = setInterval(function () {
                 currIdx = currIdx < rangeMax ? currIdx + 1 : rangeMin;
                 img.src = "imgs/" + currIdx + ".jpg";
