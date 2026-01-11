@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clock</title>
+
+</head>
+
+<body>
+    <button id="startBtn">Start Clock</button>
+    <div id="clockDisplay">00:00:00</div>
+    <p>Press Alt + W to stop the clock</p>
+    <script>
+        var startBtn = document.getElementById("startBtn");
+        var clockDisplay = document.getElementById("clockDisplay");
+        var intervalId;
+
+        function updateClock() {
+            var now = new Date().toLocaleTimeString();
+            clockDisplay.textContent = now;
+        }
+
+        startBtn.addEventListener("click", function () {
+            clearInterval(intervalId);
+            alert("Clock Started");
+            intervalId = setInterval(updateClock, 1000);
+        });
+
+        document.addEventListener("keydown", function (event) {
+            if (event.altKey && event.key === "w") {
+                alert("Clock Stopped");
+                clearInterval(intervalId);
+            }
+        });
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parent</title>
+</head>
+
+<body>
+    <h1>Parent Window</h1>
+    <button onclick="openChildWindow()">Open Child Window</button>
+    <script>
+        function openChildWindow() {
+            const childWindow = open("", "_blank", "width=500,height=200");
+            childWindow.document.write("<p>This child window will close in 5 seconds</p>");
+            setTimeout(() => childWindow.close(), 5000);
+        }
+        console.log(window);
+    </script>
+</body>
+
+</html>
