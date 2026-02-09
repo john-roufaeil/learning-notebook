@@ -6,6 +6,7 @@
 - [ENV, Global, REPL, CLI Args](#env-global-repl-cli-args)
 - [Modules & Require](#modules--require)
 - [Core Modules](#core-modules)
+- [Threads](#threads)
 
 ## Web 101
 
@@ -214,3 +215,134 @@ Search for:
 - Node fs sync vs async
 - Node http createServer
 - Node event emitter
+
+## Threads
+
+### Traditional Multi-threaded Server (classic model)
+
+- Each incoming request gets its own thread
+- That thread:
+    - runs JS/Java/etc
+    - waits for DB
+    - waits for files
+    - blocks while waiting
+
+```json
+Request 1 → Thread 1 (blocked on DB)
+Request 2 → Thread 2 (blocked on file)
+Request 3 → Thread 3 (blocked on network)
+```
+
+Consequences:
+- Simple to understand
+- Threads are heavy (memory + conetxt-switching)
+- Too many users = too many threads = server dies
+- Wasted CPU while threads wait
+
+Why it was common:
+- CPUs were slower
+- Async was painful
+- Memory was cheaper than engineering time
+
+### NodeJS Server (event-driven model)
+
+> NodeJS runs JavaScript on a single main thread, but uses multiple threads under the hood for I/O.
+
+- One main thread runs your JS
+- That thread is never blocked and delegates slow work
+- I/O is handled by OS and libuv thread pool
+- When work finishes → callback is queued → main thread executes it
+
+```
+JS Thread:
+  Request → start DB call → move on
+  Request → start file read → move on
+
+Worker Threads:
+  DB work
+  File system work
+
+Event Loop:
+  “DB done” → run callback
+```
+
+> In NodeJS, your JavaScript code runs on ONE thread. But NodeJS itself is multi-threaded internally.
+
+### Comparison
+
+Multi-threaded servers
+- Blocking is ok
+- Each request gets its own thread
+- Scaling = add more threads
+
+In NodeJS
+- Blocking is deadly
+- One blocked thread = entire server frozen
+- Scaling = non-blocking + async
+
+NodeJS good at:
+- Many concurrent users
+- I/O heavy work (APIs, DB, files, sockets)
+- Real time systems
+
+NodeJS bad at:
+- CPU heavy work (image processing, crypto, ML loops)
+- Because CPU work blocks the only JS thread
+
+|Model|Trade-off|
+|---|---|
+|Multi-threaded|Easy logic, hard scale|
+|NodeJS|Hard logic, easy scale|
+
+### What happens when NodeJS handles a request
+
+```
+Request arrives
+↓
+JS thread starts handling it
+↓
+Async I/O is delegated
+↓
+JS thread continues handling other requests
+↓
+I/O finishes
+↓
+Callback added to a queue
+↓
+JS thread executes callback
+```
+
+## Miscellaneous
+
+### Why fs.readFileSync(...) is dangerous
+
+Async version (good)
+```js
+fs.readFile("data.txt", () => {
+  console.log("done");
+});
+```
+
+What happens:
+- JS asks OS to read file
+- JS thread moves on
+- Other requests continue
+- Callback runs later
+
+Sync version (bad)
+```js
+fs.readFileSync("data.txt");
+```
+
+What happens:
+- JS thread starts reading file
+- JS thread waits
+- Event loop stops
+- No requests handled
+- Server is frozen
+
+This is what “blocks everything” means
+> The only JS thread is busy waiting.
+
+One user reading a file = all users wait.
+That’s the core danger.

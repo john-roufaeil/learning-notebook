@@ -1,0 +1,23 @@
+{
+    "data": [
+        {
+            "name": "Mouse",
+            "quantity": 1,
+            "category": "General",
+            "id": 2
+        },
+        {
+            "name": "Laptop",
+            "quantity": 1,
+            "category": "General",
+            "id": 3
+        },
+        {
+            "name": "Keyboard",
+            "quantity": 11,
+            "category": "General",
+            "id": 1
+        }
+    ],
+    "nextItemId": 4
+}
