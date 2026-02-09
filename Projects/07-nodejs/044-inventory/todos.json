@@ -17,7 +17,13 @@
             "quantity": 11,
             "category": "General",
             "id": 1
+        },
+        {
+            "name": "Watch",
+            "quantity": 1,
+            "category": "General",
+            "id": 4
         }
     ],
-    "nextItemId": 4
+    "nextItemId": 5
 }

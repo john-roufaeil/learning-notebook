@@ -6,7 +6,6 @@ const path = require('path');
 
 const todosFilePath = path.join(__dirname, 'todos.json');
 let fileContent, parsedFile, parsedTodos, itemsId;
-// either file doesn't exist, or not having any of the correct fields or not json file
 
 try {
     fileContent = fs.readFileSync(todosFilePath, 'utf-8');
@@ -25,7 +24,6 @@ try {
     itemsId = parsedFile["nextItemId"];
 }
 
-// TODO: figure the largest itemsId in file and set it
 const [, , command, value1, value2] = process.argv;
 
 
@@ -33,28 +31,53 @@ const [, , command, value1, value2] = process.argv;
 // ---------------------------------------------
 
 if (command === 'add') {
-    // Add to inventory - node index.js add [name]
+    addItem();
+} else if (command === 'destock') {
+    destockItem();
+} else if (command === 'restock') {
+    restockItem();
+} else if (command === 'edit') {
+    editItem();
+} else if (command === 'delete') {
+    deleteItem();
+} else if (command === 'list') {
+    listItems();
+} else if (command === 'summary') {
+    printSummary();
+} else {
+    console.log("Commands allowed are: add/destock/restock/edit/delete/list/summary.");
+}
+
+function updateFile(dataJSON, nextItemId) {
+    fs.writeFileSync(todosFilePath, `{"data": ${JSON.stringify(data)}, "nextItemId": ${nextItemId}}`);
+}
+
+// Add to inventory - node index.js add [name]
+function addItem() {
     if (!value1) {
         console.log("Incorrect input.\nCorrect input is: node index.js add [name]")
         return;
     }
+
     let newItem = {
         name: value1,
         quantity: 1,
         category: "General",
         id: itemsId
     };
-    const newTodos = parsedTodos.concat(newItem);
-    fs.writeFileSync(todosFilePath, `{"data": ${JSON.stringify(newTodos)}, "nextItemId": ${itemsId + 1}}`);
 
-} else if (command === 'destock') {
-    // Destock item - node index.js destock [id] [quantity]
+    const newTodos = parsedTodos.concat(newItem);
+    updateFile(newTodos, itemsId + 1);
+}
+
+// Destock item - node index.js destock [id] [quantity]
+function destockItem() {
     if (!value1 || !value2) {
         console.log("Incorrect input.\nCorrect input is: node index.js destock [id] [quantity]")
         return;
     }
 
-    const oldTodo = parsedTodos.filter((todo) => todo.id == parseInt(value1))[0];
+    const oldTodo = parsedTodos.filter((todo) => todo.id === parseInt(value1))[0];
     if (!oldTodo) {
         console.log("Item not found.")
         return;
@@ -67,10 +90,11 @@ if (command === 'add') {
     const newTodo = { ...oldTodo, quantity: oldTodo.quantity - parseInt(value2) };
     let newTodos = parsedTodos.filter((todo) => todo.id != parseInt(value1));
     newTodos = newTodos.concat(newTodo);
-    fs.writeFileSync(todosFilePath, `{"data": ${JSON.stringify(newTodos)}, "nextItemId": ${itemsId}}`);
+    updateFile(newTodos, itemsId);
+}
 
-} else if (command === 'restock') {
-    // Restock item - node index.js restock [id] [quantity]
+// Restock item - node index.js restock [id] [quantity]
+function restockItem() {
     if (!value1 || !value2) {
         console.log("Incorrect input.\nCorrect input is: node index.js restock [id] [quantity]")
         return;
@@ -85,10 +109,11 @@ if (command === 'add') {
     const newTodo = { ...oldTodo, quantity: oldTodo.quantity + parseInt(value2) };
     let newTodos = parsedTodos.filter((todo) => todo.id != parseInt(value1));
     newTodos = newTodos.concat(newTodo);
-    fs.writeFileSync(todosFilePath, `{"data": ${JSON.stringify(newTodos)}, "nextItemId": ${itemsId}}`);
+    updateFile(newTodos, itemsId);
+}
 
-} else if (command === 'edit') {
-    // Edit item name - node index.js edit [id] [new name]
+// Edit item name - node index.js edit [id] [new name]
+function editItem() {
     if (!value1 || !value2) {
         console.log("Incorrect input.\nCorrect input is: node index.js edit [id] [new name]")
         return;
@@ -103,10 +128,11 @@ if (command === 'add') {
     const newTodo = { ...oldTodo, name: value2 };
     let newTodos = parsedTodos.filter((todo) => todo.id != parseInt(value1));
     newTodos = newTodos.concat(newTodo);
-    fs.writeFileSync(todosFilePath, `{"data": ${JSON.stringify(newTodos)}, "nextItemId": ${itemsId}}`);
+    updateFile(newTodos, itemsId);
+}
 
-} else if (command === 'delete') {
-    // Delete item - node index.js delete [id]
+// Delete item - node index.js delete [id]
+function deleteItem() {
     if (!value1) {
         console.log("Incorrect input.\nCorrect input is: node index.js delete [id]")
         return;
@@ -119,15 +145,11 @@ if (command === 'add') {
     }
 
     const newTodos = parsedTodos.filter((todo) => todo.id !== parseInt(value1));
-    fs.writeFileSync(todosFilePath, `{"data": ${JSON.stringify(newTodos)}, "nextItemId": ${itemsId}}`);
+    updateFile(newTodos, itemsId);
+}
 
-} else if (command === 'list') {
-    // List items - node index.js list
-    // console.log("ID\tName\t\tCategory\tStatus\t\tStock")
-    // parsedTodos.map((todo) => {
-    //     const todoStatus = todo.quantity > 2 ? "available" : todo.quantity > 0 ? "low stock" : "out of stock";
-    //     console.log(`${todo.id}\t${todo.name}\t\t${todo.category}\t\t${todoStatus}\t${todo.quantity}`);
-    // })
+// List items - node index.js list
+function listItems() {
     console.table(parsedTodos.map((todo) => ({
         ID: todo.id,
         Name: todo.name,
@@ -135,9 +157,10 @@ if (command === 'add') {
         Status: todo.quantity > 2 ? "available" : todo.quantity > 0 ? "low stock" : "out of stock",
         Stock: todo.quantity
     })))
+}
 
-} else if (command === 'summary') {
-    // Print summary - node index.js summary
+// Print summary - node index.js summary
+function printSummary() {
     const itemsCount = parsedTodos.length;
     const quantities = parsedTodos.map((todo) => todo.quantity);
     const totalQuanities = quantities.reduce((partialSum, quantity) => partialSum + quantity, 0);
@@ -153,8 +176,4 @@ if (command === 'add') {
     Number of low stock items: ${lowStockCount}
     Number of out of stock items: ${outOfStockCount}
     `)
-
-} else {
-    console.log("Commands allowed are: add/destock/restock/edit/delete/list/summary.");
-    return;
 }
