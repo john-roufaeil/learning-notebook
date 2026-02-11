@@ -8,7 +8,7 @@
         },
         {
             "name": "Laptop",
-            "quantity": 1,
+            "quantity": 31,
             "category": "General",
             "id": 3
         },
@@ -25,5 +25,5 @@
             "id": 4
         }
     ],
-    "nextItemId": 5
+    "nextItemId": 12
 }

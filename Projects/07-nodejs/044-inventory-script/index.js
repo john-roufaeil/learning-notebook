@@ -150,13 +150,19 @@ function deleteItem() {
 
 // List items - node index.js list
 function listItems() {
-    console.table(parsedTodos.map((todo) => ({
-        ID: todo.id,
-        Name: todo.name,
-        Category: todo.category,
-        Status: todo.quantity > 2 ? "available" : todo.quantity > 0 ? "low stock" : "out of stock",
-        Stock: todo.quantity
-    })))
+    // console.table(parsedTodos.map((todo) => ({
+    //     ID: todo.id,
+    //     Name: todo.name,
+    //     Category: todo.category,
+    //     Status: todo.quantity > 2 ? "available" : todo.quantity > 0 ? "low stock" : "out of stock",
+    //     Stock: todo.quantity
+    // })))
+
+    console.log("ID\tName\t\tCategory\tStatus\t\tStock")
+    parsedTodos.map((todo) => {
+        const todoStatus = todo.quantity > 2 ? "available" : todo.quantity > 0 ? "low stock" : "out of stock";
+        console.log(`${todo.id}\t${todo.name}\t\t${todo.category}\t\t${todoStatus}\t${todo.quantity}`);
+    })
 }
 
 // Print summary - node index.js summary
