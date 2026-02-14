@@ -1,0 +1,95 @@
+:root {
+    --primary-color: #0a3dab;
+    --text-color: #1f2937;
+    --bg-color: #a5b3d0;
+    --light-bg: #f3f4f6;
+    --border-color: #e5e7eb;
+    --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --spacing-unit: 1rem;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-family);
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+h1,
+h2,
+h3 {
+    line-height: 1.2;
+    margin-bottom: var(--spacing-unit);
+    text-align: center;
+    width: 10%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 2rem;
+}
+
+p {
+    margin-bottom: var(--spacing-unit);
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 calc(var(--spacing-unit) * 0.5);
+}
+
+.button {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background-color: var(--primary-color);
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+}
+
+.button:hover {
+    background-color: #1d4ed8;
+}
+
+.card {
+    background: var(--bg-color);
+    padding: var(--spacing-unit);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.section {
+    padding: calc(var(--spacing-unit) * 2) 0;
+}
+
+.products {
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+th {
+    text-align: left;
+    color: var(--primary-color)
+}
+
+tr {
+    font-size: 1.6rem;
+}
+
+img {
+    width: 30%;
+}

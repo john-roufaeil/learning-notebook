@@ -12,39 +12,42 @@ app.use(express.json())
 app.use(express.static('public'))
 app.set('view engine', 'pug')
 
-app.get('/test', (req, res) => testConnection(res));
+app.get('/test', (req, res) => testConnection(req, res));
 
-app.get('/', (err, req, rest, next) => {
-
+app.get('/', (req, res, next) => {
+    getHomepage(req, res, next);
 })
 
-app.get('/products', (err, req, res, next) => {
-    console.log(Date.now())
-    req.hamada = 'Ahmed'
-    next()
-}, (req, res, next) => {
-    console.log(req.hamada)
-    res.status(201).json({ "hi": "hello" })
-    next()
-}, (req, res) => {
-    console.log(Date.now())
-    getProducts(res)
-});
+app.get('/balloon', (req, res) => getBalloonPage(req, res));
 
-app.get('/products/:id', (req, res) => getProduct(req, res));
+app.get('/products', (req, res, next) => getProducts(req, res, next));
 
-app.post('/products', (req, res) => addProduct(req, res));
+app.get('/products/:id', (req, res, next) => getProduct(req, res, next));
 
-app.delete('/products/:id', (req, res) => deleteProduct(req, res));
+app.post('/products', (req, res, next) => addProduct(req, res, next));
 
-app.patch('/products/:id', (req, res) => updateProduct(req, res));
+app.delete('/products/:id', (req, res, next) => deleteProduct(req, res, next));
 
-app.patch('/products/:id/restock', (req, res) => restockProduct(req, res));
+app.patch('/products/:id', (req, res, next) => updateProduct(req, res, next));
 
-app.patch('/products/:id/destock', (req, res) => destockProduct(req, res));
+app.patch('/products/:id/restock', (req, res, next) =>
+    restockProduct(req, res, next)
+);
+
+app.patch('/products/:id/destock', (req, res, next) =>
+    destockProduct(req, res, next)
+);
+
+app.use((err, req, res, next) => {
+    console.error(err);
+    const status = err.status || 500;
+    return res.status(status).json({
+        message: err.message || "Internal Server Error"
+    })
+})
 
 app.use((req, res) => {
-    res.status(404).send("Sorry can't find that!")
+    return res.status(404).send("Sorry can't find that!")
 })
 
 app.listen(port, () => console.log(`Up and running on port ${port}`))

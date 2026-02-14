@@ -1,25 +1,38 @@
+const fs = require('fs');
+const path = require('path');
 const express = require('express');
 const router = express();
 
-const testConnection = (res) => {
+const testConnection = (req, res) => {
     res.send('Hello, World!')
 }
 
 const getHomepage = (req, res) => {
-    router.get('/', (req, res) => {
-        res.render(
-            'index',
-            { title: 'Hey OSAD', message: 'Hello there ITI!' }
-        )
-    })
+    res.render(
+        'index',
+        {
+            title: 'Homepage',
+            message: "Products",
+            products: [{ "name": "hi", "quantity": 3, "category": "cat" }]
+        }
+    )
 }
 
 const getBalloonPage = (req, res) => {
-
+    res.sendFile(path.join(__dirname, "public", "balloon.html"));
 }
 
-function getProducts(res) {
-
+const getProducts = (req, res, next) => {
+    const jsonPath = path.join(__dirname, 'products.json');
+    let products;
+    try {
+        products = fs.readFileSync(jsonPath, 'utf-8');
+        return res.send(products);
+    } catch (err) {
+        err.status = 500;
+        err.message = "Database doesn't exist on server";
+        return next(err);
+    }
 }
 
 function getProduct(req, res) {
