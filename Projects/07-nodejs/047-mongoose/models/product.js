@@ -1,8 +1,6 @@
 const mongoose = require('mongoose');
 
-const { Schema } = mongoose;
-
-const productSchema = {
+const productSchema = new mongoose.Schema({
     owner: {
         type: mongoose.Types.ObjectId,
         ref: 'User'
@@ -32,7 +30,7 @@ const productSchema = {
         min: 0,
         max: 100
     },
-}
+})
 
 productSchema.virtual('status').get(() => {
     if (this.quantity > 2) return 'Available';

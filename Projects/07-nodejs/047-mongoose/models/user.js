@@ -44,7 +44,7 @@ const userSchema = new Schema({
     }
 })
 
-userSchema.pre('save', (_, input) => {
+userSchema.pre('save', () => {
     this.password = bcrypt.hashSync(this.password, 10);
     return this;
 })
