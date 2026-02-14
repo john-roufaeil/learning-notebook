@@ -4,42 +4,68 @@ const { usersController } = require('../controllers');
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-    // Return the first name of registered users
-    const users = await usersController.getUsers();
-    res.json(users);
+    try {
+        const users = await usersController.getUsers();
+        res.json(users);
+    } catch (err) {
+        console.error(err);
+        res.status(err.code || 400).send(err.message);
+    }
 });
 
 router.get('/:userId/products', async (req, res) => {
-    // Return the products of specific user
     const { userId } = req.params;
-    const userProducts = await usersController.getProductsOfUser(userId);
-    res.json(userProducts);
+    try {
+        const userProducts = await usersController.getProductsOfUser(userId);
+        res.json(userProducts);
+    } catch (err) {
+        console.error(err);
+        res.status(err.code || 400).send(err.message);
+    }
 })
 
 router.post('/', async (req, res) => {
-    // - Register a user with the following required attributes
-    // Username,password , firstName, lastName
-    // Note: Handle validation errors returned from mongo
-    const { body } = req.body;
-    const user = await usersController.createUser(body);
-    res.json(user);
+    const body = req.body;
+    try {
+        const user = await usersController.createUser(body);
+        res.json({
+            message: "user added successfully",
+            user
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(err.code || 400).send(err.message);
+    }
 });
 
 router.patch('/:id', async (req, res) => {
-    // Edit the user with the selected id
-    // Return ({message:”user was edited successfully”, user: theUserAfterEdit”}) if success
-    // Handle validation errors returned from mongo
     const { id } = req.params;
-    const { body } = req.body;
-    const user = await usersController.editUser(id, body);
-    res.json(user);
+    const body = req.body;
+    try {
+        const updatedUser = await usersController.editUser(id, body);
+
+        res.json({
+            message: "user was edited successfully",
+            user: updatedUser
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(err.code || 400).send(err.message);
+    }
 });
 
 router.delete('/:id', async (req, res) => {
-    // Delete the user with selected id
     const { id } = req.params;
-    const user = await usersController.deleteUser(id);
-    res.json(user);
+    try {
+        const user = await usersController.deleteUser(id);
+        res.json({
+            message: "user deleted successfully",
+            user
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(err.code || 400).send(err.message);
+    }
 });
 
 module.exports = router;

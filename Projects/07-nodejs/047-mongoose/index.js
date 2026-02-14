@@ -1,31 +1,17 @@
-import js from "@eslint/js";
-import globals from "globals";
-import json from "@eslint/json";
-import { defineConfig } from "eslint/config";
+const express = require('express');
+const mongoose = require('mongoose');
+const routes = require('./routes');
 
-export default defineConfig([
-    js.configs.recommended,
-    {
-        files: ["**/*.js"],
-        languageOptions: {
-            sourceType: "commonjs",
-            globals: globals.node
-        },
-        rules: {
-            // "no-console": "warn",
-            "prefer-const": "error",
-            "no-unused-vars": "warn",
-            "no-var": "error",
-            "eqeqeq": "error",
-            "max-len": ["error", { "code": 80, "tabWidth": 4 }]
-        }
-    },
-    {
-        files: ["**/*.json"],
-        plugins: { json },
-        language: "json/json"
-    },
-    {
-        ignores: ["node_modules/**", "dist/**"]
-    }
-]);
+mongoose.connect('mongodb://127:0.0.1:27017/inventory');
+
+const app = express();
+
+app.use(express.json());
+app.use(routes);
+app.use((req, res) => {
+    res.status(404).send("Sorry, this endpoint is not configured")
+});
+app.listen(3000, (err) => {
+    if (err) console.error(err);
+    console.log("Up and running on localhost:3000");
+});

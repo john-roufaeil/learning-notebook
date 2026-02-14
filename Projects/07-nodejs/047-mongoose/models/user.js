@@ -32,22 +32,13 @@ const userSchema = new Schema({
         type: Date,
         min: new Date('1920-01-01'),
         max: new Date('2026-01-01')
-    },
-    createdAt: {
-        type: Date,
-        default: () => new Date(),
-        immutable: true
-    },
-    updatedAt: {
-        type: Date,
-        default: () => new Date()
     }
 })
 
-userSchema.pre('save', () => {
+userSchema.pre('save', function () {
     this.password = bcrypt.hashSync(this.password, 10);
     return this;
-})
+}, { timestamps: true })
 
 const User = mongoose.model('User', userSchema);
 
