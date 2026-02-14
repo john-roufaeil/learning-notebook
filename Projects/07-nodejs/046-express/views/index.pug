@@ -9,8 +9,40 @@ html
                 th Name 
                 th Category
                 th Quantity 
+                th Status
             each product in products
                 tr
-                td= product.name
-                td= product.category
-                td= product.quantity
+                    td= product.name
+                    td= product.category
+                    td= product.quantity
+                    td= product.quantity >= 2? "Available": product.quantity > 0? "Low Stock" : "Out of Stock"
+                    td
+                        if product.quantity < 2
+                            button.restock(data-id=product.id) Restock
+
+script.
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.restock').forEach(button => {
+            button.addEventListener('click', async () => {
+                const id = button.dataset.id;
+
+                try {
+                    const res = await fetch(`http://localhost:3000/products/${id}/restock`, {
+                        method: 'PATCH',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+
+                    if (res.ok) {
+                        alert('Product restocked!');
+                        location.reload(); // refresh table
+                    } else {
+                        alert('Failed to restock product');
+                    }
+                } catch (err) {
+                    alert('Error contacting server');
+                }
+            });
+        });
+    });

@@ -38,7 +38,7 @@ app.patch('/products/:id/destock', (req, res, next) =>
     destockProduct(req, res, next)
 );
 
-app.use((err, req, res, next) => {
+app.use((err, req, res) => {
     console.error(err);
     const status = err.status || 500;
     return res.status(status).json({
