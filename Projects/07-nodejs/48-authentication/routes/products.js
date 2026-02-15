@@ -1,9 +1,10 @@
 const express = require('express');
 const { productsController } = require('../controllers');
+const authMiddleware = require('../middlewares/auth');
 
 const router = express.Router();
 
-router.get('/', async (req, res) => {
+router.get('/', authMiddleware, async (req, res) => {
     const { limit, skip, status } = req.query;
     try {
         const products = await productsController
@@ -15,7 +16,7 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.post('/', async (req, res) => {
+router.post('/', authMiddleware, async (req, res) => {
     const body = req.body;
     const userId = req.body.userId;
     try {
@@ -27,7 +28,7 @@ router.post('/', async (req, res) => {
     }
 });
 
-router.patch('/:id', async (req, res) => {
+router.patch('/:id', authMiddleware, async (req, res) => {
     const { id } = req.params;
     const body = req.body;
     const userId = req.body.userId;
@@ -40,7 +41,7 @@ router.patch('/:id', async (req, res) => {
     }
 });
 
-router.patch('/:id/stock', async (req, res) => {
+router.patch('/:id/stock', authMiddleware, async (req, res) => {
     const { id } = req.params;
     const { operation, quantity, userId } = req.body;
     try {
@@ -54,9 +55,9 @@ router.patch('/:id/stock', async (req, res) => {
     }
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', authMiddleware, async (req, res) => {
     const { id } = req.params;
-    if (!req.body && !req.body.userId)
+    if (!req.body || !req.body.userId)
         res.status(400).send("userId is required");
     const userId = req.body.userId;
     try {
