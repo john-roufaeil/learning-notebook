@@ -26,9 +26,9 @@ const productSchema = new mongoose.Schema({
 })
 
 productSchema.virtual('status').get(function () {
-    if (this.quantity > 2) return 'Available';
-    if (this.quantity > 0) return 'Low Stock';
-    return 'Out of Stock';
+    if (this.quantity > 2) return 'available';
+    if (this.quantity > 0) return 'low-stock';
+    return 'out-of-stock';
 });
 
 productSchema.index({ owner: 1, name: 1 }, { unique: true });

@@ -4,7 +4,7 @@ const authMiddleware = require('../middlewares/auth');
 
 const router = express.Router();
 
-router.get('/', authMiddleware, async (req, res) => {
+router.get('/', async (req, res) => {
     const { limit, skip, status } = req.query;
     try {
         const products = await productsController
@@ -18,7 +18,7 @@ router.get('/', authMiddleware, async (req, res) => {
 
 router.post('/', authMiddleware, async (req, res) => {
     const body = req.body;
-    const userId = req.body.userId;
+    const userId = req.userId;
     try {
         const product = await productsController.createProduct(body, userId)
         res.json(product);
@@ -31,9 +31,10 @@ router.post('/', authMiddleware, async (req, res) => {
 router.patch('/:id', authMiddleware, async (req, res) => {
     const { id } = req.params;
     const body = req.body;
-    const userId = req.body.userId;
     try {
-        const product = await productsController.editProduct(id, body, userId);
+        const product = await productsController.editProduct(id, body);
+        if (req.userId !== product.owner)
+            return res.status(401).send("Unauthorized");
         res.json(product);
     } catch (err) {
         console.error(err);
@@ -43,11 +44,14 @@ router.patch('/:id', authMiddleware, async (req, res) => {
 
 router.patch('/:id/stock', authMiddleware, async (req, res) => {
     const { id } = req.params;
-    const { operation, quantity, userId } = req.body;
+    const { operation, quantity } = req.body;
     try {
         const product = await productsController.editProductStock(
-            id, operation, Number(quantity), userId
+            id, operation, Number(quantity)
         );
+
+        if (req.userId !== product.owner)
+            return res.status(401).send("Unauthorized");
         res.json(product);
     } catch (err) {
         console.error(err);
@@ -57,11 +61,10 @@ router.patch('/:id/stock', authMiddleware, async (req, res) => {
 
 router.delete('/:id', authMiddleware, async (req, res) => {
     const { id } = req.params;
-    if (!req.body || !req.body.userId)
-        res.status(400).send("userId is required");
-    const userId = req.body.userId;
     try {
-        const product = await productsController.deleteProduct(id, userId);
+        const product = await productsController.deleteProduct(id);
+        if (req.userId !== product.owner)
+            return res.status(401).send("Unauthorized");
         res.json(product);
     } catch (err) {
         console.error(err);

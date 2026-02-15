@@ -2,6 +2,7 @@ const Product = require('../models/product');
 const User = require('../models/user');
 const mongoose = require('mongoose');
 const StatusError = require('../helpers/StatusError');
+const bcrypt = require('bcrypt');
 
 const login = async (data) => {
     const user = await User.findOne({ username: data.username });
@@ -43,40 +44,39 @@ const createUser = async (data) => {
         "username": data.username,
         "password": data.password
     })
-    const jwt = user.generateJWT();
+    const jwt = user.generateToken();
     return jwt;
 }
 
 const editUser = async (id, data) => {
     if (!mongoose.Types.ObjectId.isValid(id))
         throw new StatusError(400, 'Invalid User ID');
-    const existingUser = await User.findById(id);
-    if (!existingUser)
-        throw new StatusError(404, 'This user does not exist');
-    if (data.firstName) {
-        existingUser.firstName = data.firstName;
-    }
-    if (data.lastName) {
-        existingUser.lastName = data.lastName;
-    }
-    if (data.dob) {
-        existingUser.dob = data.dob;
-    }
+
+    const fieldsToUpdate = {};
+    if (data.firstName) fieldsToUpdate.firstName = data.firstName;
+    if (data.lastName) fieldsToUpdate.lastName = data.lastName;
+    if (data.dob) fieldsToUpdate.dob = data.dob;
     if (data.password) {
-        existingUser.password = data.password;
-    }
-    await existingUser.save();
-    return existingUser;
+        fieldsToUpdate.password = bcrypt.hashSync(data.password, 10);
+    };
+    const updatedUser = await User.findByIdAndUpdate(
+        id,
+        fieldsToUpdate,
+        { new: true }
+    );
+
+    if (!updatedUser)
+        throw new StatusError(404, 'This user does not exist');
+    return updatedUser;
 }
 
 const deleteUser = async (id) => {
     if (!mongoose.Types.ObjectId.isValid(id))
         throw new StatusError(400, 'Invalid User ID');
-    const existingUser = await User.findById(id);
-    if (!existingUser)
+    const deletedUser = await User.findByIdAndDelete(id);
+    if (!deletedUser)
         throw new StatusError(404, 'This user does not exist');
-    await User.deleteOne({ '_id': id });
-    return existingUser;
+    return deletedUser;
 }
 
 module.exports = {

@@ -3,18 +3,19 @@ const mongoose = require('mongoose');
 const StatusError = require('../helpers/StatusError');
 
 const getProducts = async (limit, skip, status) => {
-    let products;
-    if (status)
-        products = await Product.find({ 'status': status });
-    else
-        products = await Product.find();
+    let query = Product.find();
     if (limit) {
         if (limit > 1000) limit = 1000;
-        products = await products.limit(limit);
+        query = query.limit(limit);
     }
     if (skip)
-        products = await products.skip(skip);
-    return await products;
+        query = query.skip(skip);
+    let products = await query;
+    if (status)
+        products = products.filter(p => p.status === status);
+    
+    console.log(products);
+    return products;
 }
 
 const createProduct = async (data, userId) => {
@@ -31,15 +32,15 @@ const createProduct = async (data, userId) => {
     return product;
 };
 
-const editProduct = async (id, body, userId) => {
+const editProduct = async (id, body) => {
     if (!mongoose.Types.ObjectId.isValid(id))
         throw new StatusError(400, 'Invalid Product ID');
     const product = await Product.findById(id);
     if (!product)
         throw new StatusError(404, "This product does not exist");
-    if (product.owner.toString() !== userId) {
-        throw new StatusError(401, "Unauthorized to edit this product");
-    }
+    // if (product.owner.toString() !== userId) {
+    //     throw new StatusError(401, "Unauthorized to edit this product");
+    // }
     if (body.name) {
         const existingName = await Product.findOne({ 'name': body.name });
         if (existingName)
@@ -51,14 +52,14 @@ const editProduct = async (id, body, userId) => {
     return product;
 }
 
-const editProductStock = async (id, operation, quantity, userId) => {
+const editProductStock = async (id, operation, quantity) => {
     if (!mongoose.Types.ObjectId.isValid(id))
         throw new StatusError(400, "Invalid Product ID");
     const existingProduct = await Product.findById(id);
     if (!existingProduct)
         throw new StatusError(404, "This product does not exist");
-    if (existingProduct.owner.toString() !== userId)
-        throw new StatusError(401, "Unauthorized to edit this product");
+    // if (existingProduct.owner.toString() !== userId)
+    //     throw new StatusError(401, "Unauthorized to edit this product");
     if (operation === "restock" && existingProduct.quantity + quantity > 100)
         throw new StatusError(400, "Stock cannot exceed 100");
     if (operation === "destock" && existingProduct.quantity - quantity < 0)
@@ -74,14 +75,14 @@ const editProductStock = async (id, operation, quantity, userId) => {
     return existingProduct;
 }
 
-const deleteProduct = async (id, userId) => {
+const deleteProduct = async (id) => {
     if (!mongoose.Types.ObjectId.isValid(id))
         throw new StatusError(400, 'Invalid Product ID');
     const existingProduct = await Product.findById(id);
     if (!existingProduct)
         throw new StatusError(404, 'This product does not exist');
-    if (existingProduct.owner.toString() !== userId)
-        throw new StatusError(401, "Unauthorized to delete this product");
+    // if (existingProduct.owner.toString() !== userId)
+    //     throw new StatusError(401, "Unauthorized to delete this product");
     await Product.deleteOne({ '_id': id });
     return existingProduct;
 }

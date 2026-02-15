@@ -50,7 +50,10 @@ userSchema.pre('save', function () {
 })
 
 userSchema.set('toJSON', {
-    transform: (doc, { _v, password, ...rest }, options) => rest
+    transform: (_, ret) => {
+        const { password, ...rest } = ret;
+        return rest;
+    }
 });
 
 userSchema.methods.verifyPassword = function (password) {
@@ -59,7 +62,7 @@ userSchema.methods.verifyPassword = function (password) {
 
 userSchema.methods.generateToken = function () {
     return jwt.sign(
-        { userId: this._id, username: this.username }
+        { userId: this._id }
         , JWT_SECRET, { expiresIn: '1d' }
     )
 }

@@ -6,9 +6,8 @@ const router = express.Router();
 
 router.post('/login', async (req, res) => {
     try {
-        const { body } = req;
-        const jwt = await usersController.login(body);
-        res.json({ jwt });
+        const token = await usersController.login(req.body);
+        res.json({ token });
     }
     catch (err) {
         console.error(err);
@@ -28,6 +27,8 @@ router.get('/', async (req, res) => {
 
 router.get('/:userId/products', authMiddleware, async (req, res) => {
     const { userId } = req.params;
+    if (req.userId !== userId)
+        return res.status(401).send("Unauthorized");
     try {
         const userProducts = await usersController.getProductsOfUser(userId);
         res.json(userProducts);
@@ -54,6 +55,8 @@ router.post('/', async (req, res) => {
 router.patch('/:id', authMiddleware, async (req, res) => {
     const { id } = req.params;
     const body = req.body;
+    if (req.userId !== id)
+        return res.status(401).send("Unauthorized");
     try {
         const updatedUser = await usersController.editUser(id, body);
 
@@ -69,6 +72,8 @@ router.patch('/:id', authMiddleware, async (req, res) => {
 
 router.delete('/:id', authMiddleware, async (req, res) => {
     const { id } = req.params;
+    if (req.userId !== id)
+        return res.status(401).send("Unauthorized");
     try {
         const user = await usersController.deleteUser(id);
         res.json({
