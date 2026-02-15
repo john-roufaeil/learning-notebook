@@ -8,7 +8,7 @@ const userSchema = new Schema({
         type: String,
         required: true,
         unique: true,
-        minLength: 8,
+        minLength: 4,
         lowercase: true,
         trim: true
     },
@@ -33,12 +33,12 @@ const userSchema = new Schema({
         min: new Date('1920-01-01'),
         max: new Date('2026-01-01')
     }
-})
+}, { timestamps: true })
 
 userSchema.pre('save', function () {
     this.password = bcrypt.hashSync(this.password, 10);
     return this;
-}, { timestamps: true })
+})
 
 const User = mongoose.model('User', userSchema);
 
