@@ -3,7 +3,6 @@ const StatusError = require('../helpers/StatusError');
 const User = require('../models/user');
 require('dotenv').config();
 
-
 const JWT_SECRET = process.env.JWT_SECRET;
 
 async function authMiddleware(req, res, next) {

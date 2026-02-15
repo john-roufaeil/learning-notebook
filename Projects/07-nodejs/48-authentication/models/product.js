@@ -7,7 +7,6 @@ const productSchema = new mongoose.Schema({
     },
     name: {
         type: String,
-        unique: true,
         required: true,
         minLength: 5,
         maxLength: 20
@@ -31,6 +30,8 @@ productSchema.virtual('status').get(function () {
     if (this.quantity > 0) return 'Low Stock';
     return 'Out of Stock';
 });
+
+productSchema.index({ owner: 1, name: 1 }, { unique: true });
 
 const Product = mongoose.model('Product', productSchema);
 

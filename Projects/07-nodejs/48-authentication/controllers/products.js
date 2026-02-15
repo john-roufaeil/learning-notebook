@@ -8,8 +8,10 @@ const getProducts = async (limit, skip, status) => {
         products = await Product.find({ 'status': status });
     else
         products = await Product.find();
-    if (limit)
+    if (limit) {
+        if (limit > 1000) limit = 1000;
         products = await products.limit(limit);
+    }
     if (skip)
         products = await products.skip(skip);
     return await products;
