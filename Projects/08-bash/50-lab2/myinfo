@@ -1,0 +1,13 @@
+#!/bin/bash
+
+echo "Please enter your logname"
+read logname
+
+echo "--- Listing files---"
+ls -al /home/$logname
+
+echo "--- Copying files---"
+
+echo "--- Listing processes---"
+ps -u $logname
+

@@ -1,0 +1,15 @@
+#!/bin/bash
+
+if [ $# -lt 2 ]
+then
+	echo "At least 2 arguments required"
+
+elif [ $# -eq 2 ]
+then
+	cp $1 $2
+	echo "Copied $1 to $2"
+
+else
+	cp $*
+	echo "Multiple files copied"
+fi
