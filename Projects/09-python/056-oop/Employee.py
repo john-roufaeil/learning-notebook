@@ -1,4 +1,6 @@
+import re
 from Person import Person
+from Car import Car
 
 class Employee(Person):
   def __init__(self, id, car, email, salary, distanceToWork, name, money, mood, healthRate):
@@ -33,6 +35,8 @@ class Employee(Person):
   def email(self, value):
     if not isinstance(value, str):
       raise ValueError("Email must be a string")
+    if not re.match(r'^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$', value):
+      raise ValueError("Invalid email")
     self.__email = value.lower()
   
   @property
@@ -40,8 +44,8 @@ class Employee(Person):
     return self.__salary
   @salary.setter
   def salary(self, value):
-    if value < 0:
-      raise ValueError("Salary cannot be negative")
+    if value < 1000:
+      raise ValueError("Salary must be 1000 or more")
     self.__salary = value
 
   @property
@@ -53,8 +57,13 @@ class Employee(Person):
       raise ValueError("Distance to work cannot be negative")
     self._distanceToWork = value
 
-  def work(self):
-    pass
+  def work(self, hours):
+    if hours > 8:
+      self.mood = "Tired"
+    elif hours < 8:
+      self.mood = "Lazy"
+    else:
+      self.mood = "Happy"
 
   def drive(self):
     pass

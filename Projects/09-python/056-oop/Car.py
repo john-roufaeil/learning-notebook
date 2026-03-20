@@ -4,26 +4,26 @@ class Car:
     self._fuelRate = fuelRate
     self._velocity = velocity
 
-  @parameter
+  @property
   def name(self):
     return self._name
   @name.setter
   def name(self, value):
     self._name = value
   
-  @parameter
+  @property
   def fuelRate(self):
     return self._fuelRate
   @fuelRate.setter
   def fuelRate(self, value):
     self._fuelRate = value
   
-  @parameter
+  @property
   def velocity(self):
-    return self.velocity
+    return self._velocity
   @velocity.setter
   def velocity(self, value):
-    self.velocity = value
+    self._velocity = value
   
   def run(self):
     pass
