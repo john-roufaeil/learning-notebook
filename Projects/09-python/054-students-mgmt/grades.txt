@@ -1,0 +1,15 @@
+1,Python,98
+1,English,24
+1,JS,35
+2,Python,23
+2,English,84
+2,JS,28
+3,Python,19
+3,English,94
+3,JS,39
+4,Python,94
+4,English,12
+4,JS,85
+5,Python,93
+5,English,35
+5,JS,75
