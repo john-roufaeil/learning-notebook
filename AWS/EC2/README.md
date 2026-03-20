@@ -41,7 +41,7 @@ Amazon EC2 (Elastic Compute Cloud) provides resizable virtual machines in the cl
 - **Region & Availability Zone:** EC2 instances run in a specific AZ within a Region
 - **Elastic IP:** A static public IPv4 address you can attach to an instance
 - **Key Pair:** Public/private key used for SSH authentication
-- **User Data:** Scripts that run on first boot to automate configuration
+- **User Data:** Scripts that run on first boot to automate configuration run as root (sudo)
 - **Instance Metadata:** Info about the running instance, accessible at `http://169.254.169.254/latest/meta-data/`
 
 > 📝 **Exam Tip:** EC2 is **IaaS**. You are responsible for the OS, applications, and data. AWS manages the physical hardware and hypervisor.
