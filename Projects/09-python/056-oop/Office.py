@@ -1,9 +1,12 @@
+import json
 from Employee import Employee
 
 class Office:
+  employeesNum = 0
   def __init__(self, name, employees):
     self._name = name
     self._employees = employees
+    Office.employeesNum += len(employees)
   
   @property
   def name(self):
@@ -34,12 +37,59 @@ class Office:
     if not isinstance(employee, Employee):
       raise ValueError("Must hire an Employee object")
     self._employees.append(employee)
+    Office.employeesNum += 1
   
   def fire(self, id):
-    pass
+    newEmployees = []
+    for e in self.employees:
+      if e.id != id:
+        newEmployees.append(e)
+    if len(self.employees) != len(newEmployees):
+      Office.employeesNum -= 1
+    self.employees = newEmployees
   
-  def calculate_lateness(self, id):
-    pass
+  def deduct(self, id, deduction):
+    emp = self.get_employee(id)
+    if not emp:
+      return
+    emp.salary -= deduction
 
-  def reward(self, id):
-    pass
+  def reward(self, id, reward):
+    emp = eslf.get_employee(id):
+    if not emp:
+      return
+    emp.salary += reward
+
+  def check_lateness(self, id, moveHour):
+    emp = self.get_employee(id)
+    if not emp:
+        return
+
+    isLate = Office.calculate_lateness(9, moveHour, emp.distanceToWork, emp.car.velocity)
+    if isLate:
+        self.deduct(id, 10)
+    else:
+        self.reward(id, 10)
+
+  @staticmethod
+  def calculate_lateness(targetHour , moveHour, distance, velocity):
+    arrivalTime = moveHour + (distance / velocity)
+    return targetHour < arrivalTime
+
+  @classmethod
+  def change_emps_num(cls, num):
+    cls.employeesNum = num
+
+  def export_data(self, filename):
+    data = {
+      "officeName": self.name,
+      "employees": [emp.to_dict() for emp in self.employees]
+    }
+  
+  try:
+    file = open(filename, "w")
+    file.write(data)
+  except:
+    print("Error in accessing file")
+  finally:
+    file.close()

@@ -65,10 +65,10 @@ class Employee(Person):
     else:
       self.mood = "Happy"
 
-  def drive(self, velocity):
+  def drive(self, velocity, distance):
     if not self.car:
       raise ValueError("Employee doesn't have a car")
-    self.car.run(velocity, self.distanceToWork)
+    self.car.run(velocity, distance)
   
   def refuel(self, gasAmount):
     if not self.car:
@@ -77,3 +77,20 @@ class Employee(Person):
   
   def send_mail(self):
     pass
+
+  def to_dict(self):
+    return {
+        "id": self.id,
+        "name": self.name,
+        "email": self.email,
+        "salary": self.salary,
+        "distanceToWork": self.distanceToWork,
+        "money": self.money,
+        "mood": self.mood,
+        "healthRate": self.healthRate,
+        "car": {
+            "name": self.car.name,
+            "fuelRate": self.car.fuelRate,
+            "velocity": self.car.velocity
+        } if self.car else None
+    }
