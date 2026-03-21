@@ -4,7 +4,7 @@ from Car import Car
 
 class Employee(Person):
   def __init__(self, id, car, email, salary, distanceToWork, name, money, mood, healthRate):
-    super().__init__(name, money, mood, healthRate)
+    super().__init__(name, mood, money, healthRate)
     self.__id = id
     self._car = car
     self.__email = email
@@ -65,11 +65,15 @@ class Employee(Person):
     else:
       self.mood = "Happy"
 
-  def drive(self):
-    pass
+  def drive(self, velocity):
+    if not self.car:
+      raise ValueError("Employee doesn't have a car")
+    self.car.run(velocity, self.distanceToWork)
   
-  def refuel(self):
-    pass
+  def refuel(self, gasAmount):
+    if not self.car:
+      raise ValueError("Employee doesn't have a car")
+    self.car.fuelRate = min(self.car.fuelRate + gasAmount, 100)
   
   def send_mail(self):
     pass

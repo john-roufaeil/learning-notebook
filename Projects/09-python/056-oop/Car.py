@@ -16,6 +16,8 @@ class Car:
     return self._fuelRate
   @fuelRate.setter
   def fuelRate(self, value):
+    if value < 0 or value > 100:
+      raise ValueError("Fuel rate must be between 0 and 100")
     self._fuelRate = value
   
   @property
@@ -23,10 +25,19 @@ class Car:
     return self._velocity
   @velocity.setter
   def velocity(self, value):
+    if value < 0 or value > 200:
+      raise ValueError("Velocity must be between 0 and 200")
     self._velocity = value
   
-  def run(self):
-    pass
-
-  def stop(self):
-    pass
+  def run(self, velocity, distance):
+    self.velocity = velocity
+    consumed = min(self.fuelRate, distance)
+    self.fuelRate -= consumed
+    self.stop(distance - consumed)
+    
+  def stop(self, remainingDistance):
+    self.velocity = 0
+    if remainingDistance == 0:
+      print("Car stopping; arrived at destination")
+    else:
+      print(f"Car stopping; distance remaining {remainingDistance}")
