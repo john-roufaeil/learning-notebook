@@ -1,5 +1,5 @@
 class Car:
-  def __init__(self, name, fuelRate, velocity):
+  def __init__(self, name, fuelRate=0, velocity=0):
     self._name = name
     self._fuelRate = fuelRate
     self._velocity = velocity

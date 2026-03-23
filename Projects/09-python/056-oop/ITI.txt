@@ -1,0 +1,46 @@
+{
+  "officeName": "ITI Main Office",
+  "employees": [
+    {
+      "id": "1233",
+      "name": "Samy",
+      "email": "samy@email.com",
+      "salary": 9500,
+      "distanceToWork": 20,
+      "money": 0,
+      "mood": "Lazy",
+      "healthRate": 50,
+      "car": {
+        "name": "Fiat128",
+        "fuelRate": 0,
+        "velocity": 0
+      }
+    },
+    {
+      "id": "1234",
+      "name": "John",
+      "email": "john@email.com",
+      "salary": 70500,
+      "distanceToWork": 10,
+      "money": 1799800,
+      "mood": "Happy",
+      "healthRate": 75,
+      "car": {
+        "name": "Toyota",
+        "fuelRate": 0,
+        "velocity": 0
+      }
+    },
+    {
+      "id": "1236",
+      "name": "Mary",
+      "email": "mary@email.com",
+      "salary": 80000,
+      "distanceToWork": 5,
+      "money": 2000000,
+      "mood": "Happy",
+      "healthRate": 90,
+      "car": null
+    }
+  ]
+}

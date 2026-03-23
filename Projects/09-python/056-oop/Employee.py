@@ -1,6 +1,14 @@
 import re
+import smtplib
+from email.message import EmailMessage
 from Person import Person
 from Car import Car
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+EMAIL_USER = os.getenv("EMAIL_USER")
+EMAIL_PASS = os.getenv("EMAIL_PASS")
 
 class Employee(Person):
   def __init__(self, id, car, email, salary, distanceToWork, name, money, mood, healthRate):
@@ -73,10 +81,24 @@ class Employee(Person):
   def refuel(self, gasAmount):
     if not self.car:
       raise ValueError("Employee doesn't have a car")
-    self.car.fuelRate = min(self.car.fuelRate + gasAmount, 100)
-  
-  def send_mail(self):
-    pass
+
+  def send_mail(self, receiver_email, msg, receiver_name, subject="No Subject"):
+    if not re.match(r'^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$', receiver_email):
+        raise ValueError("Receiver email must be a valid email")
+    
+    email = EmailMessage()
+    email["From"] = EMAIL_USER
+    email["To"] = receiver_email
+    email["Subject"] = subject
+    email.set_content(f"Hi {receiver_name},\n\n{msg}\n\nThanks!")
+    
+    try:
+        with smtplib.SMTP_SSL("smtp.gmail.com", 465) as smtp:
+            smtp.login(EMAIL_USER, EMAIL_PASS)
+            smtp.send_message(email)
+        print("Email sent successfully!")
+    except Exception as e:
+        print("Failed to send email:", e)
 
   def to_dict(self):
     return {

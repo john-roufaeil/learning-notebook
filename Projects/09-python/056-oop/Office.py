@@ -55,7 +55,7 @@ class Office:
     emp.salary -= deduction
 
   def reward(self, id, reward):
-    emp = eslf.get_employee(id):
+    emp = self.get_employee(id)
     if not emp:
       return
     emp.salary += reward
@@ -86,10 +86,12 @@ class Office:
       "employees": [emp.to_dict() for emp in self.employees]
     }
   
-  try:
-    file = open(filename, "w")
-    file.write(data)
-  except:
-    print("Error in accessing file")
-  finally:
-    file.close()
+    file = None
+    try:
+      file = open(filename, "w")
+      json.dump(data, file, indent=2)
+    except:
+      print("Error in accessing file")
+    finally:
+      if file:
+        file.close()
