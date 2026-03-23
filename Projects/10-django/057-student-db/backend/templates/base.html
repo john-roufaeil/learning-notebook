@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}App{% endblock %}</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f7fa;
+    }
+
+    /* Navbar */
+    .navbar {
+      background: #2c3e50;
+      padding: 2rem 6rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-left {
+      color: white;
+      font-weight: bold;
+      font-size: 1.5rem;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-size: 1.2rem;
+      margin-left: 20px;
+      font-weight: 500;
+    }
+
+    .nav-links a:hover {
+      text-decoration: underline;
+    }
+
+    .container {
+      padding: 30px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <div class="nav-left">ITI System</div>
+
+    <div class="nav-links">
+      <a href="{% url 'home' %}">Home</a>
+      <a href="{% url 'students_page' %}">Students</a>
+      <a href="{% url 'contact_page' %}">Contact Us</a>
+      <a href="{% url 'admin:index' %}">Admin Panel</a>
+    </div>
+  </div>
+
+  <!-- Page Content -->
+  <div class="container">
+    {% block content %}
+    {% endblock %}
+  </div>
+
+</body>
+
+</html>

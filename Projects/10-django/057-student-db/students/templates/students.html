@@ -1,0 +1,228 @@
+{% extends "base.html" %}
+
+{% block title %}Students{% endblock %}
+
+{% block content %}
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #f5f7fa;
+    margin: 0;
+  }
+
+  header {
+    background: #2c3e50;
+    color: white;
+    padding: 20px;
+    text-align: center;
+  }
+
+  .container {
+    width: 90%;
+    margin: 30px auto;
+  }
+
+  .form-card {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+
+  button {
+    background: #27ae60;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  button:hover {
+    background: #219150;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  th,
+  td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+  }
+
+  th {
+    background: #34495e;
+    color: white;
+  }
+
+  img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .actions button {
+    margin: 0 5px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+  }
+
+  .delete {
+    background: #e74c3c;
+    color: white;
+  }
+
+  .delete:hover {
+    background: #c0392b;
+  }
+
+
+
+
+  .form-card {
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .form-content {
+    width: 50%;
+    margin: auto;
+  }
+
+  .form-card h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #2c3e50;
+  }
+
+  .form-group {
+    position: relative;
+    margin-bottom: 20px;
+  }
+
+  .form-group input {
+    width: 100%;
+    padding: 14px 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    outline: none;
+    font-size: 1rem;
+    transition: 0.3s;
+  }
+
+  .form-group label {
+    position: absolute;
+    top: 14px;
+    left: 12px;
+    color: #999;
+    font-size: 1rem;
+    pointer-events: none;
+    transition: 0.3s;
+  }
+
+  .form-group input:focus+label,
+  .form-group input:not(:placeholder-shown)+label {
+    top: -10px;
+    left: 10px;
+    font-size: 0.8rem;
+    background: white;
+    padding: 0 4px;
+  }
+</style>
+</head>
+
+<div class="container">
+
+  <!-- Add Student Form -->
+  <div class="form-card">
+    <div class="form-content">
+      <h2>Add New Student</h2>
+      <form method="POST" action="{% url 'students_page' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class=" form-group">
+          <input type="text" name="name" required>
+          <label>Name</label>
+        </div>
+        <div class="form-group">
+          <input type="number" name="age" required>
+          <label>Age</label>
+        </div>
+        <div class="form-group">
+          <input type="email" name="email" required>
+          <label>Email</label>
+        </div>
+        <div class="form-group">
+          <input type="file" name="img" accept="image/*">
+          <label>Upload Image</label>
+        </div>
+        <button type="submit">Add Student</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Students Table -->
+  <table>
+    <thead>
+      <tr>
+        <th>Image</th>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Email</th>
+        <th>Created</th>
+        <th>Updated</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for student in students %}
+      <tr>
+        <td>
+          {% if student.img %}
+          <img src="{{ student.img.url }}" alt="{{ student.name }}" width="100">
+          {% else %}
+          <img
+            src="https://static.vecteezy.com/system/resources/previews/013/360/247/non_2x/default-avatar-photo-icon-social-media-profile-sign-symbol-vector.jpg"
+            alt="No image" width="100">
+          {% endif %}
+        </td>
+        <td>{{student.name}}</td>
+        <td>{{student.age}}</td>
+        <td>{{student.email}}</td>
+        <td>{{student.date_added}}</td>
+        <td>{{student.date_updated}}</td>
+        <td class=" actions">
+          <a href="{% url 'student_delete' student.id %}">Delete</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+
+  </table>
+
+</div>
+
+{% endblock %}

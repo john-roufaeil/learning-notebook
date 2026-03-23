@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+
+{% block title %}Contact Us{% endblock %}
+
+{% block content %}
+
+<style>
+  .container {
+    width: 90%;
+    margin: 30px auto;
+  }
+
+  .form-card {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: auto;
+  }
+
+  .form-card h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #2c3e50;
+  }
+
+  input,
+  textarea {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    font-family: Arial, sans-serif;
+    transition: 0.3s;
+  }
+
+  input:focus,
+  textarea:focus {
+    border-color: #db3434;
+    outline: none;
+    box-shadow: 0 0 5px rgba(219, 52, 52, 0.4);
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+
+  button {
+    background: #db3434;
+    color: white;
+    padding: 12px;
+    width: 100%;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-top: 10px;
+  }
+
+  button:hover {
+    background: #b92929;
+  }
+
+  .contact-info {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #555;
+    font-size: 0.95rem;
+  }
+
+  .contact-info p {
+    margin: 5px 0;
+  }
+</style>
+
+<div class="container">
+
+  <div class="form-card">
+    <h2>Contact Us</h2>
+    <div class="contact-info">
+      <p>We’d love to hear from you! Send us your feedback or questions below.</p>
+    </div>
+
+    <form method="POST">
+      {% csrf_token %}
+      <input type="text" name="name" placeholder="Your Name" required>
+      <input type="email" name="email" placeholder="Your Email" required>
+      <textarea name="message" placeholder="Your Message" required></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+  </div>
+
+</div>
+
+{% endblock %}

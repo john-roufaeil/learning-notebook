@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+<style>
+  .home-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+  }
+
+  .card {
+    background: white;
+    padding: 40px;
+    width: 420px;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+
+  .logo {
+    width: 100px;
+    margin-bottom: 20px;
+  }
+
+  h2 {
+    margin-bottom: 10px;
+    color: #2c3e50;
+  }
+
+  p {
+    color: #666;
+    margin-bottom: 25px;
+  }
+
+  .button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 50%;
+    margin: auto;
+  }
+
+  .btn {
+    display: inline-block;
+    text-decoration: none;
+    background: #bf4b51;
+    color: white;
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: 0.3s;
+    border: 2px solid #bf4b51;
+  }
+
+  .btn:hover {
+    background: #922026;
+    border: 2px solid #922026;
+  }
+
+  .btn_sec {
+    display: inline-block;
+    text-decoration: none;
+    color: #bf4b51;
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: 0.3s;
+    border: 2px solid white;
+  }
+
+  .btn_sec:hover {
+    border: 2px solid #922026;
+    color: #922026;
+  }
+</style>
+
+<div class="home-container">
+  <div class="card">
+
+    <img src="https://shamra-academia.com/uploads/publishers/logoc1ee0a1961b28b92869f371af51313da.png" class="logo"
+      alt="ITI Logo">
+
+    <h2>Welcome to ITI</h2>
+    <p>Manage students, track data, and submit feedbacks.</p>
+
+    <div class="button-group">
+      <a href="{% url 'students_page' %}" class="btn">Go to Students</a>
+      <a href="{% url 'contact_page' %}" class="btn_sec">Contact Us</a>
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}
