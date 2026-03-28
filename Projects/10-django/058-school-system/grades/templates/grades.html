@@ -1,0 +1,461 @@
+{% extends "base.html" %}
+{% block title %}Grades — School System{% endblock %}
+
+{% block content %}
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600&display=swap"
+  rel="stylesheet">
+
+<style>
+  main,
+  body {
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .page-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #e0e4ef;
+  }
+
+  .page-header h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2rem;
+    color: #2c3e50;
+  }
+
+  .page-header p {
+    color: #6b7280;
+    margin-top: .25rem;
+  }
+
+  .card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 1px 4px rgba(44, 62, 80, .07), 0 4px 16px rgba(44, 62, 80, .06);
+    padding: 1.75rem;
+    margin-bottom: 2rem;
+  }
+
+  .card h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.2rem;
+    color: #2c3e50;
+    margin-bottom: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+  }
+
+  .card h2::before {
+    content: '';
+    display: inline-block;
+    width: 4px;
+    height: 1.1em;
+    background: #2c3e50;
+    border-radius: 2px;
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: .4rem;
+  }
+
+  .form-group label {
+    font-size: .8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    color: #6b7280;
+  }
+
+  .form-group input,
+  .form-group select {
+    padding: .6rem .85rem;
+    border: 1.5px solid #dde1ea;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .95rem;
+    color: #2c3e50;
+    transition: border .2s, box-shadow .2s;
+    outline: none;
+    background: #f9fafb;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus {
+    border-color: #2c3e50;
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(44, 62, 80, .1);
+  }
+
+  .btn-primary {
+    margin-top: 1rem;
+    padding: .65rem 1.6rem;
+    background: #2c3e50;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: .95rem;
+    cursor: pointer;
+    transition: background .2s, transform .1s;
+  }
+
+  .btn-primary:hover {
+    background: #1a252f;
+    transform: translateY(-1px);
+  }
+
+  /* Search bar */
+  .search-bar {
+    display: flex;
+    gap: .75rem;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    padding: 1.25rem 1.5rem;
+    background: #f8f9fd;
+    border: 1.5px solid #e0e4ef;
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+  }
+
+  .search-bar .form-group {
+    flex: 1;
+    min-width: 160px;
+  }
+
+  .btn-search {
+    padding: .62rem 1.4rem;
+    background: #2c3e50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: .9rem;
+    cursor: pointer;
+    transition: background .2s;
+    white-space: nowrap;
+  }
+
+  .btn-search:hover {
+    background: #1a252f;
+  }
+
+  .btn-reset {
+    padding: .62rem 1.1rem;
+    background: #fff;
+    color: #6b7280;
+    border: 1.5px solid #dde1ea;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: .9rem;
+    cursor: pointer;
+    transition: border-color .2s;
+  }
+
+  .btn-reset:hover {
+    border-color: #2c3e50;
+    color: #2c3e50;
+  }
+
+  .table-wrap {
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .92rem;
+  }
+
+  thead th {
+    background: #f3f5f9;
+    color: #6b7280;
+    font-size: .75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    padding: .75rem 1rem;
+    text-align: left;
+    border-bottom: 1.5px solid #e0e4ef;
+  }
+
+  tbody tr {
+    border-bottom: 1px solid #f0f2f7;
+    transition: background .15s;
+  }
+
+  tbody tr:last-child {
+    border-bottom: none;
+  }
+
+  tbody tr:hover {
+    background: #f8f9fd;
+  }
+
+  tbody td {
+    padding: .75rem 1rem;
+    color: #374151;
+    vertical-align: middle;
+  }
+
+  .badge {
+    display: inline-block;
+    padding: .2rem .65rem;
+    border-radius: 999px;
+    font-size: .75rem;
+    font-weight: 600;
+  }
+
+  .badge-gray {
+    background: #f3f4f6;
+    color: #6b7280;
+  }
+
+  .badge-purple {
+    background: #ede9fe;
+    color: #6d28d9;
+  }
+
+  .grade-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.4rem;
+    height: 2.4rem;
+    border-radius: 50%;
+    font-weight: 700;
+    font-size: .85rem;
+  }
+
+  .grade-a {
+    background: #d1fae5;
+    color: #065f46;
+  }
+
+  .grade-b {
+    background: #dbeafe;
+    color: #1d4ed8;
+  }
+
+  .grade-c {
+    background: #fef9c3;
+    color: #854d0e;
+  }
+
+  .grade-d {
+    background: #ffedd5;
+    color: #c2410c;
+  }
+
+  .grade-f {
+    background: #fee2e2;
+    color: #b91c1c;
+  }
+
+  .btn-sm {
+    padding: .3rem .75rem;
+    border-radius: 6px;
+    font-size: .8rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    font-family: 'DM Sans', sans-serif;
+    transition: opacity .15s;
+  }
+
+  .btn-edit {
+    background: #e0f2fe;
+    color: #0369a1;
+  }
+
+  .btn-delete {
+    background: #fee2e2;
+    color: #b91c1c;
+  }
+
+  .btn-sm:hover {
+    opacity: .8;
+  }
+
+  .results-meta {
+    font-size: .85rem;
+    color: #6b7280;
+    margin-bottom: .75rem;
+  }
+
+  .results-meta strong {
+    color: #2c3e50;
+  }
+</style>
+
+<div class="page-header">
+  <h1>Grades</h1>
+  <p>Record, search, and manage student grades across all subjects.</p>
+</div>
+
+<!-- Add Grade -->
+<div class="card">
+  <h2>Add Grade</h2>
+  <form method="POST" action="{% url 'grades' %}">
+    {% csrf_token %}
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Student</label>
+        <select name="student" required>
+          <option value="">— Select Student —</option>
+          {% for student in students %}
+          <option value="{{ student.studentId }}">{{ student.firstName }} {{ student.lastName }} ({{ student.studentId
+            }})
+          </option>
+          </option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Subject</label>
+        <select name="subject" required>
+          <option value="">— Select Subject —</option>
+          {% for subject in subjects %}
+          <option value="{{ subject.code }}">{{ subject.name }} ({{ subject.code }})</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Score (0–100)</label>
+        <input type="number" name="score" min="0" max="100" placeholder="e.g. 87" required>
+      </div>
+    </div>
+    <button type="submit" class="btn-primary">+ Add Grade</button>
+  </form>
+</div>
+
+<!-- Search & Filter -->
+<!-- Search & Filter -->
+<div class="card">
+  <h2>Search Grades</h2>
+  <div class="search-bar">
+    <div class="form-group">
+      <label>Student ID</label>
+      <input type="text" id="search-student" placeholder="e.g. STU-001" value="{{ request.GET.student_id }}">
+    </div>
+    <div class="form-group">
+      <label>Subject Name</label>
+      <input type="text" id="search-subject" placeholder="e.g. Mathematics" value="{{ request.GET.subject_name }}">
+    </div>
+    <button type="button" class="btn-reset" id="btn-reset">Reset</button>
+  </div>
+
+  <div id="results-meta" class="results-meta" style="display:none;"></div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Student</th>
+          <th>Student ID</th>
+          <th>Subject</th>
+          <th>Score</th>
+          <th>Letter</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="grades-tbody">
+        {% for grade in grades %}
+        <tr data-student-id="{{ grade.student.studentId|lower }}" data-subject-name="{{ grade.subject.name|lower }}">
+          <td><strong>{{ grade.student.firstName }} {{ grade.student.lastName }}</strong></td>
+          <td><span class="badge badge-gray">{{ grade.student.studentId }}</span></td>
+          <td><span class="badge badge-purple">{{ grade.subject.name }}</span></td>
+          <td><strong>{{ grade.score }}</strong></td>
+          <td>
+            {% if grade.score >= 90 %}<span class="grade-pill grade-a">A</span>
+            {% elif grade.score >= 80 %}<span class="grade-pill grade-b">B</span>
+            {% elif grade.score >= 70 %}<span class="grade-pill grade-c">C</span>
+            {% elif grade.score >= 60 %}<span class="grade-pill grade-d">D</span>
+            {% else %}<span class="grade-pill grade-f">F</span>
+            {% endif %}
+          </td>
+          <td style="display:flex;gap:.5rem;">
+            <form method="POST" action="{% url 'grade_delete' grade.pk %}" style="display:inline;">
+              {% csrf_token %}
+              <button type="submit" class="btn-sm btn-delete"
+                onclick="return confirm('Delete this grade entry?')">Delete</button>
+            </form>
+          </td>
+        </tr>
+        {% empty %}
+        <tr id="empty-row">
+          <td colspan="6" style="text-align:center;color:#9ca3af;padding:2rem;">No grades yet. Add one above.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <p id="no-results" style="display:none;text-align:center;color:#9ca3af;padding:2rem;">No grades found matching your
+      search.</p>
+  </div>
+</div>
+
+<script>
+  const studentInput = document.getElementById('search-student');
+  const subjectInput = document.getElementById('search-subject');
+  const tbody = document.getElementById('grades-tbody');
+  const meta = document.getElementById('results-meta');
+  const noResults = document.getElementById('no-results');
+  const resetBtn = document.getElementById('btn-reset');
+
+  function filterGrades() {
+    const sid = studentInput.value.trim().toLowerCase();
+    const sname = subjectInput.value.trim().toLowerCase();
+    const rows = tbody.querySelectorAll('tr[data-student-id]');
+    let visible = 0;
+
+    rows.forEach(row => {
+      const matchId = !sid || row.dataset.studentId.includes(sid);
+      const matchName = !sname || row.dataset.subjectName.includes(sname);
+      const show = matchId && matchName;
+      row.style.display = show ? '' : 'none';
+      if (show) visible++;
+    });
+
+    const searching = sid || sname;
+    noResults.style.display = (searching && visible === 0) ? 'block' : 'none';
+
+    if (searching) {
+      meta.style.display = 'block';
+      meta.innerHTML = `Showing <strong>${visible}</strong> result${visible !== 1 ? 's' : ''}` +
+        (sid ? ` for student ID <strong>${studentInput.value.trim()}</strong>` : '') +
+        (sname ? ` in <strong>${subjectInput.value.trim()}</strong>` : '');
+    } else {
+      meta.style.display = 'none';
+    }
+  }
+
+  let debounce;
+  [studentInput, subjectInput].forEach(el => {
+    el.addEventListener('input', () => {
+      clearTimeout(debounce);
+      debounce = setTimeout(filterGrades, 250);
+    });
+  });
+
+  resetBtn.addEventListener('click', () => {
+    studentInput.value = '';
+    subjectInput.value = '';
+    filterGrades();
+  });
+
+  // Run on load in case inputs have pre-filled values
+  filterGrades();
+</script>
+
+{% endblock %}

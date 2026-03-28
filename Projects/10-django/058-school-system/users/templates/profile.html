@@ -1,0 +1,365 @@
+{% extends "base.html" %}
+{% block title %}My Profile — School System{% endblock %}
+
+{% block content %}
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600&display=swap"
+  rel="stylesheet">
+
+<style>
+  main,
+  body {
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .page-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #e0e4ef;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .page-header .avatar {
+    width: 56px;
+    height: 56px;
+    background: #2c3e50;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .page-header .avatar svg {
+    width: 28px;
+    height: 28px;
+    fill: white;
+  }
+
+  .page-header h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.75rem;
+    color: #2c3e50;
+    margin-bottom: .1rem;
+  }
+
+  .page-header p {
+    color: #6b7280;
+    font-size: .9rem;
+  }
+
+  .profile-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  @media (max-width: 700px) {
+    .profile-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 1px 4px rgba(44, 62, 80, .07), 0 4px 16px rgba(44, 62, 80, .06);
+    padding: 1.75rem;
+  }
+
+  .card h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.1rem;
+    color: #2c3e50;
+    margin-bottom: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+  }
+
+  .card h2::before {
+    content: '';
+    display: inline-block;
+    width: 4px;
+    height: 1.1em;
+    background: #2c3e50;
+    border-radius: 2px;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: .4rem;
+    margin-bottom: 1rem;
+  }
+
+  .form-group:last-of-type {
+    margin-bottom: 0;
+  }
+
+  .form-group label {
+    font-size: .78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    color: #6b7280;
+  }
+
+  .form-group input {
+    padding: .65rem .9rem;
+    border: 1.5px solid #dde1ea;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .95rem;
+    color: #2c3e50;
+    background: #f9fafb;
+    outline: none;
+    transition: border .2s, box-shadow .2s;
+  }
+
+  .form-group input:focus {
+    border-color: #2c3e50;
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(44, 62, 80, .1);
+  }
+
+  .form-group input[readonly] {
+    background: #f3f4f6;
+    color: #9ca3af;
+    cursor: not-allowed;
+  }
+
+  .input-hint {
+    font-size: .75rem;
+    color: #9ca3af;
+    margin-top: .15rem;
+  }
+
+  .btn-save {
+    margin-top: 1.25rem;
+    padding: .65rem 1.6rem;
+    background: #2c3e50;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: .95rem;
+    cursor: pointer;
+    transition: background .2s, transform .1s;
+    width: 100%;
+  }
+
+  .btn-save:hover {
+    background: #1a252f;
+    transform: translateY(-1px);
+  }
+
+  .btn-save:active {
+    transform: translateY(0);
+  }
+
+  /* Alert banners */
+  .alert {
+    padding: .75rem 1rem;
+    border-radius: 8px;
+    font-size: .875rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+  }
+
+  .alert-success {
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    color: #166534;
+  }
+
+  .alert-error {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #b91c1c;
+  }
+
+  /* Danger zone */
+  .danger-zone {
+    margin-top: 1.5rem;
+    border: 1.5px solid #fecaca;
+    border-radius: 12px;
+    padding: 1.5rem;
+    background: #fff;
+  }
+
+  .danger-zone h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.1rem;
+    color: #b91c1c;
+    margin-bottom: .5rem;
+  }
+
+  .danger-zone p {
+    font-size: .875rem;
+    color: #6b7280;
+    margin-bottom: 1rem;
+  }
+
+  .btn-danger {
+    padding: .6rem 1.4rem;
+    background: #fee2e2;
+    color: #b91c1c;
+    border: 1.5px solid #fecaca;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: .9rem;
+    cursor: pointer;
+    transition: background .2s;
+  }
+
+  .btn-danger:hover {
+    background: #fecaca;
+  }
+
+  /* Password strength bar */
+  .strength-bar {
+    height: 4px;
+    border-radius: 2px;
+    background: #e5e7eb;
+    margin-top: .5rem;
+    overflow: hidden;
+  }
+
+  .strength-fill {
+    height: 100%;
+    border-radius: 2px;
+    width: 0%;
+    transition: width .3s, background .3s;
+  }
+
+  .strength-label {
+    font-size: .72rem;
+    color: #9ca3af;
+    margin-top: .25rem;
+  }
+</style>
+
+<div class="page-header">
+  <div class="avatar">
+    <svg viewBox="0 0 24 24">
+      <path
+        d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z" />
+    </svg>
+  </div>
+  <div>
+    <h1>My Profile</h1>
+    <p>{{ request.session.email }}</p>
+  </div>
+</div>
+
+{% if messages %}
+{% for message in messages %}
+<div class="alert {% if message.tags == 'success' %}alert-success{% else %}alert-error{% endif %}">
+  {{ message }}
+</div>
+{% endfor %}
+{% endif %}
+
+<div class="profile-grid">
+
+  <!-- Email Management -->
+  <div class="card">
+    <h2>Email Address</h2>
+
+    <form method="POST" action="{% url 'profile_update_email' %}">
+      {% csrf_token %}
+      <div class="form-group">
+        <label>Current Email</label>
+        <input type="email" value="{{ request.session.email }}" readonly>
+      </div>
+      <div class="form-group">
+        <label>New Email Address</label>
+        <input type="email" name="new_email" placeholder="new@example.com" required>
+      </div>
+      <button type="submit" class="btn-save">Update Email</button>
+    </form>
+  </div>
+
+  <!-- Password Management -->
+  <div class="card">
+    <h2>Change Password</h2>
+
+    <form method="POST" action="{% url 'profile_update_password' %}">
+      {% csrf_token %}
+      <div class="form-group">
+        <label>Current Password</label>
+        <input type="password" name="current_password" placeholder="Your current password" required>
+      </div>
+      <div class="form-group">
+        <label>New Password</label>
+        <input type="password" name="new_password" id="new-password" placeholder="At least 8 characters" required>
+      </div>
+      <button type="submit" class="btn-save">Update Password</button>
+    </form>
+  </div>
+
+</div>
+
+<!-- Danger Zone -->
+<div class="danger-zone">
+  <h2>Danger Zone</h2>
+  <p>Permanently delete your account. This action cannot be undone and will remove all your data.</p>
+  <form method="POST" action="{% url 'profile_delete' %}">
+    {% csrf_token %}
+    <button type="submit" class="btn-danger"
+      onclick="return confirm('Are you sure you want to delete your account? This cannot be undone.')">
+      Delete My Account
+    </button>
+  </form>
+</div>
+
+<script>
+  // Password strength meter
+  const newPwd = document.getElementById('new-password');
+  const fill = document.getElementById('strength-fill');
+  const label = document.getElementById('strength-label');
+  const confirmPwd = document.getElementById('confirm-password');
+  const matchHint = document.getElementById('match-hint');
+
+  newPwd.addEventListener('input', () => {
+    const v = newPwd.value;
+    let score = 0;
+    if (v.length >= 8) score++;
+    if (/[A-Z]/.test(v)) score++;
+    if (/[0-9]/.test(v)) score++;
+    if (/[^A-Za-z0-9]/.test(v)) score++;
+
+    const levels = [
+      { pct: '0%', color: '#e5e7eb', text: '' },
+      { pct: '25%', color: '#ef4444', text: 'Weak' },
+      { pct: '50%', color: '#f97316', text: 'Fair' },
+      { pct: '75%', color: '#eab308', text: 'Good' },
+      { pct: '100%', color: '#22c55e', text: 'Strong' },
+    ];
+
+    fill.style.width = levels[score].pct;
+    fill.style.background = levels[score].color;
+    label.textContent = v.length ? levels[score].text : '';
+    label.style.color = levels[score].color;
+  });
+
+  // Password match check
+  confirmPwd.addEventListener('input', () => {
+    if (!confirmPwd.value) { matchHint.textContent = ''; return; }
+    if (confirmPwd.value === newPwd.value) {
+      matchHint.textContent = '✓ Passwords match';
+      matchHint.style.color = '#16a34a';
+    } else {
+      matchHint.textContent = '✗ Passwords do not match';
+      matchHint.style.color = '#dc2626';
+    }
+  });
+</script>
+
+{% endblock %}

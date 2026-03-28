@@ -1,0 +1,275 @@
+{% extends "base.html" %}
+{% block title %}Sign In — School System{% endblock %}
+
+{% block content %}
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600&display=swap"
+  rel="stylesheet">
+
+<style>
+  main,
+  body {
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .auth-wrap {
+    min-height: calc(100vh - 180px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .auth-card {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 6px rgba(44, 62, 80, .06), 0 12px 40px rgba(44, 62, 80, .10);
+    padding: 2.5rem 2.75rem;
+    width: 100%;
+    max-width: 420px;
+  }
+
+  .auth-brand {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .auth-brand .logo-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    background: #2c3e50;
+    border-radius: 12px;
+    margin-bottom: .75rem;
+  }
+
+  .auth-brand .logo-mark span {
+    color: white;
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.4rem;
+  }
+
+  .auth-brand h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.7rem;
+    color: #2c3e50;
+    margin-bottom: .2rem;
+  }
+
+  .auth-brand p {
+    color: #9ca3af;
+    font-size: .9rem;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: .4rem;
+    margin-bottom: 1rem;
+  }
+
+  .form-group label {
+    font-size: .8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    color: #6b7280;
+  }
+
+  .label-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .label-row a {
+    font-size: .78rem;
+    color: #2c3e50;
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .label-row a:hover {
+    text-decoration: underline;
+  }
+
+  .form-group input {
+    padding: .7rem .9rem;
+    border: 1.5px solid #dde1ea;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .95rem;
+    color: #2c3e50;
+    transition: border .2s, box-shadow .2s;
+    outline: none;
+    background: #f9fafb;
+    width: 100%;
+  }
+
+  .form-group input:focus {
+    border-color: #2c3e50;
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(44, 62, 80, .1);
+  }
+
+  .btn-submit {
+    width: 100%;
+    padding: .8rem;
+    background: #2c3e50;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background .2s, transform .1s;
+    margin-top: .5rem;
+  }
+
+  .btn-submit:hover {
+    background: #1a252f;
+    transform: translateY(-1px);
+  }
+
+  .btn-submit:active {
+    transform: translateY(0);
+  }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    margin: 1.5rem 0;
+    color: #d1d5db;
+    font-size: .8rem;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+  }
+
+  .divider::before,
+  .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #e5e7eb;
+  }
+
+  .auth-footer {
+    text-align: center;
+    font-size: .875rem;
+    color: #6b7280;
+    margin-top: 1.25rem;
+  }
+
+  .auth-footer a {
+    color: #2c3e50;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .auth-footer a:hover {
+    text-decoration: underline;
+  }
+
+  .error-alert {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: 8px;
+    padding: .75rem 1rem;
+    margin-bottom: 1rem;
+    font-size: .875rem;
+    color: #b91c1c;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+  }
+
+  .success-alert {
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    border-radius: 8px;
+    padding: .75rem 1rem;
+    margin-bottom: 1rem;
+    font-size: .875rem;
+    color: #166534;
+  }
+
+  .remember-row {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    margin-bottom: 1rem;
+  }
+
+  .remember-row input[type="checkbox"] {
+    width: 1rem;
+    height: 1rem;
+    accent-color: #2c3e50;
+    cursor: pointer;
+  }
+
+  .remember-row label {
+    font-size: .875rem;
+    color: #6b7280;
+    cursor: pointer;
+  }
+</style>
+
+<div class="auth-wrap">
+  <div class="auth-card">
+
+    <div class="auth-brand">
+      <div class="logo-mark"><span>S</span></div>
+      <h1>Welcome Back</h1>
+      <p>Sign in to your school portal</p>
+    </div>
+
+    {% if messages %}
+    {% for message in messages %}
+    {% if message.tags == 'success' %}
+    <div class="success-alert">{{ message }}</div>
+    {% else %}
+    <div class="error-alert">{{ message }}</div>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+
+    {% if form.errors %}
+    <div class="error-alert">
+      Invalid email or password. Please try again.
+    </div>
+    {% endif %}
+
+    <form method="POST" action="{% url 'login' %}">
+      {% csrf_token %}
+
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" name="email" value="{{ form.email.value|default:'' }}" placeholder="your.email@example.com"
+          required autofocus autocomplete="email">
+      </div>
+
+      <div class="form-group">
+        <div class="label-row">
+          <label>Password</label>
+        </div>
+        <input type="password" name="password" placeholder="Enter your password" required
+          autocomplete="current-password">
+      </div>
+
+      <input type="hidden" name="next" value="{{ next }}">
+
+      <button type="submit" class="btn-submit">Sign In</button>
+    </form>
+
+    <div class="divider">or</div>
+
+    <div class="auth-footer">
+      Don't have an account? <a href="{% url 'register' %}">Create one</a>
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}

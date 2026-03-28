@@ -1,0 +1,369 @@
+{% extends "base.html" %}
+{% block title %}Students — School System{% endblock %}
+
+{% block content %}
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600&display=swap"
+  rel="stylesheet">
+
+<style>
+  main,
+  body {
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .page-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #e0e4ef;
+  }
+
+  .page-header h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2rem;
+    color: #2c3e50;
+  }
+
+  .page-header p {
+    color: #6b7280;
+    margin-top: 0.25rem;
+  }
+
+  /* Card */
+  .card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 1px 4px rgba(44, 62, 80, .07), 0 4px 16px rgba(44, 62, 80, .06);
+    padding: 1.75rem;
+    margin-bottom: 2rem;
+  }
+
+  .card h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.2rem;
+    color: #2c3e50;
+    margin-bottom: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+  }
+
+  .card h2::before {
+    content: '';
+    display: inline-block;
+    width: 4px;
+    height: 1.1em;
+    background: #2c3e50;
+    border-radius: 2px;
+  }
+
+  /* Form */
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: .4rem;
+  }
+
+  .form-group label {
+    font-size: .8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    color: #6b7280;
+  }
+
+  .form-group input,
+  .form-group select {
+    padding: .6rem .85rem;
+    border: 1.5px solid #dde1ea;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .95rem;
+    color: #2c3e50;
+    transition: border .2s, box-shadow .2s;
+    outline: none;
+    background: #f9fafb;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus {
+    border-color: #2c3e50;
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(44, 62, 80, .1);
+  }
+
+  .btn-primary {
+    margin-top: 1rem;
+    padding: .65rem 1.6rem;
+    background: #2c3e50;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: .95rem;
+    cursor: pointer;
+    transition: background .2s, transform .1s;
+  }
+
+  .btn-primary:hover {
+    background: #1a252f;
+    transform: translateY(-1px);
+  }
+
+  .btn-primary:active {
+    transform: translateY(0);
+  }
+
+  /* Table */
+  .table-wrap {
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .92rem;
+  }
+
+  thead th {
+    background: #f3f5f9;
+    color: #6b7280;
+    font-size: .75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    padding: .75rem 1rem;
+    text-align: left;
+    border-bottom: 1.5px solid #e0e4ef;
+  }
+
+  tbody tr {
+    border-bottom: 1px solid #f0f2f7;
+    transition: background .15s;
+  }
+
+  tbody tr:last-child {
+    border-bottom: none;
+  }
+
+  tbody tr:hover {
+    background: #f8f9fd;
+  }
+
+  tbody td {
+    padding: .75rem 1rem;
+    color: #374151;
+    vertical-align: middle;
+  }
+
+  .badge {
+    display: inline-block;
+    padding: .2rem .65rem;
+    border-radius: 999px;
+    font-size: .75rem;
+    font-weight: 600;
+  }
+
+  .badge-blue {
+    background: #dbeafe;
+    color: #1d4ed8;
+  }
+
+  .badge-green {
+    background: #d1fae5;
+    color: #065f46;
+  }
+
+  .badge-gray {
+    background: #f3f4f6;
+    color: #6b7280;
+  }
+
+  .btn-sm {
+    padding: .3rem .75rem;
+    border-radius: 6px;
+    font-size: .8rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    font-family: 'DM Sans', sans-serif;
+    transition: opacity .15s;
+  }
+
+  .btn-edit {
+    background: #e0f2fe;
+    color: #0369a1;
+  }
+
+  .btn-delete {
+    background: #fee2e2;
+    color: #b91c1c;
+  }
+
+  .btn-sm:hover {
+    opacity: .8;
+  }
+
+  /* Top 3 */
+  /* .top3-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+
+  .top3-card {
+    background: linear-gradient(135deg, #f8f9fd 0%, #e8ecf5 100%);
+    border: 1.5px solid #e0e4ef;
+    border-radius: 12px;
+    padding: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .top3-rank {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2rem;
+    color: #2c3e50;
+    opacity: .25;
+    min-width: 2.5rem;
+    text-align: center;
+  }
+
+  .top3-rank.gold {
+    opacity: 1;
+    color: #d97706;
+  }
+
+  .top3-rank.silver {
+    opacity: 1;
+    color: #9ca3af;
+  }
+
+  .top3-rank.bronze {
+    opacity: 1;
+    color: #b45309;
+  }
+
+  .top3-info h3 {
+    font-size: 1rem;
+    color: #2c3e50;
+    font-weight: 600;
+  }
+
+  .top3-info span {
+    font-size: .85rem;
+    color: #6b7280;
+  }
+
+  .top3-avg {
+    margin-left: auto;
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.5rem;
+    color: #2c3e50;
+  } */
+
+  .section-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  @media (max-width: 768px) {
+    .section-row {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<div class="page-header">
+  <h1>Students</h1>
+  <p>Manage student records and view performance rankings.</p>
+</div>
+
+<!-- Add / Edit Student Form -->
+<div class="card">
+  <h2>Add Student</h2>
+  <form method="POST" action="{% url 'students' %}">
+    {% csrf_token %}
+    <div class="form-grid">
+      <div class="form-group">
+        <label>First Name</label>
+        <input type="text" name="firstName" placeholder="e.g. Ahmed" required>
+      </div>
+      <div class="form-group">
+        <label>Last Name</label>
+        <input type="text" name="lastName" placeholder="e.g. Hassan" required>
+      </div>
+      <div class="form-group">
+        <label>Student ID</label>
+        <input type="text" name="studentId" placeholder="e.g. STU-001" required>
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" name="email" placeholder="e.g. ahmed@school.edu">
+      </div>
+      <div class="form-group">
+        <label>Gender</label>
+        <select name="gender">
+          <option value="">— Select —</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+        </select>
+      </div>
+      </select>
+    </div>
+    <button type="submit" class="btn-primary">+ Add Student</button>
+</div>
+</form>
+</div>
+
+
+<!-- Students Table -->
+<div class="card">
+  <h2>All Students</h2>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Gender</th>
+          <th>Avg Grade</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for student in students %}
+        <tr>
+          <td><span class="badge badge-gray">{{ student.studentId }}</span></td>
+          <td><strong>{{ student.firstName }} {{ student.lastName }}</strong></td>
+          <td>{{ student.email|default:"—" }}</td>
+          <td><span class="badge badge-blue">{{ student.gender }}</span></td>
+          <td><span class="badge badge-green">{{ student.avg_grade|floatformat:1|default:"—" }}</span></td>
+          <td style="display:flex;gap:.5rem;">
+            <form method="POST" action="{% url 'student_delete' student.pk %}" style="display:inline;">
+              {% csrf_token %}
+              <button type="submit" class="btn-sm btn-delete"
+                onclick="return confirm('Delete {{ student.first_name }}?')">Delete</button>
+            </form>
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="6" style="text-align:center;color:#9ca3af;padding:2rem;">No students yet. Add one above.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{% endblock %}

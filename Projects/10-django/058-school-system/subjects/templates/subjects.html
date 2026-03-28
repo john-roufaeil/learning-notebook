@@ -1,0 +1,312 @@
+{% extends "base.html" %}
+{% block title %}Subjects — School System{% endblock %}
+
+{% block content %}
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600&display=swap"
+  rel="stylesheet">
+
+<style>
+  main,
+  body {
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .page-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #e0e4ef;
+  }
+
+  .page-header h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2rem;
+    color: #2c3e50;
+  }
+
+  .page-header p {
+    color: #6b7280;
+    margin-top: .25rem;
+  }
+
+  .card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 1px 4px rgba(44, 62, 80, .07), 0 4px 16px rgba(44, 62, 80, .06);
+    padding: 1.75rem;
+    margin-bottom: 2rem;
+  }
+
+  .card h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.2rem;
+    color: #2c3e50;
+    margin-bottom: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+  }
+
+  .card h2::before {
+    content: '';
+    display: inline-block;
+    width: 4px;
+    height: 1.1em;
+    background: #2c3e50;
+    border-radius: 2px;
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: .4rem;
+  }
+
+  .form-group label {
+    font-size: .8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    color: #6b7280;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    padding: .6rem .85rem;
+    border: 1.5px solid #dde1ea;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .95rem;
+    color: #2c3e50;
+    transition: border .2s, box-shadow .2s;
+    outline: none;
+    background: #f9fafb;
+  }
+
+  .form-group textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    border-color: #2c3e50;
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(44, 62, 80, .1);
+  }
+
+  .btn-primary {
+    margin-top: 1rem;
+    padding: .65rem 1.6rem;
+    background: #2c3e50;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: .95rem;
+    cursor: pointer;
+    transition: background .2s, transform .1s;
+  }
+
+  .btn-primary:hover {
+    background: #1a252f;
+    transform: translateY(-1px);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .92rem;
+  }
+
+  thead th {
+    background: #f3f5f9;
+    color: #6b7280;
+    font-size: .75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    padding: .75rem 1rem;
+    text-align: left;
+    border-bottom: 1.5px solid #e0e4ef;
+  }
+
+  tbody tr {
+    border-bottom: 1px solid #f0f2f7;
+    transition: background .15s;
+  }
+
+  tbody tr:last-child {
+    border-bottom: none;
+  }
+
+  tbody tr:hover {
+    background: #f8f9fd;
+  }
+
+  tbody td {
+    padding: .75rem 1rem;
+    color: #374151;
+    vertical-align: middle;
+  }
+
+  .badge {
+    display: inline-block;
+    padding: .2rem .65rem;
+    border-radius: 999px;
+    font-size: .75rem;
+    font-weight: 600;
+  }
+
+  .badge-purple {
+    background: #ede9fe;
+    color: #6d28d9;
+  }
+
+  .badge-orange {
+    background: #ffedd5;
+    color: #c2410c;
+  }
+
+  .badge-gray {
+    background: #f3f4f6;
+    color: #6b7280;
+  }
+
+  .btn-sm {
+    padding: .3rem .75rem;
+    border-radius: 6px;
+    font-size: .8rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    font-family: 'DM Sans', sans-serif;
+    transition: opacity .15s;
+  }
+
+  .btn-edit {
+    background: #e0f2fe;
+    color: #0369a1;
+  }
+
+  .btn-delete {
+    background: #fee2e2;
+    color: #b91c1c;
+  }
+
+  .btn-sm:hover {
+    opacity: .8;
+  }
+
+  .subject-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .subject-tile {
+    background: linear-gradient(135deg, #2c3e50 0%, #3d5166 100%);
+    border-radius: 12px;
+    padding: 1.25rem;
+    color: white;
+  }
+
+  .subject-tile h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.1rem;
+    margin-bottom: .25rem;
+  }
+
+  .subject-tile p {
+    font-size: .8rem;
+    opacity: .75;
+  }
+
+  .subject-tile .code {
+    font-size: .7rem;
+    opacity: .5;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    margin-top: .75rem;
+  }
+
+  .table-wrap {
+    overflow-x: auto;
+  }
+</style>
+
+<div class="page-header">
+  <h1>Subjects</h1>
+  <p>Add and manage subjects offered in the school curriculum.</p>
+</div>
+
+<!-- Add Subject -->
+<div class="card">
+  <h2>Add Subject</h2>
+  <form method="POST" action="{% url 'subjects' %}">
+    {% csrf_token %}
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Subject Name</label>
+        <input type="text" name="name" placeholder="e.g. Mathematics" required>
+      </div>
+      <div class="form-group">
+        <label>Subject Code</label>
+        <input type="text" name="code" placeholder="e.g. MATH-101" required>
+      </div>
+      <div class="form-group">
+        <label>Credits</label>
+        <input type="number" name="credits" min="1" max="6" placeholder="e.g. 3">
+      </div>
+    </div>
+    <button type="submit" class="btn-primary">+ Add Subject</button>
+  </form>
+</div>
+
+<!-- Subjects Table -->
+<div class="card">
+  <h2>All Subjects</h2>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Code</th>
+          <th>Subject Name</th>
+          <th>Credits</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for subject in subjects %}
+        <tr>
+          <td><span class="badge badge-purple">{{ subject.code }}</span></td>
+          <td><strong>{{ subject.name }}</strong></td>
+          <td><span class="badge badge-orange">{{ subject.credits }} cr.</span></td>
+          <td style="display:flex;gap:.5rem;">
+            <form method="POST" action="{% url 'subject_delete' subject.pk %}" style="display:inline;">
+              {% csrf_token %}
+              <button type="submit" class="btn-sm btn-delete"
+                onclick="return confirm('Delete {{ subject.name }}?')">Delete</button>
+            </form>
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="6" style="text-align:center;color:#9ca3af;padding:2rem;">No subjects yet. Add one above.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{% endblock %}
