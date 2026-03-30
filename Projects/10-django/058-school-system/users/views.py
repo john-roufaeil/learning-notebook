@@ -28,7 +28,7 @@ def register(request):
     
 def logout(request):
   request.session.pop('email', None)
-  return HttpResponse('Logout')
+  return redirect('login')
 
 def profile(request):
   if not request.session.get('email'):
@@ -41,7 +41,7 @@ def profile_update_email(request):
   if not request.session.get('email'):
     return redirect('login')
   if request.method == 'POST':
-    email = request.POST.get('email')
+    email = request.POST.get('new_email')
     user = User.objects.filter(email=request.session.get('email')).first()
     user.email = email
     user.save()
@@ -54,11 +54,15 @@ def profile_update_password(request):
   if not request.session.get('email'):
     return redirect('login')
   if request.method == 'POST':
-    password = request.POST.get('password')
+    current_password = request.POST.get('current_password')
+    password = request.POST.get('new_password')
     user = User.objects.filter(email=request.session.get('email')).first()
-    user.password = password
-    user.save()
-    return redirect('profile')
+    if user.password == current_password:
+      user.password = password
+      user.save()
+      return redirect('profile')
+    else:
+      return HttpResponse('Current password is incorrect')
   else:
     return HttpResponse('Invalid request method')
 

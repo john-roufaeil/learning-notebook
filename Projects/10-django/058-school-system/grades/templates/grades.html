@@ -315,8 +315,8 @@
         <select name="student" required>
           <option value="">— Select Student —</option>
           {% for student in students %}
-          <option value="{{ student.studentId }}">{{ student.firstName }} {{ student.lastName }} ({{ student.studentId
-            }})
+          <option value="{{ student.studentId }}">{{ student.firstName }} {{ student.lastName }}
+            ({{student.studentId}})
           </option>
           </option>
           {% endfor %}

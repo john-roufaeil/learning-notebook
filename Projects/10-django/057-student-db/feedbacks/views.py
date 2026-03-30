@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Feedback
 
-# Create your views here.
 def contact_page(request):
     if request.method == "GET":
         return render(request, "contact.html")

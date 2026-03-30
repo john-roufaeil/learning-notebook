@@ -336,7 +336,6 @@
           <th>Name</th>
           <th>Email</th>
           <th>Gender</th>
-          <th>Avg Grade</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -347,7 +346,6 @@
           <td><strong>{{ student.firstName }} {{ student.lastName }}</strong></td>
           <td>{{ student.email|default:"—" }}</td>
           <td><span class="badge badge-blue">{{ student.gender }}</span></td>
-          <td><span class="badge badge-green">{{ student.avg_grade|floatformat:1|default:"—" }}</span></td>
           <td style="display:flex;gap:.5rem;">
             <form method="POST" action="{% url 'student_delete' student.pk %}" style="display:inline;">
               {% csrf_token %}

@@ -290,7 +290,7 @@
         <tr>
           <td><span class="badge badge-purple">{{ subject.code }}</span></td>
           <td><strong>{{ subject.name }}</strong></td>
-          <td><span class="badge badge-orange">{{ subject.credits }} cr.</span></td>
+          <td><span class="badge badge-orange">{{ subject.credits }} hrs</span></td>
           <td style="display:flex;gap:.5rem;">
             <form method="POST" action="{% url 'subject_delete' subject.pk %}" style="display:inline;">
               {% csrf_token %}
