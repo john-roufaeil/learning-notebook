@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
 from .models import Student
-from .serializers import StudentSerializer, StudentUpdateSerializer
+from .serializers import StudentSerializer
 
 class StudentListView(APIView):
   authentication_classes = [TokenAuthentication]
@@ -29,7 +29,7 @@ class StudentListView(APIView):
   
   def patch(self, request,studentId):
       student = Student.objects.get(studentId=studentId)
-      serializer = StudentUpdateSerializer(student, data=request.data, partial=True)
+      serializer = StudentSerializer(student, data=request.data, partial=True)
       if serializer.is_valid():
           serializer.save()
           return Response(serializer.data, status=200)

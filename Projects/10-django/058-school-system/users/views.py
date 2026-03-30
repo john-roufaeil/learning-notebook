@@ -19,7 +19,7 @@ def register(request):
   if request.method == 'GET':
     return render(request, 'register.html')
   email = request.POST.get('email')
-  password = request.POST.get('password1')
+  password = request.POST.get('password')
   user = User.objects.create(email=email, password=password)
   if user:
     return redirect('login')

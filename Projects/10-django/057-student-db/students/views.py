@@ -16,5 +16,4 @@ def students_page(request):
 def student_delete(request, id):
     student = Student.objects.get(id=id)
     student.delete()
-    students = Student.objects.all()
     return redirect("students_page")
