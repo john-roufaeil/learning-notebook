@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import ProductCard from "./components/ProductCard";
 import Pagination from "./components/Pagination";
+import axios from "axios";
 
 function ProductsListPage() {
   const [products, setProducts] = useState([]);
@@ -9,16 +10,13 @@ function ProductsListPage() {
 
   useEffect(() => {
     const skip = (page - 1) * 10;
-    fetch(`https://dummyjson.com/products?limit=10&page=${page}&skip=${skip}`)
-      .then(res => res.json())
-      .then(data => setProducts(data.products))
+    axios.get(`https://dummyjson.com/products?limit=10&page=${page}&skip=${skip}`)
+      .then(res => {
+        setProducts(res.data.products);
+        setTotalPages(Math.ceil(res.data.total / 10));
+      })
+      .catch(err => console.error("Error fetching products:", err));
   }, [page])
-
-  useEffect(() => {
-    fetch(`https://dummyjson.com/products?limit=0`)
-      .then(res => res.json())
-      .then(data => setTotalPages(Math.ceil(data.total / 10)))
-  }, [])
 
   return (
     <div className="p-6">

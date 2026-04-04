@@ -2,15 +2,16 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import axios from "axios";
 
 function ProductDetailsPage() {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
-  useEffect(() => {
-    fetch(`https://dummyjson.com/products/${id}`)
-      .then(res => res.json())
-      .then(data => setProduct(data))
 
+  useEffect(() => {
+    axios.get(`https://dummyjson.com/products/${id}`)
+      .then(res => setProduct(res.data))
+      .catch(err => console.error("Error fetching product:", err));
   }, [id]);
 
   useEffect(() => {

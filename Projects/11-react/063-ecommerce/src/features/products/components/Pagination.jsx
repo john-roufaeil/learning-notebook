@@ -7,27 +7,27 @@ function Pagination({ page, setPage, totalPages }) {
       <FontAwesomeIcon
         icon={faAngleDoubleLeft}
         onClick={() => setPage(1)}
-        className="border-2 border-gray-300 p-2 rounded-lg hover:bg-gray-200 hover:cursor-pointer"
+        className={`border-2 border-gray-300 p-2 rounded-lg hover:bg-gray-200 ${page === 1 ? "opacity-25 hover:cursor-not-allowed" : "hover:cursor-pointer"}`}
       />
 
       <FontAwesomeIcon
         icon={faAngleLeft}
         onClick={() => setPage(Math.max(1, page - 1))}
-        className="border-2 border-gray-300 p-2 rounded-lg hover:bg-gray-200 hover:cursor-pointer"
+        className={`border-2 border-gray-300 p-2 rounded-lg hover:bg-gray-200 ${page === 1 ? "opacity-25 hover:cursor-not-allowed" : "hover:cursor-pointer"}`}
       />
 
-      <p className="text-gray-600">Page {page}</p>
+      <p className="text-gray-600">Page {page}/{totalPages}</p>
 
       <FontAwesomeIcon
         icon={faAngleRight}
         onClick={() => setPage(Math.min(totalPages, page + 1))}
-        className="border-2 border-gray-300 p-2 rounded-lg hover:bg-gray-200 hover:cursor-pointer"
+        className={`border-2 border-gray-300 p-2 rounded-lg hover:bg-gray-200 ${page === totalPages ? "opacity-25 hover:cursor-not-allowed" : "hover:cursor-pointer"}`}
       />
 
       <FontAwesomeIcon
         icon={faAngleDoubleRight}
         onClick={() => setPage(totalPages)}
-        className="border-2 border-gray-300 p-2 rounded-lg hover:bg-gray-200 hover:cursor-pointer"
+        className={`border-2 border-gray-300 p-2 rounded-lg hover:bg-gray-200 ${page === totalPages ? "opacity-25 hover:cursor-not-allowed" : "hover:cursor-pointer"}`}
       />
     </div>
   )
