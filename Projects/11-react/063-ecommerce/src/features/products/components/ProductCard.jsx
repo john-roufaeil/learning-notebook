@@ -11,9 +11,7 @@ function ProductCard({ product }) {
     navigate(`/products/${product.id}`);
   };
 
-  const handleAddToCart = (e) => {
-    e.stopPropagation();
-    console.log("Adding to cart:", product);
+  const handleAddToCart = () => {
     dispatch({ type: "cart/addToCart", payload: product });
   };
 

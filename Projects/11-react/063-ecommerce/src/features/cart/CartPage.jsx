@@ -100,13 +100,19 @@ function CartPage() {
             </div>
 
             <div className="bg-white shadow-md rounded-2xl p-6 mt-6 flex justify-between items-center">
-              <span className="text-lg font-medium">
-                Total ({totalItems} items)
-              </span>
-              <span className="text-2xl font-bold">
-                ${totalPrice.toFixed(2)}
-              </span>
+              <div className="flex gap-2 items-center justify-center">
+                <span className="text-lg font-medium">
+                  Total ({totalItems} items)
+                </span>
+                <span className="text-2xl font-bold">
+                  ${totalPrice.toFixed(2)}
+                </span>
+              </div>
+              <Link to="/checkout" className="mt-6 bg-green-600 text-white py-3 px-6 rounded-xl font-semibold hover:bg-green-700 transition">
+                Proceed to Checkout
+              </Link>
             </div>
+
           </>
         )}
       </div>

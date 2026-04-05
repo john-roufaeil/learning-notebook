@@ -4,7 +4,7 @@ import { useContext } from "react";
 import { LanguageContext } from "../contexts/LanguageContext";
 
 function Layout() {
-  const { lang, setLang } = useContext(LanguageContext);
+  const { lang } = useContext(LanguageContext);
   return (
     <div dir={lang === "ar" ? "rtl" : "ltr"}>
       <Navbar />
