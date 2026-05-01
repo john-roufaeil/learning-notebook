@@ -1,0 +1,11 @@
+# docker-compose.yml
+version: '3.8'
+
+services:
+  web:
+    build: .  # Tells Docker to look for a Dockerfile in the current directory
+    container_name: php-lab
+    ports:
+      - "8080:80"
+    volumes:
+      - ./src:/var/www/html
