@@ -1,18 +1,29 @@
 <?php
+session_start();
+
+if (isset($_GET['logout'])) {
+  $_SESSION = [];
+  session_destroy();
+  header('Location: index.php');
+  exit;
+}
+ 
 $error = '';
-$loggedIn = false;
-$loggedName = '';
+if (isset($_SESSION['name'])) {
+  $loggedName = $_SESSION['name'];
+}
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $email = trim($_POST['email'] ?? '');
-  $pw = $_POST['password']   ?? '';
-
+  $pw = $_POST['password'] ?? '';
+ 
   if ($email === '' || $pw === '') {
     $error = 'Please fill in both fields.';
   } else {
-    $lines = file('users.txt', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+    $lines = file(__DIR__ . '/users.txt', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
     $found = false;
-
+ 
     foreach ($lines as $line) {
       [$dbName, $dbEmail, $dbPw] = explode('|', $line);
       if (
@@ -20,12 +31,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         md5($pw) === $dbPw
       ) {
         $found = true;
-        $loggedIn = true;
-        $loggedName=  $dbName;
-        break;
+        $_SESSION['name'] = $dbName;
+        $_SESSION['email']    = $dbEmail;
+        header('Location: index.php');
+        exit;
       }
     }
-    
+ 
     if (!$found) {
       $error = 'Invalid email or password.';
     }
@@ -42,8 +54,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
   <h2>Login</h2>
-  <?php if ($loggedIn): ?>
-    <p>Welcome, <?= $loggedName ?></p>
+  <?php if (isset($_SESSION['name'])): ?>
+    <p>Welcome, <?= $_SESSION['name'] ?></p>
     <p><a href="index.php">Logout</a></p>
 
   <?php else: ?>

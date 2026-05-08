@@ -1,30 +1,30 @@
 <?php
 $errors  = [];
-
+ 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   if (empty($_POST['name']) || !preg_match('/^[a-zA-Z\s]{2,50}$/', $_POST['name'])) {
     $errors['name'] = "Name is required and must be 2-50 letters only.";
   }
-
+ 
   if (empty($_POST['email']) || 
   !preg_match('/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/', $_POST['email']) ||
   !filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)
   ) {
       $errors['email'] = "Valid email is required.";
   }
-
-  if (empty($_POST['password']) || strlen($_POST['password']) < 8 || !preg_match('/^[a-zA-Z0-9_]{8}$/', $_POST['password'])) {
+ 
+  if (empty($_POST['password']) || !preg_match('/^[a-z0-9_]{8}$/', $_POST['password'])) {
       $errors['password'] = "Password does not meet requirements.";
   }
-
+ 
   if (empty($_POST['confirm']) || $_POST['confirm'] !== $_POST['password']) {
       $errors['confirm'] = "Password does not match.";
   }
-
+ 
   if (empty($_POST['room']) || !in_array($_POST['room'], ['Application 1', 'Application 2', 'Cloud'])) {
       $errors['room'] = "Room is required and must be one of vlaid options.";
   }
-
+ 
   $file_tmp = '';
   $file_name = '';
   if (empty($_FILES['picture']['name'])) {
@@ -32,29 +32,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   } else {
       $file_name = $_FILES['picture']['name'];
       $file_tmp = $_FILES['picture']['tmp_name'];
-
+ 
       $ext = explode('.', $file_name);
       $file_ext = strtolower(end($ext));
-
+ 
       if (!in_array($file_ext, ['jpeg', 'jpg', 'png', 'gif', 'webp'])) {
           $errors['picture'] = 'Not supported file type.';
       }
   }
-
+ 
   if (empty($errors)) {
     $uploadDir = __DIR__ . '/files/';
-    if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
-    $savedFilename = uniqid('', true) . '_' . basename($file_name);
-    move_uploaded_file($file_tmp, $uploadDir . $savedFilename);
+    move_uploaded_file($file_tmp, $uploadDir . $file_name);
     $record = implode('|', [
         $_POST['name'],
         $_POST['email'],
         md5($_POST['password']),
         $_POST['room'],
-        'files/' . $savedFilename,
+        'files/' . $file_name,
     ]);
-
-    file_put_contents("users.txt", $record.PHP_EOL, FILE_APPEND | LOCK_EX);
+ 
+    file_put_contents(__DIR__ . '/users.txt', $record.PHP_EOL, FILE_APPEND);
     header('Location: index.php');
     exit;
   }
