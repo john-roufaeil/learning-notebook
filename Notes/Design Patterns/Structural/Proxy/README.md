@@ -1,0 +1,3 @@
+- provide a placeholder for another object to control access to it
+- can be used for lazy initializaiton, security, caching, logging, etc...
+
