@@ -1,6 +1,5 @@
 <?php
 $errors  = [];
- 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   if (empty($_POST['name']) || !preg_match('/^[a-zA-Z\s]{2,50}$/', $_POST['name'])) {
     $errors['name'] = "Name is required and must be 2-50 letters only.";

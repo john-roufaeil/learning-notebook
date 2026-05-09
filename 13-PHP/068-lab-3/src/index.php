@@ -13,7 +13,6 @@ if (isset($_SESSION['name'])) {
   $loggedName = $_SESSION['name'];
 }
 
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $email = trim($_POST['email'] ?? '');
   $pw = $_POST['password'] ?? '';
@@ -56,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <h2>Login</h2>
   <?php if (isset($_SESSION['name'])): ?>
     <p>Welcome, <?= $_SESSION['name'] ?></p>
-    <p><a href="index.php">Logout</a></p>
+    <p><a href="index.php?logout=1">Logout</a></p>
 
   <?php else: ?>
     <?php if ($error): ?>
