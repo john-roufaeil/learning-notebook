@@ -1,0 +1,27 @@
+sequenceDiagram
+    participant browser
+    participant server
+
+    browser->>server: GET /exampleapp/spa
+    activate server
+    server->>browser: HTML Document
+    deactivate server    
+
+    browser->>server: GET /exampleapp/main.css
+    activate server
+    server->>browser: CSS File
+    deactivate server
+
+    browser->>server: GET /exampleapp/spa.js
+    activate server
+    server->>browser: JS File
+    deactivate server
+
+    Note right of browser: Browser executes JS and fetches JSON from server
+
+    browser->>server: GET /exampleapp/data.json
+    activate server
+    server->>browser: JSON File
+    deactivate server
+
+    Note right of browser: Browser executes callback and renders the data

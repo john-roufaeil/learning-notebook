@@ -1,0 +1,14 @@
+sequenceDiagram
+    participant browser
+    participant server
+
+    Note right of browser: User types a note and clicks Save button
+    Note right of browser: JS prevents default form submit, creates the note locally, and redraws UI
+    
+    browser->>server: POST /exampleapp/new_note_spa
+    activate server
+    Note left of server: Server parses the JSON payload and saves the new note to db
+    server->>browser: HTTP status 201 Created
+    deactivate server
+
+    Note right of browser: The browser stays on same page, no further GET requests needed
