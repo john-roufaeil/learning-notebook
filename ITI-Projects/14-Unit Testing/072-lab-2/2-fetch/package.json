@@ -1,10 +1,14 @@
 {
-  "name": "071-lab-1",
+  "name": "2-fetch",
   "version": "1.0.0",
+  "main": "index.js",
   "scripts": {
     "test": "jest"
   },
   "devDependencies": {
     "jest": "^30.4.2"
+  },
+  "dependencies": {
+    "axios": "^1.16.1"
   }
 }

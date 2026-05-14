@@ -1,6 +1,7 @@
 {
-  "name": "071-lab-1",
+  "name": "1-order",
   "version": "1.0.0",
+  "main": "emailService.js",
   "scripts": {
     "test": "jest"
   },
