@@ -5,12 +5,12 @@
     <meta charset="UTF-8">
     <title>ITI Blogs</title>
 </head>
-<body>
-    <header>
-        <h1>ITI Blogs</h1>
+<body class="bg-slate-100">
+    <header class="p-4">
+        <h1 class="text-3xl text-center">ITI Blogs</h1>
         <br />
     </header>
-    <main>
+    <main class="p-4">
         @yield('content')
     </main>
 </body>

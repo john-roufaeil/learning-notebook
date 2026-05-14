@@ -1,38 +1,36 @@
 @extends('layouts.master')
 
 @section('content')
-    <div>
-        <a href="{{ route('posts.create') }}">Create Post</a>
-        <br /><br />
-        <a href="{{ route('users.create') }}">Create User</a>
-        <br /><br />
+    <div class="flex gap-4 mb-4">
+        <x-button href="{{ route('posts.create') }}">Create new post</x-button>        
+        <x-button href="{{ route('users.create') }}" variant="outline">Create new user</x-button>
     </div>
 
-    <table>
+    <table class="border">
         <thead>
-            <tr>
-                <th>ID</th>
-                <th>Title</th>
-                <th>Posted By</th>
-                <th>Created At</th>
-                <th>Actions</th>
+            <tr class="border-b">
+                <th class="p-2 border-l">ID</th>
+                <th class="p-2 border-l">Title</th>
+                <th class="p-2 border-l">Posted By</th>
+                <th class="p-2 border-l">Created At</th>
+                <th class="p-2 border-l">Actions</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($posts as $post)
-                <tr>
-                    <td>{{ $post['id'] }}</td>
-                    <td>{{ $post['title'] }}</td>
-                    <td>{{ $post->author->name }}</td>
-                    <td>{{ $post['created_at']->format('H:i d/m/Y') }}</td>
-                    <td>
-                        <a href="{{ route('posts.show', $post['id']) }}">View</a>
-                        <a href="{{ route('posts.edit', $post['id']) }}">Edit</a>
+                <tr class="border-b">
+                    <td class="px-2 border-r">{{ $post['id'] }}</td>
+                    <td class="px-2 border-r">{{ $post['title'] }}</td>
+                    <td class="px-2 border-r">{{ $post->author->name }}</td>
+                    <td class="px-2 border-r">{{ $post['created_at']->format('H:i d/m/Y') }}</td>
+                    <td class="px-2 flex gap-2">
+                        <x-button href="{{ route('posts.show', $post['id']) }}" variant="ghost">View</x-button>
+                        <x-button href="{{ route('posts.edit', $post['id']) }}" variant="ghost">Edit</x-button>
                         <form action="{{ route('posts.destroy', $post['id']) }}" method="POST" style="display:inline;"
                             onsubmit="return confirm('Confirm Delete')">
                             @csrf
                             @method('DELETE')
-                            <button>Delete</button>
+                            <x-button variant="danger" type="submit">Delete</x-button>
                         </form>
                     </td>
                 </tr>
