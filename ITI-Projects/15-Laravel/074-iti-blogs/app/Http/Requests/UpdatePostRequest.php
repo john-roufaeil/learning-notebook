@@ -11,7 +11,7 @@ class UpdatePostRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,7 @@ class UpdatePostRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title'=> ['required', 'string', 'unique:posts,title'.$this->post->id, 'min:3'],
+            'title'=> ['required', 'string', 'unique:posts,title,'.$this->post, 'min:3'],
             'content'=> ['required', 'string', 'min:10'],
             'author_id'=> ['required', 'string', 'exists:users,id']
         ];
