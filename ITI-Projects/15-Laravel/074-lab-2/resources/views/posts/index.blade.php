@@ -22,7 +22,7 @@
                     <td class="px-2 border-r">{{ $post['id'] }}</td>
                     <td class="px-2 border-r">{{ $post['title'] }}</td>
                     <td class="px-2 border-r">{{ $post->author->name }}</td>
-                    <td class="px-2 border-r">{{ $post['created_at']->format('H:i d/m/Y') }}</td>
+                    <td class="px-2 border-r">{{ $post['created_at']->format('H:i, D d/m/Y') }}</td>
                     <td class="px-2 flex gap-2">
                         <x-button href="{{ route('posts.show', $post['id']) }}" variant="ghost">View</x-button>
                         <x-button href="{{ route('posts.edit', $post['id']) }}" variant="ghost">Edit</x-button>
