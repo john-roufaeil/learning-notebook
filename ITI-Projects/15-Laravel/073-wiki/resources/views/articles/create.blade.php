@@ -1,8 +1,8 @@
 @extends('layouts.master')
 
 @section('content')
-  <h2 class="text-center mb-4 text-xl">New Post</h2>
-  <form action="{{ route('posts.store') }}" method="POST" class="border w-1/2 mx-auto p-4 py-12 rounded flex flex-col gap-4 items-center bg-slate-200 border-slate-300">
+  <h2 class="text-center mb-4 text-xl">New Article</h2>
+  <form action="{{ route('articles.store') }}" method="POST" class="border w-1/2 mx-auto p-4 py-12 rounded flex flex-col gap-4 items-center bg-slate-200 border-slate-300">
     @csrf
 
     <div class="flex flex-col gap-2 justify-between w-4/5">
@@ -22,7 +22,7 @@
     </div>
 
     <div class="flex flex-col gap-2 justify-between w-4/5">
-        <label class="font-bold">Post Creator</label>
+        <label class="font-bold">Article Author</label>
         <select name="author_id" class="ring rounded p-2">
             @foreach ($users as $id => $name)
               <option value="{{ $id }}">{{ $name }}</option>
@@ -35,7 +35,7 @@
 
     <div class="flex gap-4">
       <x-button type="submit">Create</x-button>
-      <x-button variant="outline" href="{{ route('posts.index') }}">Cancel</x-button>
+      <x-button variant="outline" href="{{ route('articles.index') }}">Cancel</x-button>
     </div>
   </form>
 @endsection

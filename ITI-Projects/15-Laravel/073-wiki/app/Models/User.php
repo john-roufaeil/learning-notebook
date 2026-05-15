@@ -12,8 +12,8 @@ class User extends Authenticatable
 
     protected $fillable = ['name','email', 'password'];
 
-    public function posts(): HasMany
+    public function articles(): HasMany
     {
-        return $this->hasMany(Post::class, 'author_id');
+        return $this->hasMany(Article::class, 'author_id');
     }
 }

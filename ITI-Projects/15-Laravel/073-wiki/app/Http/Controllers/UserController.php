@@ -12,7 +12,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        return User::with('posts')->get();
+        return User::with('articles')->get();
     }
 
     public function create()
@@ -36,7 +36,7 @@ class UserController extends Controller
             'email'=> $request->email,
             'password'=> bcrypt($request->password),
         ]);
-        return redirect()->route('posts.index');
+        return redirect()->route('articles.index');
     }
 
     /**
@@ -44,6 +44,6 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        return User::with('posts')->findOrFail($id);
+        return User::with('articles')->findOrFail($id);
     }
 }
