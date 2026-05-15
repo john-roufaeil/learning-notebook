@@ -51,4 +51,9 @@ class PostController extends Controller
         $posts = Post::onlyTrashed()->paginate(10);
         return view('posts.trashed', compact('posts'));
     }
+    
+    public function restore(int $id) {
+        Post::withTrashed()->findOrFail($id)->restore();
+        return redirect()->route('posts.trashed');
+    }
 }
