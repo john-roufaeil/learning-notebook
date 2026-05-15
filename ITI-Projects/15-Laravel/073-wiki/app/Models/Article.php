@@ -27,4 +27,8 @@ class Article extends Model
             'onUpdate'=> true
         ]];
     }
+
+    public function getRouteKeyName(): string {
+        return 'slug';
+    }
 }

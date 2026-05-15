@@ -5,7 +5,7 @@
         <h2 class="text-2xl font-bold tracking-tight text-slate-900 mb-2">Edit Article</h2>
         <p class="text-sm text-slate-500 mb-6">Modifying: <span class="font-semibold text-slate-700">"{{ $article->title }}"</span></p>
         
-        <form action="{{ route('articles.update', $article->id) }}" method="POST" 
+        <form action="{{ route('articles.update', $article) }}" method="POST" 
               class="card p-6 rounded-xl border border-slate-200 bg-white shadow-sm space-y-5">
             @csrf
             @method('PUT')

@@ -9,10 +9,10 @@ Route::get('/', function () {
 });
 
 Route::get('/articles/trashed', [ArticleController::class, 'trashed'])->name('articles.trashed');
-Route::patch('/articles/{id}/restore', [ArticleController::class, 'restore'])->name('articles.restore');
 Route::post('/articles/trashed/restore-all/', [ArticleController::class, 'restoreAll'])->name('articles.restore-all');
-Route::delete('articles/{id}/force-delete', [ArticleController::class, 'forceDelete'])->name('articles.force-delete');
 Route::delete('articles/trashed/force-delete-all', [ArticleController::class, 'forceDeleteAll'])->name('articles.force-delete-all');
+Route::patch('/articles/{article}/restore', [ArticleController::class, 'restore'])->name('articles.restore')->withTrashed();
+Route::delete('articles/{article}/force-delete', [ArticleController::class, 'forceDelete'])->name('articles.force-delete')->withTrashed();
 
 Route::resource('articles', ArticleController::class);
 Route::resource('users', UserController::class);

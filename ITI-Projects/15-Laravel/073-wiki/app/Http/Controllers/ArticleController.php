@@ -23,25 +23,22 @@ class ArticleController extends Controller {
         return redirect()->route('articles.index');
     }
 
-    public function show(int $id) {
-        $article = Article::with('author')->findOrFail($id);
+    public function show(Article $article) {
+        $article->load('author');
         return view('articles.show', compact('article'));
     }
 
-    public function edit(int $id) {
-        $article = Article::with('author')->findOrFail($id);
+    public function edit(Article $article) {
         $users = User::pluck('name','id');
         return view('articles.edit', compact('article', 'users'));
     }
 
-    public function update(UpdateArticleRequest $request, int $id) {
-        $article = Article::findOrFail($id);
+    public function update(UpdateArticleRequest $request, Article $article) {
         $article->update($request->validated());
         return redirect()->route('articles.index');
     }
     
-    public function destroy(int $id) {
-        $article = Article::findOrFail($id);
+    public function destroy(Article $article) {
         $article->delete();
         return redirect()->route('articles.index');
     }
@@ -51,8 +48,8 @@ class ArticleController extends Controller {
         return view('articles.trashed', compact('trashedArticles'));
     }
     
-    public function restore(int $id) {
-        Article::withTrashed()->findOrFail($id)->restore();
+    public function restore(Article $article) {
+        $article->restore();
         return redirect()->route('articles.trashed');
     }
 
@@ -61,8 +58,8 @@ class ArticleController extends Controller {
         return redirect()->route('articles.trashed');
     }
 
-    public function forceDelete(int $id) {
-        Article::withTrashed()->findOrFail($id)->forceDelete();
+    public function forceDelete(Article $article) {
+        $article->forceDelete();
         return redirect()->route('articles.trashed');
     }
 

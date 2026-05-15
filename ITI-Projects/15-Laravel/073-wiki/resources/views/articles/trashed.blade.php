@@ -80,7 +80,7 @@
                 <div class="flex items-center justify-between pt-4 mt-4 border-t border-slate-100">
                     
                     {{-- Restore Trigger Form --}}
-                    <form action="{{ route('articles.restore', $article->id) }}" method="POST">
+                    <form action="{{ route('articles.restore', $article) }}" method="POST">
                         @csrf
                         @method('PATCH')
                         <x-button type="submit" variant="secondary">
@@ -89,7 +89,7 @@
                     </form>
                     
                     {{-- Permanent Force Delete Trigger Form --}}
-                    <form action="{{ route('articles.force-delete', $article->id) }}" method="POST"
+                    <form action="{{ route('articles.force-delete', $article) }}" method="POST"
                           onsubmit="return confirm('WARNING: This will permanently delete this article from the database. This action cannot be undone. Proceed?')">
                         @csrf
                         @method('DELETE')
