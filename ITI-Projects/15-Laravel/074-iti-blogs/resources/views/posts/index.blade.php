@@ -6,7 +6,7 @@
         <x-button href="{{ route('users.create') }}" variant="outline">Create new user</x-button>
     </div>
 
-    <table class="border">
+    <table class="border mb-4 w-2/3">
         <thead>
             <tr class="border-b">
                 <th class="p-2 border-l">ID</th>
@@ -37,5 +37,7 @@
             @endforeach
         </tbody>
     </table>
-    {{ $posts->links() }}
+    <div class="w-2/3">
+        {{ $posts->links() }}
+    </div>
 @endsection
