@@ -51,6 +51,56 @@
             </p>
         </article>
 
+        {{-- Post comment form --}}
+        <div class="mt-8 pt-6 border-t border-slate-100">
+            <h3 class="text-lg font-semibold text-slate-800 mb-4">Comments ({{ $article->comments->count() }})</h3>
+            
+            <form action="{{ route('comments.store') }}" method="POST" class="space-y-3 mb-6">
+                @csrf
+                <input type="hidden" name="commentable_id" value="{{ $article->id }}">
+                <input type="hidden" name="commentable_type" value="{{ App\Models\Article::class }}">
+                
+                <textarea name="body" rows="3" 
+                    class="w-full rounded-lg border border-slate-200 p-3 text-sm focus:border-slate-400 focus:ring-0 text-slate-700 placeholder-slate-400"
+                    placeholder="Write a comment...">{{ old('body') }}</textarea>
+                
+                @error('body') 
+                    <p class="text-xs font-medium text-red-500 mt-1">{{ $message }}</p> 
+                @enderror
+                
+                <div class="flex justify-end">
+                    <x-button type="submit" variant="secondary">Add comment</x-button>
+                </div>
+            </form>
+
+            {{-- List comments --}}
+            <div class="space-y-4">
+                @forelse ($article->comments as $comment)
+                    <div class="p-4 rounded-lg bg-slate-50 border border-slate-100 flex justify-between items-start gap-4">
+                        <div class="space-y-1">
+                            <div class="flex items-center gap-2 text-xs">
+                                <span class="font-semibold text-slate-800">{{ $comment->author->name }}</span>
+                                <span class="text-slate-400">·</span>
+                                <span class="text-slate-400">{{ $comment->created_at->diffForHumans() }}</span>
+                            </div>
+                            <p class="text-sm text-slate-600 leading-relaxed">{{ $comment->body }}</p>
+                        </div>
+
+                        {{-- Only show delete button if the logged user owns the comment --}}
+                        <form action="{{ route('comments.destroy', $comment) }}" method="POST" onsubmit="return confirm('Delete comment?')">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="text-xs text-red-500 hover:text-red-700 font-medium transition-colors">
+                                Delete
+                            </button>
+                        </form>
+                    </div>
+                @empty
+                    <p class="text-sm text-slate-400 italic text-center py-4">No comments yet. Be the first to start the conversation!</p>
+                @endforelse
+            </div>
+        </div>
+
         {{-- Advanced Backend Practice Anchor (Optional UI placeholder for later) --}}
         <div class="mt-8 pt-6 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400">
             <span>System Timestamp: {{ $article->created_at->format('Y-m-d H:i:s A') }}</span>

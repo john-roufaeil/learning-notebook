@@ -24,7 +24,7 @@ class ArticleController extends Controller {
     }
 
     public function show(Article $article) {
-        $article->load('author');
+        $article->load(['author', 'comments.author']);
         return view('articles.show', compact('article'));
     }
 

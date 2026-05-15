@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Article extends Model
 {
@@ -16,8 +17,7 @@ class Article extends Model
 
     protected $fillable = ['title', 'content', 'author_id'];
 
-    public function author(): BelongsTo
-    {
+    public function author(): BelongsTo {
         return $this->belongsTo(User::class, 'author_id');
     }
 
@@ -30,5 +30,9 @@ class Article extends Model
 
     public function getRouteKeyName(): string {
         return 'slug';
+    }
+
+    public function comments(): MorphMany {
+        return $this->morphMany(Comment::class, 'commentable');
     }
 }
