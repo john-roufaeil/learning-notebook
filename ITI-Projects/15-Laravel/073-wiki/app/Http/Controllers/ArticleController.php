@@ -47,12 +47,27 @@ class ArticleController extends Controller {
     }
 
     public function trashed() {
-        $articles = Article::onlyTrashed()->paginate(10);
-        return view('articles.trashed', compact('articles'));
+        $trashedArticles = Article::onlyTrashed()->paginate(10);
+        return view('articles.trashed', compact('trashedArticles'));
     }
     
     public function restore(int $id) {
         Article::withTrashed()->findOrFail($id)->restore();
+        return redirect()->route('articles.trashed');
+    }
+
+    public function restoreAll() {
+        Article::onlyTrashed()->restore();
+        return redirect()->route('articles.trashed');
+    }
+
+    public function forceDelete(int $id) {
+        Article::withTrashed()->findOrFail($id)->forceDelete();
+        return redirect()->route('articles.trashed');
+    }
+
+    public function forceDeleteAll() {
+        Article::onlyTrashed()->forceDelete();
         return redirect()->route('articles.trashed');
     }
 }

@@ -8,6 +8,7 @@
         <div class="flex gap-2">
             <x-button href="{{ route('articles.create') }}" variant="secondary">New Article</x-button>
             <x-button href="{{ route('users.create') }}" variant="secondary">New User</x-button>
+            <x-button href="{{ route('articles.trashed') }}" variant="secondary">View trash</x-button>
         </div>
     </div>
 
