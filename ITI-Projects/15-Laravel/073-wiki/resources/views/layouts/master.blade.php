@@ -15,7 +15,7 @@
       <a href="/" style="font-weight:600; font-size:1rem; color:var(--color-text);" class="hover:bg-gray-200 active: px-2 py-1 rounded">
         Wiki
       </a>
-      <div style="display:flex; gap:1rem; align-items:center;">
+      <!-- <div style="display:flex; gap:1rem; align-items:center;">
         <a href="{{ route('articles.index') }}" style="font-size:0.875rem; color:var(--color-muted);">Articles</a>
         @auth
           <form method="POST" action="/logout">@csrf
@@ -26,7 +26,7 @@
         @else
           <a href="/login" class="btn btn-primary" style="padding:0.35rem 0.8rem; font-size:0.8rem;">Login</a>
         @endauth
-      </div>
+      </div> -->
     </div>
   </nav>
 
