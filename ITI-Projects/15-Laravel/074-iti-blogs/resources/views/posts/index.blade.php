@@ -11,6 +11,7 @@
             <tr class="border-b">
                 <th class="p-2 border-l">ID</th>
                 <th class="p-2 border-l">Title</th>
+                <th class="p-2 border-l">Slug</th>
                 <th class="p-2 border-l">Posted By</th>
                 <th class="p-2 border-l">Created At</th>
                 <th class="p-2 border-l">Actions</th>
@@ -21,6 +22,7 @@
                 <tr class="border-b">
                     <td class="px-2 border-r">{{ $post['id'] }}</td>
                     <td class="px-2 border-r">{{ $post['title'] }}</td>
+                    <td class="px-2 border-r">{{ $post->slug }}</td>
                     <td class="px-2 border-r">{{ $post->author->name }}</td>
                     <td class="px-2 border-r">{{ $post['created_at']->format('Y-m-d') }}</td>
                     <td class="px-2 flex gap-2">
