@@ -6,15 +6,52 @@
   <!-- Left: Content Column -->
   <div class="lg:col-span-2 space-y-4">
     <div class="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
-      <img src="{{ asset('storage/' . $picture->image_path) }}" alt="{{ $picture->title }}" class="w-full object-contain bg-slate-900 max-h-[500px]">
-      <div class="p-6 space-y-3">
+      <img src="{{ asset('storage/' . $picture->image_path) }}" alt="{{ $picture->title }}" class="w-full object-contain bg-slate-100 max-h-[500px]">
+
+      <div class="p-6 space-y-4">
+        {{-- Header Data --}}
         <div>
           <h1 class="text-2xl font-bold tracking-tight text-slate-900">{{ $picture->title }}</h1>
           <p class="text-xs text-slate-400 mt-0.5">By {{ $picture->artist->name ?? 'Unknown Artist' }} • {{ $picture->created_at->format('Y-m-d') }}</p>
         </div>
+
+        {{-- System Properties Row: ID & Slug badges --}}
+        <div class="flex flex-wrap items-center gap-2 text-[11px] font-mono text-slate-400 pt-1">
+          <span class="px-1.5 py-0.5 rounded bg-slate-100 text-slate-600 font-bold border border-slate-200">
+            #{{ $picture->id }}
+          </span>
+          <span class="px-2 py-0.5 rounded bg-slate-50 border border-slate-200 truncate max-w-xs" title="URL Slug Reference">
+            /{{ $picture->slug }}
+          </span>
+        </div>
+
         @if($picture->description)
         <p class="text-sm text-slate-600 leading-relaxed pt-3 border-t border-slate-100">{{ $picture->description }}</p>
         @endif
+
+        {{-- Action Control Toolbar --}}
+        <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+          {{-- Return Navigation --}}
+          <a href="{{ route('pictures.index') }}" class="text-xs font-medium text-slate-600 hover:text-slate-900 flex items-center gap-1">
+            ← Back to Gallery
+          </a>
+
+          {{-- Management Actions --}}
+          <div class="flex items-center gap-2">
+            <a href="{{ route('pictures.edit', $picture) }}" class="btn btn-secondary" style="padding:0.35rem 0.8rem; font-size:0.75rem;">
+              Edit
+            </a>
+
+            <form action="{{ route('pictures.destroy', $picture) }}" method="POST" onsubmit="return confirm('Move this piece to the trash?');" class="inline">
+              @csrf
+              @method('DELETE')
+              <button type="submit" class="btn btn-danger" style="padding:0.35rem 0.8rem; font-size:0.75rem;">
+                Delete
+              </button>
+            </form>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
@@ -30,7 +67,7 @@
       <input type="hidden" name="commentable_type" value="{{ get_class($picture) }}">
 
       <textarea name="body" rows="3" placeholder="Add a comment on this picture..." required
-        class="w-full text-sm p-3 border @error('body') border-red-500 @else border-slate-200 @enderror rounded-lg focus:outline-none">{{ old('body') }}</textarea>
+        class="w-full text-sm p-3 border @error('body') border-red-500 @else border-slate-200 @enderror rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-900/10">{{ old('body') }}</textarea>
       @error('body') <p class="text-xs text-red-600 mt-1" style="color: #dc2626;">{{ $message }}</p> @enderror
 
       <div class="flex justify-end">
@@ -66,5 +103,6 @@
       @endforelse
     </div>
   </div>
+
 </div>
 @endsection
