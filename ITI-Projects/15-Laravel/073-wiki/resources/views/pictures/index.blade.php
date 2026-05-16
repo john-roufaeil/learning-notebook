@@ -35,7 +35,7 @@
             </span>
 
             {{-- Slug Wrapper --}}
-            <span class="px-2 py-0.5 rounded bg-slate-50 border border-slate-200 truncate max-w-[180px]" title="Slug Reference: {{ $picture->slug }}">
+            <span class="px-2 py-0.5 rounded bg-slate-50 border border-slate-200 truncate max-w-45" title="Slug Reference: {{ $picture->slug }}">
               /{{ $picture->slug }}
             </span>
 

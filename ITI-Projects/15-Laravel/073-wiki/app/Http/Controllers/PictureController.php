@@ -87,6 +87,7 @@ class PictureController extends Controller
     if ($picture->is_deletable_image) {
       Storage::disk('public')->delete($picture->image_path);
     }
+    $picture->comments()->delete();
     $picture->forceDelete();
     return redirect()->route('pictures.trashed');
   }
@@ -95,6 +96,7 @@ class PictureController extends Controller
   {
     $trashedPictures = Picture::onlyTrashed()->get();
     foreach ($trashedPictures as $picture) {
+      $picture->comments()->delete();
       if ($picture->is_deletable_image) {
         Storage::disk('public')->delete($picture->image_path);
       }

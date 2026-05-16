@@ -71,12 +71,16 @@ class ArticleController extends Controller
 
     public function forceDelete(Article $article)
     {
+        $article->comments()->delete();
         $article->forceDelete();
         return redirect()->route('articles.trashed');
     }
 
     public function forceDeleteAll()
     {
+        Article::onlyTrashed()->each(function ($article) {
+            $article->comments()->delete();
+        });
         Article::onlyTrashed()->forceDelete();
         return redirect()->route('articles.trashed');
     }

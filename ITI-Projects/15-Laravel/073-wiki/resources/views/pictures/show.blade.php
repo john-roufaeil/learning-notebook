@@ -6,7 +6,7 @@
   <!-- Left: Content Column -->
   <div class="lg:col-span-2 space-y-4">
     <div class="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
-      <img src="{{ asset('storage/' . $picture->image_path) }}" alt="{{ $picture->title }}" class="w-full object-contain bg-slate-100 max-h-[500px]">
+      <img src="{{ asset('storage/' . $picture->image_path) }}" alt="{{ $picture->title }}" class="w-full object-contain bg-slate-100 max-h-125">
 
       <div class="p-6 space-y-4">
         {{-- Header Data --}}

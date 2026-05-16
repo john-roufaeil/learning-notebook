@@ -66,8 +66,8 @@ class Picture extends Model
     protected function imageUrl(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->getRawOriginal('image_path')
-                ? asset('storage/' . $this->getRawOriginal('image_path'))
+            get: fn() => $this->image_path
+                ? asset('storage/' . $this->image_path)
                 : asset('storage/pictures/placeholder.png'),
         );
     }
@@ -75,8 +75,8 @@ class Picture extends Model
     protected function isDeletableImage(): Attribute
     {
         return Attribute::make(
-            get: fn() => (bool) $this->getRawOriginal('image_path')
-                && basename($this->getRawOriginal('image_path')) !== 'placeholder.png',
+            get: fn() => (bool) $this->image_path
+                && basename($this->image_path) !== 'placeholder.png',
         );
     }
 }
