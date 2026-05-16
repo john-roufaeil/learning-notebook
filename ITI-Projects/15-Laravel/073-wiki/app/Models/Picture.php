@@ -12,9 +12,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Picture extends Model
 {
-    use HasFactory;
-    use Sluggable;
-    use SoftDeletes;
+    use HasFactory, Sluggable, SoftDeletes;
 
     protected $fillable = ['title', 'description', 'image_path', 'artist_id'];
 

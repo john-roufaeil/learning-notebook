@@ -12,9 +12,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Article extends Model
 {
-    use HasFactory;
-    use Sluggable;
-    use SoftDeletes;
+    use HasFactory, Sluggable, SoftDeletes;
 
     protected $fillable = ['title', 'content', 'author_id'];
 
