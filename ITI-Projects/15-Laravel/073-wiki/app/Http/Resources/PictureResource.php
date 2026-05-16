@@ -17,7 +17,7 @@ class PictureResource extends JsonResource
         return [
             'title' => $this->title,
             'description' => $this->description,
-            'image_url' => $this->image_url,
+            'image' => $this->image_url,
             'artist' => new UserResource($this->artist),
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
         ];
