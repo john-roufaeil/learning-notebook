@@ -49,7 +49,7 @@ class PictureController extends Controller
   {
     $data = $request->validated();
     if ($request->hasFile('image')) {
-      if ($picture->image_path && basename($picture->image_path) !== 'placeholder.png') {
+      if ($picture->is_deletable_image) {
         Storage::disk('public')->delete($picture->image_path);
       }
       $data['image_path'] = $request->file('image')->store('pictures', 'public');
@@ -70,10 +70,9 @@ class PictureController extends Controller
     return view('pictures.trashed', compact('trashedPictures'));
   }
 
-  public function restore($picture)
+  public function restore(Picture $picture)
   {
-    $model = Picture::onlyTrashed()->where('id', $picture)->orWhere('slug', $picture)->firstOrFail();
-    $model->restore();
+    $picture->restore();
     return redirect()->route('pictures.trashed');
   }
 
@@ -83,13 +82,12 @@ class PictureController extends Controller
     return redirect()->route('pictures.trashed');
   }
 
-  public function forceDelete($picture)
+  public function forceDelete(Picture $picture)
   {
-    $model = Picture::onlyTrashed()->where('id', $picture)->orWhere('slug', $picture)->firstOrFail();
-    if ($model->image_path && basename($model->image_path) !== 'placeholder.png') {
-      Storage::disk('public')->delete($model->image_path);
+    if ($picture->is_deletable_image) {
+      Storage::disk('public')->delete($picture->image_path);
     }
-    $model->forceDelete();
+    $picture->forceDelete();
     return redirect()->route('pictures.trashed');
   }
 
@@ -97,7 +95,7 @@ class PictureController extends Controller
   {
     $trashedPictures = Picture::onlyTrashed()->get();
     foreach ($trashedPictures as $picture) {
-      if ($picture->image_path && basename($picture->image_path) !== 'placeholder.png') {
+      if ($picture->is_deletable_image) {
         Storage::disk('public')->delete($picture->image_path);
       }
       $picture->forceDelete();

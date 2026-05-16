@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Article extends Model
 {
@@ -17,22 +18,41 @@ class Article extends Model
 
     protected $fillable = ['title', 'content', 'author_id'];
 
-    public function author(): BelongsTo {
-        return $this->belongsTo(User::class, 'author_id');
-    }
-
-    public function sluggable(): array {
+    public function sluggable(): array
+    {
         return ['slug' => [
             'source' => 'title',
-            'onUpdate'=> true
+            'onUpdate' => true
         ]];
     }
 
-    public function getRouteKeyName(): string {
+    public function getRouteKeyName(): string
+    {
         return 'slug';
     }
 
-    public function comments(): MorphMany {
+    public function author(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'author_id');
+    }
+
+    public function comments(): MorphMany
+    {
         return $this->morphMany(Comment::class, 'commentable');
+    }
+
+    protected function title(): Attribute
+    {
+        return Attribute::make(
+            get: fn($value) => ucwords($value),
+            set: fn($value) => strtolower($value)
+        );
+    }
+
+    protected function content(): Attribute
+    {
+        return Attribute::make(
+            set: fn($value) => trim($value)
+        );
     }
 }

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Picture extends Model
 {
@@ -17,19 +18,12 @@ class Picture extends Model
 
     protected $fillable = ['title', 'description', 'image_path', 'artist_id'];
 
-    public function artist(): BelongsTo
-    {
-        return $this->belongsTo(User::class, 'artist_id');
-    }
-
     public function sluggable(): array
     {
-        return [
-            'slug' => [
-                'source' => 'title',
-                'onUpdate' => true
-            ]
-        ];
+        return ['slug' => [
+            'source' => 'title',
+            'onUpdate' => true
+        ]];
     }
 
     public function getRouteKeyName(): string
@@ -37,8 +31,52 @@ class Picture extends Model
         return 'slug';
     }
 
+    public function artist(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'artist_id');
+    }
+
     public function comments(): MorphMany
     {
         return $this->morphMany(Comment::class, 'commentable');
+    }
+
+    protected function title(): Attribute
+    {
+        return Attribute::make(
+            get: fn($value) => ucwords($value),
+            set: fn($value) => strtolower(trim($value))
+        );
+    }
+
+    protected function description(): Attribute
+    {
+        return Attribute::make(
+            set: fn($value) => trim($value)
+        );
+    }
+
+    protected function imagePath(): Attribute
+    {
+        return Attribute::make(
+            set: fn($value) => ltrim(str_replace('storage/', '', $value), '/')
+        );
+    }
+
+    protected function imageUrl(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->getRawOriginal('image_path')
+                ? asset('storage/' . $this->getRawOriginal('image_path'))
+                : asset('storage/pictures/placeholder.png'),
+        );
+    }
+
+    protected function isDeletableImage(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => (bool) $this->getRawOriginal('image_path')
+                && basename($this->getRawOriginal('image_path')) !== 'placeholder.png',
+        );
     }
 }
