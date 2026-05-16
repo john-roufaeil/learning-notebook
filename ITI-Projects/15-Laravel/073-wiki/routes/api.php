@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\ArticleController;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\ArticleController;
+use App\Http\Controllers\Api\PictureController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,7 +21,12 @@ Route::post('/login', [AuthController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
+
     Route::get('/articles', [ArticleController::class, 'index']);
     Route::get('/articles/{id}', [ArticleController::class, 'show']);
     Route::post('/articles', [ArticleController::class, 'store']);
+
+    Route::get('/pictures', [PictureController::class, 'index']);
+    Route::get('/pictures/{id}', [PictureController::class, 'show']);
+    Route::post('/pictures', [PictureController::class, 'store']);
 });

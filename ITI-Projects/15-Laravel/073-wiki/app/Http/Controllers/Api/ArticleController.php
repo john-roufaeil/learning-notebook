@@ -29,7 +29,7 @@ class ArticleController extends Controller
             return response()->json([
                 "status" => "failed",
                 "message" => "Article not found"
-            ]);
+            ], 404);
         }
 
         return response()->json(
@@ -42,7 +42,10 @@ class ArticleController extends Controller
 
     public function store(StoreArticleRequest $request)
     {
-        $article = Article::create($request->validated());
+        $article = Article::create([
+            ...$request->validated(),
+            'author_id' => $request->user()->id
+        ]);
         return response()->json(
             ArticlesResource::make($article)->toResponse(request())->getData(),
             200,
