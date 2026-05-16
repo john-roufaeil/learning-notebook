@@ -51,21 +51,14 @@
             {{ $picture->description ?? 'No historical summary or description provided for this artwork asset.' }}
           </p>
         </div>
-
-        <!-- Action Control Buttons -->
         <div class="flex items-center justify-end gap-2 pt-3 border-t border-slate-100">
-          <a href="{{ route('pictures.show', $picture) }}" class="btn btn-secondary" style="padding:0.3rem 0.7rem; font-size:0.75rem;">
-            View
-          </a>
-          <a href="{{ route('pictures.edit', $picture) }}" class="btn btn-secondary" style="padding:0.3rem 0.7rem; font-size:0.75rem;">
-            Edit
+          <x-button href="{{ route('pictures.show', $picture) }}" variant="secondary" tag="a">View</x-button>
+          <x-button href="{{ route('pictures.edit', $picture) }}" variant="secondary" tag="a">Edit</x-button>
           </a>
           <form action="{{ route('pictures.destroy', $picture) }}" method="POST" onsubmit="return confirm('Move this piece to the trash?');">
             @csrf
             @method('DELETE')
-            <button type="submit" class="btn btn-danger" style="padding:0.3rem 0.7rem; font-size:0.75rem;">
-              Delete
-            </button>
+            <x-button variant="danger" type="submit">Delete</x-button>
           </form>
         </div>
       </div>

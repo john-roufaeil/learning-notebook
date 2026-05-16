@@ -32,22 +32,22 @@
         {{-- Action Control Toolbar --}}
         <div class="flex items-center justify-between pt-4 border-t border-slate-100">
           {{-- Return Navigation --}}
-          <a href="{{ route('pictures.index') }}" class="text-xs font-medium text-slate-600 hover:text-slate-900 flex items-center gap-1">
+          <x-button variant="secondary" href="{{ route('pictures.index') }}" class="text-xs font-medium text-slate-600 hover:text-slate-900 flex items-center gap-1">
             Back to Gallery
-          </a>
+          </x-button>
 
           {{-- Management Actions --}}
           <div class="flex items-center gap-2">
-            <a href="{{ route('pictures.edit', $picture) }}" class="btn btn-secondary" style="padding:0.35rem 0.8rem; font-size:0.75rem;">
+            <x-button variant="secondary" href="{{ route('pictures.edit', $picture) }}" class="btn btn-secondary" style="padding:0.35rem 0.8rem; font-size:0.75rem;">
               Edit
-            </a>
+            </x-button>
 
             <form action="{{ route('pictures.destroy', $picture) }}" method="POST" onsubmit="return confirm('Move this piece to the trash?');" class="inline">
               @csrf
               @method('DELETE')
-              <button type="submit" class="btn btn-danger" style="padding:0.35rem 0.8rem; font-size:0.75rem;">
+              <x-button variant="danger" type="submit" style="padding:0.35rem 0.8rem; font-size:0.75rem;">
                 Delete
-              </button>
+              </x-button>
             </form>
           </div>
         </div>
@@ -71,9 +71,9 @@
       @error('body') <p class="text-xs text-red-600 mt-1" style="color: #dc2626;">{{ $message }}</p> @enderror
 
       <div class="flex justify-end">
-        <button type="submit" class="btn btn-primary" style="padding:0.35rem 0.8rem; font-size:0.8rem;">
+        <x-button variant="secondary" type="submit" style="padding:0.35rem 0.8rem; font-size:0.8rem;">
           Post Comment
-        </button>
+        </x-button>
       </div>
     </form>
 
@@ -88,13 +88,15 @@
           </div>
 
           <!-- Delete Form Context Bypassing Auth -->
+          @if(auth()->id() === $comment->author_id)
           <form action="{{ route('comments.destroy', $comment) }}" method="POST" onsubmit="return confirm('Remove this comment?');">
             @csrf
             @method('DELETE')
-            <button type="submit" class="btn btn-danger" style="padding:0.2rem 0.5rem; font-size:0.7rem;">
+            <x-button variant="danger" type="submit" style="padding:0.35rem 0.8rem; font-size:0.75rem;">
               Delete
-            </button>
+            </x-button>
           </form>
+          @endif
         </div>
         <p class="text-sm text-slate-600 leading-snug">{{ $comment->body }}</p>
       </div>
