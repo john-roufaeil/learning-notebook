@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.app')
 
 @section('content')
 
@@ -6,9 +6,9 @@
     <div class="flex items-center justify-between mb-6">
         <h2 class="text-2xl font-bold tracking-tight text-slate-900">Articles</h2>
         <div class="flex gap-2">
-            <x-button href="{{ route('articles.create') }}" variant="secondary">New Article</x-button>
-            <x-button href="{{ route('users.create') }}" variant="secondary">New User</x-button>
             <x-button href="{{ route('articles.trashed') }}" variant="secondary">View trash</x-button>
+            <x-button href="{{ route('users.create') }}" variant="secondary">New User</x-button>
+            <x-button href="{{ route('articles.create') }}" variant="primary">New Article</x-button>
         </div>
     </div>
 
