@@ -12,7 +12,7 @@
         {{-- Header Data --}}
         <div>
           <h1 class="text-2xl font-bold tracking-tight text-slate-900">{{ $picture->title }}</h1>
-          <p class="text-xs text-slate-400 mt-0.5">By {{ $picture->artist->name ?? 'Unknown Artist' }} • {{ $picture->created_at->format('Y-m-d') }}</p>
+          <p class="text-xs text-slate-400 mt-0.5">By {{ $picture->artist->name ?? 'Unknown Artist' }} • {{ $picture->created_at->format('l, F d, Y') }}</p>
         </div>
 
         {{-- System Properties Row: ID & Slug badges --}}
@@ -33,7 +33,7 @@
         <div class="flex items-center justify-between pt-4 border-t border-slate-100">
           {{-- Return Navigation --}}
           <a href="{{ route('pictures.index') }}" class="text-xs font-medium text-slate-600 hover:text-slate-900 flex items-center gap-1">
-            ← Back to Gallery
+            Back to Gallery
           </a>
 
           {{-- Management Actions --}}
@@ -58,7 +58,7 @@
 
   <!-- Right: Comments Discussion Column -->
   <div class="space-y-6">
-    <h2 class="text-lg font-bold text-slate-900">Discussion</h2>
+    <h2 class="text-lg font-bold text-slate-900">Comments ({{ $picture->comments->count() }})</h2>
 
     <!-- Comment Submission Form -->
     <form action="{{ route('comments.store') }}" method="POST" class="space-y-3">
@@ -84,7 +84,7 @@
         <div class="flex items-center justify-between">
           <div>
             <p class="text-xs font-semibold text-slate-800">{{ $comment->author->name ?? 'System User' }}</p>
-            <p class="text-[10px] text-slate-400">{{ $comment->created_at->format('Y-m-d') }}</p>
+            <p class="text-[10px] text-slate-400">{{ $comment->created_at->diffForHumans() }}</p>
           </div>
 
           <!-- Delete Form Context Bypassing Auth -->

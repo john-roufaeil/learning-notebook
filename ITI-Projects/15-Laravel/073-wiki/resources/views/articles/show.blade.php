@@ -5,7 +5,7 @@
 {{-- Navigation & Utility Header --}}
 <div class="flex items-center justify-between mb-6">
     <x-button href="{{ route('articles.index') }}" variant="secondary" tag="a">
-        &larr; Back to Articles
+        Back to Articles
     </x-button>
     <div class="flex gap-2">
         <x-button href="{{ route('articles.edit', $article) }}" variant="secondary" tag="a">Edit</x-button>
@@ -81,7 +81,7 @@
                     <div class="flex items-center gap-2 text-xs">
                         <span class="font-semibold text-slate-800">{{ $comment->author->name }}</span>
                         <span class="text-slate-400">·</span>
-                        <span class="text-slate-400">{{ $comment->created_at->format('Y-m-d') }}</span>
+                        <span class="text-slate-400">{{ $comment->created_at->diffForHumans() }}</span>
                     </div>
                     <p class="text-sm text-slate-600 leading-relaxed">{{ $comment->body }}</p>
                 </div>
@@ -99,11 +99,6 @@
             <p class="text-sm text-slate-400 italic text-center py-4">No comments yet. Be the first to start the conversation!</p>
             @endforelse
         </div>
-    </div>
-
-    {{-- Advanced Backend Practice Anchor (Optional UI placeholder for later) --}}
-    <div class="mt-8 pt-6 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400">
-        <span>System Timestamp: {{ $article->created_at->format('Y-m-d H:i:s A') }}</span>
     </div>
 
 </div>
