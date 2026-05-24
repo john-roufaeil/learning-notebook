@@ -1,7 +1,7 @@
 <script setup>
-import { computed } from 'vue';
 import { RouterLink } from 'vue-router';
 import { onMounted, onUnmounted } from 'vue';
+import { useProductPrice } from '@/composables/useProductPrice';
 
 onMounted(() => {
   console.log(`ProductCard mounted - ${props.product.name}`);
@@ -15,27 +15,7 @@ const props = defineProps({
   product: Object
 })
 
-const discountedPrice = computed(() => {
-  return props.product.discount ?
-    props.product.price * (1 - props.product.discount / 100) :
-    props.product.price;
-});
-
-const CONVERSION_RATE = 35;
-
-const formattedDiscountedPrice = computed(() =>
-  new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "EGP",
-  }).format(discountedPrice.value * CONVERSION_RATE),
-);
-
-const formattedPrice = computed(() =>
-  new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "EGP",
-  }).format(props.product.price * CONVERSION_RATE),
-);
+const { formattedDiscountedPrice, formattedPrice } = useProductPrice(props.product);
 </script>
 
 <template>

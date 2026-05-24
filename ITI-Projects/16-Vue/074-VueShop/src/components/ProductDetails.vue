@@ -1,9 +1,10 @@
 <script setup>
-import { computed } from 'vue';
+import { useProductPrice } from '@/composables/useProductPrice';
 
 const props = defineProps({product: Object})
 const emit = defineEmits(['addToCart']);
 
+const { formattedDiscountedPrice, formattedPrice } = useProductPrice(props.product);
 const getTagColor = (tag) => {
   switch (tag) {
     case 'Fashion':
@@ -14,28 +15,6 @@ const getTagColor = (tag) => {
       return 'badge-accent';
   }
 }
-
-const discountedPrice = computed(() => {
-  return props.product.discount ?
-    props.product.price * (1 - props.product.discount / 100) :
-    props.product.price;
-});
-
-const CONVERSION_RATE = 35;
-
-const formattedDiscountedPrice = computed(() =>
-  new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "EGP",
-  }).format(discountedPrice.value * CONVERSION_RATE),
-);
-
-const formattedPrice = computed(() =>
-  new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "EGP",
-  }).format(props.product.price * CONVERSION_RATE),
-);
 </script>
 
 <template>
