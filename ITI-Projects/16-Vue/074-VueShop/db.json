@@ -1,0 +1,60 @@
+{
+  "products": [
+    {
+      "id": 101,
+      "title": "Orbit Wireless Headphones",
+      "description": "Comfort-focused wireless headphones with clear mids, punchy bass, and 30-hour battery life.",
+      "price": 129.99,
+      "image": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=900&q=80",
+      "imageAlt": "Black wireless headphones on a white background",
+      "tags": [
+        "audio",
+        "wireless",
+        "best-seller"
+      ],
+      "stock": 12
+    },
+    {
+      "id": 102,
+      "title": "Pulse Smartwatch",
+      "description": "Track heart rate, sleep, and daily activity with a bright display and water-resistant build.",
+      "price": 89.5,
+      "image": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=900&q=80",
+      "imageAlt": "Smartwatch close-up on a soft background",
+      "tags": [
+        "wearables",
+        "fitness",
+        "new"
+      ],
+      "stock": 5
+    },
+    {
+      "id": 103,
+      "title": "Aero Mechanical Keyboard",
+      "description": "Low-profile mechanical keyboard with hot-swappable switches and subtle RGB backlight.",
+      "price": 149.0,
+      "image": "https://images.unsplash.com/photo-1618384887929-16ec33fab9ef?auto=format&fit=crop&w=900&q=80",
+      "imageAlt": "Mechanical keyboard on a desk",
+      "tags": [
+        "accessories",
+        "keyboard",
+        "gaming"
+      ],
+      "stock": 0
+    },
+    {
+      "id": 104,
+      "title": "Nova 4K Webcam",
+      "description": "Ultra-clear 4K webcam with dual microphones and auto-light correction for meetings.",
+      "price": 109.0,
+      "image": "https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&w=900&q=80",
+      "imageAlt": "Webcam mounted on top of a monitor",
+      "tags": [
+        "video",
+        "work",
+        "creator"
+      ],
+      "stock": 18
+    }
+  ]
+}
