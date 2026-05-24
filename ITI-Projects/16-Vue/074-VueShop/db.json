@@ -12,7 +12,8 @@
         "wireless",
         "best-seller"
       ],
-      "stock": 12
+      "stock": 5,
+      "discount": 10
     },
     {
       "id": 102,
@@ -26,13 +27,13 @@
         "fitness",
         "new"
       ],
-      "stock": 5
+      "stock": 4
     },
     {
       "id": 103,
       "title": "Aero Mechanical Keyboard",
       "description": "Low-profile mechanical keyboard with hot-swappable switches and subtle RGB backlight.",
-      "price": 149.0,
+      "price": 149,
       "image": "https://images.unsplash.com/photo-1618384887929-16ec33fab9ef?auto=format&fit=crop&w=900&q=80",
       "imageAlt": "Mechanical keyboard on a desk",
       "tags": [
@@ -40,13 +41,14 @@
         "keyboard",
         "gaming"
       ],
-      "stock": 0
+      "stock": 5,
+      "discount": 10
     },
     {
       "id": 104,
       "title": "Nova 4K Webcam",
       "description": "Ultra-clear 4K webcam with dual microphones and auto-light correction for meetings.",
-      "price": 109.0,
+      "price": 109,
       "image": "https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&w=900&q=80",
       "imageAlt": "Webcam mounted on top of a monitor",
       "tags": [
@@ -54,7 +56,8 @@
         "work",
         "creator"
       ],
-      "stock": 18
+      "stock": 4,
+      "discount": 10
     }
   ]
 }
