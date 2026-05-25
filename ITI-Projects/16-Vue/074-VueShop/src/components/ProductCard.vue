@@ -2,6 +2,7 @@
 import { RouterLink } from 'vue-router';
 import { onMounted, onUnmounted } from 'vue';
 import { useProductPrice } from '@/composables/useProductPrice';
+import { useCartStore } from '@/stores/cartStore';
 
 onMounted(() => {
   console.log(`ProductCard mounted - ${props.product.title}`);
@@ -15,12 +16,13 @@ const props = defineProps({
   product: Object
 })
 
+const cartStore = useCartStore();
 const { formattedDiscountedPrice, formattedPrice } = useProductPrice(() => props.product);
 </script>
 
 <template>
-  <RouterLink :to="`/products/${product.id}`" class="h-full flex flex-1 ">
-    <div class="bg-base-200 w-full h-full shadow-md hover:bg-base-300/60 duration-300 transition-all hover:-translate-y-1">
+  <div class="bg-base-200 h-full shadow-md hover:bg-base-300/60 duration-300 transition-all hover:-translate-y-1 flex flex-col">
+    <RouterLink :to="`/products/${product.id}`" class="flex flex-col flex-1">
       <figure class="rounded-t-lg overflow-hidden h-50 w-full shrink-0">
         <img loading="lazy" :src="product.image" :alt="product.title" class="w-full h-full object-cover" />
       </figure>
@@ -34,6 +36,16 @@ const { formattedDiscountedPrice, formattedPrice } = useProductPrice(() => props
         </div>
         <span v-if="product.badge" class="badge badge-accent">{{ product.badge }}</span>
       </div>
+    </RouterLink>
+    <div class="p-4 pt-0">
+      <button
+        type="button"
+        class="btn btn-primary btn-sm w-full"
+        :disabled="product.stock === 0"
+        @click="cartStore.addToCart(product)"
+      >
+        {{ product.stock === 0 ? 'Out of Stock' : 'Add to Cart' }}
+      </button>
     </div>
-  </RouterLink>
+  </div>
 </template>

@@ -1,37 +1,26 @@
 import { computed } from "vue";
 
 const CONVERSION_RATE = 35;
+const formatCurrency = (amount: number) =>
+  new Intl.NumberFormat("en-US", { style: "currency", currency: "EGP" })
+    .format(amount * CONVERSION_RATE);
 
-interface Product {
-  price: number;
-  discount?: number;
-}
+export const formatDiscountedPrice = (price: number, discount?: number): string => {
+  const discounted = discount ? price * (1 - discount / 100) : price;
+  return formatCurrency(discounted);
+};
 
-export const useProductPrice = (product: Product) => {
+export const useProductPrice = (getProduct: () => { price: number, discount?: number }) => {
   const discountedPrice = computed(() => {
+    const product = getProduct();
     return product.discount ?
       product.price * (1 - product.discount / 100) :
       product.price;
   });
 
+  const formattedDiscountedPrice = computed(() => formatCurrency(discountedPrice.value));
 
-  const formattedDiscountedPrice = computed(() =>
-    new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "EGP",
-    }).format(discountedPrice.value * CONVERSION_RATE),
-  );
+  const formattedPrice = computed(() => formatCurrency(getProduct().price));
 
-  const formattedPrice = computed(() =>
-    new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "EGP",
-    }).format(product.price * CONVERSION_RATE),
-  );
-
-  return {
-    discountedPrice,
-    formattedDiscountedPrice,
-    formattedPrice
-  }
+  return { discountedPrice, formattedDiscountedPrice, formattedPrice }
 }
