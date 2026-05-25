@@ -27,7 +27,7 @@
         "fitness",
         "new"
       ],
-      "stock": 4
+      "stock": 5
     },
     {
       "id": 103,
@@ -56,7 +56,7 @@
         "work",
         "creator"
       ],
-      "stock": 4,
+      "stock": 5,
       "discount": 10
     }
   ]
