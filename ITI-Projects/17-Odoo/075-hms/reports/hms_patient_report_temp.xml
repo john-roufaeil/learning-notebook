@@ -1,0 +1,94 @@
+<odoo>
+    <data>
+        <template id="hms_patient_template">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="web.external_layout">
+                        <div class="page" style="font-size: 18px;">
+                            
+                            <div class="row">
+                                <div class="col-8 text-left mt-4">
+                                    <span class="align-left text-danger" style="font-size: 36px;">
+                                        <strong>Patient Status Report</strong>
+                                    </span>
+                                </div>
+                                <div class="col-4 text-center">
+                                    <img t-if="o.image" t-att-src="image_data_uri(o.image)" style="max-height: 150px;"/>
+                                </div>
+                            </div>
+                            
+                            <table class="table borderless mt-4">
+                                <tr>
+                                    <td>
+                                        <strong>Name:</strong> <span t-field="o.first_name"/> <span t-field="o.last_name"/>
+                                    </td>
+                                    <td>
+                                        <strong>Birth date:</strong> <span t-field="o.birth_date"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong>Age:</strong> <span t-field="o.age"/>
+                                    </td>
+                                    <td>
+                                        <strong>PCR:</strong> <span t-field="o.pcr"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong>Department:</strong> <span t-field="o.department_id.name"/>
+                                    </td>
+                                    <td>
+                                        <strong>Blood Type:</strong> <span t-field="o.blood_type"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong>Doctors:</strong> <span t-esc="', '.join(o.doctors_ids.mapped(lambda d: d.first_name + ' ' + d.last_name))"/>
+                                    </td>
+                                    <td>
+                                        <strong>Email:</strong> <span t-field="o.email"/>
+                                    </td>
+                                </tr>
+                            </table>
+                            
+                            <div class="mt-4">
+                                <center>
+                                    <strong class="text-danger" style="font-size: 20px;">
+                                        Log History
+                                    </strong>
+                                </center>
+                            </div>
+
+                            <table class="table table-sm table-bordered mt-2">
+                                <thead style="background-color: #007bff; color: white;">
+                                    <tr class="border border-white">
+                                        <th class="border border-white">User</th>
+                                        <th class="border border-white">Date</th>
+                                        <th class="border border-white">Info</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="o.logs" t-as="A">
+                                        <tr style="background-color: #d8e4f8;" class="border border-white">
+                                            <td class="border border-white">
+                                                <span t-field="A.create_uid" />
+                                            </td>
+                                            <td class="border border-white">
+                                                <span t-field="A.create_date"/>
+                                            </td>
+                                            <td class="border border-white">
+                                                <span t-field="A.description" />
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                            
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

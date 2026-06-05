@@ -1,0 +1,25 @@
+<odoo>
+  <record id="hms_customer_form_extension" model="ir.ui.view">
+    <field name="name">Add related patient to customer form</field>
+    <field name="model">res.partner</field>
+    <field name="inherit_id" ref="base.view_partner_form"/>
+    <field name="arch" type="xml">
+      <group name="misc" position="inside">
+        <field name="related_patient_id" string="Related Patient"/>
+      </group>
+      <field name="vat" position="attributes">
+        <attribute name="required">1</attribute>
+      </field>
+    </field>
+  </record>
+  <record id="hms_customer_list_extension" model="ir.ui.view">
+    <field name="name">Add email to customer list</field>
+    <field name="model">res.partner</field>
+    <field name="inherit_id" ref="base.view_partner_tree"/>
+    <field name="arch" type="xml">
+      <field name="email" position="after">
+        <field name="website"/>
+      </field>
+    </field>
+</record>
+</odoo>

@@ -1,0 +1,43 @@
+<odoo>
+  <record id="hms_department_list" model="ir.ui.view">
+    <field name="name">hms.department.list</field>
+    <field name="model">hms.department</field>
+    <field name="arch" type="xml">
+      <tree>
+        <field name="name"/>
+        <field name="capacity"/>
+        <field name="is_opened"/>
+      </tree>
+    </field>
+  </record>
+
+  <record id="hms_department_form" model="ir.ui.view">
+    <field name="name">hms.department.form</field>
+    <field name="model">hms.department</field>
+    <field name="arch" type="xml">
+      <form>
+        <sheet>
+          <group>
+            <field name="name" required="1"/>
+            <field name="capacity"/>
+            <field name="is_opened"/>
+            <field name="patients" widget="many2many_tags"/>
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <record id="hms_department_action" model="ir.actions.act_window">
+    <field name="name">Departments</field>
+    <field name="res_model">hms.department</field>
+    <field name="view_mode">list,form,kanban</field>
+  </record>
+
+  <menuitem 
+    id="hms_departments_menu"
+    name="Departments"
+    parent="hms_data_menu"
+    action="hms_department_action"
+  />
+</odoo>
