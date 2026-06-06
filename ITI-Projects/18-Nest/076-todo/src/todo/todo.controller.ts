@@ -8,7 +8,9 @@ import {
   Delete,
 } from '@nestjs/common';
 import { TodoService } from './todo.service';
-import { Todo } from './todo.type';
+import { Todo } from './todo.entity';
+import { CreateTodoDto } from './dto/create-todo.dto';
+import { EditTodoDto } from './dto/edit-todo.dto';
 
 @Controller('todos')
 export class TodoController {
@@ -25,12 +27,12 @@ export class TodoController {
   }
 
   @Post()
-  addTodo(@Body() body: Todo): Todo {
+  addTodo(@Body() body: CreateTodoDto): Todo {
     return this.todoService.addTodo(body);
   }
 
   @Patch(':id')
-  updateTodo(@Param('id') id: number, @Body() body: Todo): Todo {
+  updateTodo(@Param('id') id: number, @Body() body: EditTodoDto): Todo {
     return this.todoService.updateTodo(+id, body);
   }
 

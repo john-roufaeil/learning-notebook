@@ -1,5 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { Todo, TodoStatus } from './todo.type';
+import { Todo, TodoStatus } from './todo.entity';
+import { CreateTodoDto } from './dto/create-todo.dto';
+import { EditTodoDto } from './dto/edit-todo.dto';
 
 @Injectable()
 export class TodoService {
@@ -15,7 +17,7 @@ export class TodoService {
     return todo;
   }
 
-  addTodo(todo: Todo): Todo {
+  addTodo(todo: CreateTodoDto): Todo {
     const newTodo = {
       ...todo,
       id: this.todos.length + 1,
@@ -25,19 +27,15 @@ export class TodoService {
     return newTodo;
   }
 
-  updateTodo(id: number, newTodo: Todo): Todo {
+  updateTodo(id: number, newTodo: EditTodoDto): Todo {
     const todoIdx = this.todos.findIndex((todo) => todo.id === id);
     if (todoIdx === -1) throw new NotFoundException('Todo not found');
-    if (newTodo.task) this.todos[todoIdx].task = newTodo.task;
-    if (newTodo.status) this.todos[todoIdx].status = newTodo.status;
-    //Object.assign()
-    return this.todos[todoIdx];
+    return Object.assign(this.todos[todoIdx], newTodo);
   }
 
   deleteTodo(id: number): void {
-    const index = this.todos.findIndex((todo) => todo.id === id);
-    if (index !== -1) {
-      this.todos.splice(index, 1);
-    }
+    const todoIdx = this.todos.findIndex((todo) => todo.id === id);
+    if (todoIdx === -1) throw new NotFoundException('Todo not found');
+    this.todos.splice(todoIdx, 1);
   }
 }
